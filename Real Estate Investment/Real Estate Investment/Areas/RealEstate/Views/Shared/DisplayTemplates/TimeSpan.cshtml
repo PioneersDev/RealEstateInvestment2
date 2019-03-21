@@ -1,0 +1,2 @@
+﻿@model TimeSpan?
+@(Model.HasValue ? Model.Value.ToString(@"hh\:mm") : string.Empty)

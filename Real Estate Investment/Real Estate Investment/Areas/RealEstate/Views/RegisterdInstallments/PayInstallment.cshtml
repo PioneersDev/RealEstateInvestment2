@@ -1,0 +1,47 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.ViewModels.PayInstallmentViewModel
+@{
+    Layout = null;
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        دفع القسط
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("PayInstallment", "RegisterdInstallments", FormMethod.Post, new { id = "popupForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.RefId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.RefId, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.RefId, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.Remarks, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="دفع القسط" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#RefId').val('');
+    });
+</script>

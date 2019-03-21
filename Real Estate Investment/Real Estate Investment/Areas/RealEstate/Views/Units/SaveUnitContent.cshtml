@@ -1,0 +1,69 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.UnitContent
+@{
+    Layout = null;
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        @if (Model != null && Model.Id > 0)
+        {
+            @:تعديل بيانات محتوى
+        }
+        else
+        {
+            @:اضافة محتوى جديد للوحدة
+        }
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("SaveUnitContent", "Units", FormMethod.Post, new { id = "popupForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @if (Model != null && Model.Id > 0)
+                {
+                    @Html.HiddenFor(model => model.Id)
+                }
+                @Html.HiddenFor(model => model.UnitId)
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.DropDownList("ContentTypeId", ViewBag.ContentTypes as SelectList, "اختر نوع المحتوى....", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ContentTypeId, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.ContentTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ContentMeters, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ContentMeters, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.ContentMeters, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ContentCount, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ContentCount, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.ContentCount, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ContentDetail, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ContentDetail, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.ContentDetail, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="حفظ" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

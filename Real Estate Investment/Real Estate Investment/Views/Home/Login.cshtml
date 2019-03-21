@@ -1,0 +1,109 @@
+﻿@using RealEstateInvestment.Models
+@model LoginViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--IE Compatibility modes-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--Mobile first-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>تسجيل الدخول</title>
+
+    <!-- Bootstrap -->
+    <link href="~/assets/lib/bootstrap/css/bootstrap.rtl.css" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/assets/lib/font-awesome/css/font-awesome.css">
+
+    <!-- Metis core stylesheet -->
+    <link rel="stylesheet" href="~/assets/css/main.rtl.css">
+
+    <!-- metisMenu stylesheet -->
+    <link rel="stylesheet" href="~/assets/lib/metismenu/metisMenu.css">
+
+    <!-- onoffcanvas stylesheet -->
+    <link rel="stylesheet" href="~/assets/lib/onoffcanvas/onoffcanvas.css">
+
+    <!-- animate.css stylesheet -->
+    <link rel="stylesheet" href="~/assets/lib/animate.css/animate.css">
+    <style media="screen">
+        body {
+            direction: rtl;
+        }
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="~/assets/js/html5shiv.min.js"></script>
+    <script src="~/assets/js/respond.min.js"></script>
+        <![endif]-->
+</head>
+<body class="login">
+    <div class="form-signin">
+        <div class="text-center">
+            <img src="~/assets/img/logo.png" alt="Metis Logo">
+        </div>
+        <hr>
+        <div class="tab-content">
+            <div id="login" class="tab-pane active">
+                @using (Html.BeginForm("Login", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <p class="text-muted text-center">
+                        ادخل اسم المستخدم وكلمة المرور
+                    </p>
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control top", placeholder = "اسم المستخدم" })
+                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control bottom", placeholder = "كلمة المرور" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.LabelFor(m => m.RememberMe, new { style = "margin-right:2px;" })
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">تسجيل الدخول</button>
+                }
+            </div>
+            <div id="forgot" class="tab-pane">
+                @using (Html.BeginForm("ForgotPassword", "Home", FormMethod.Post))
+                {
+                    <p class="text-muted text-center">ادخل بريد الكتروني صحيح</p>
+                    <input type="Email" placeholder="mail@domain.com" class="form-control">
+                    <br>
+                    <button class="btn btn-lg btn-danger btn-block" type="submit">استعادة كلمة المرور</button>
+                }
+            </div>
+        </div>
+        <hr>
+        <div class="text-center">
+            <ul class="list-inline">
+                <li><a class="text-muted" href="#login" data-toggle="tab">تسجيل الدخول</a></li>
+                <li><a class="text-muted" href="#forgot" data-toggle="tab">استعادة كلمةالمرور</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!--jQuery -->
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <!--Bootstrap -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        (function ($) {
+            $(document).ready(function () {
+                $('.list-inline li > a').click(function () {
+                    var activeForm = $(this).attr('href') + ' > form';
+                    //console.log(activeForm);
+                    $(activeForm).addClass('animated fadeIn');
+                    //set timer to 1 seconds, after that, unload the animate animation
+                    setTimeout(function () {
+                        $(activeForm).removeClass('animated fadeIn');
+                    }, 1000);
+                });
+            });
+        })(jQuery);
+    </script>
+</body>
+</html>

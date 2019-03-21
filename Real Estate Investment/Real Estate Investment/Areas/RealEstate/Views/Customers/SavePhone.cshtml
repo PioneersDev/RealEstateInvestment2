@@ -1,0 +1,38 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.CustomerPhone
+@{ 
+    Layout = null;
+}
+@using (Html.BeginForm("SavePhone", "Customers", FormMethod.Post, new { id = "Form" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @if (Model != null && Model.Id > 0)
+        {
+            @Html.HiddenFor(model => model.Id)
+        }
+        @Html.HiddenFor(model => model.CustomerId)
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.DropDownList("PhoneTypeId", ViewBag.PhoneTypes as SelectList, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PhoneTypeId, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.PhoneTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="حفظ" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}

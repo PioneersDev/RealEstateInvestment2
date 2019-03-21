@@ -1,0 +1,128 @@
+﻿@{
+    Layout = null;
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        جهات الاتصال
+    </div>
+    <div class="panel-body">
+        <div style="width:90%;margin:0 auto;" class="childTableContainer">
+            <a class="popup btn btn-primary" href="/RealEstate/Customers/SavePhone?id=0&CustomerId=@ViewBag.id" style="margin-bottom:20px;margin-top:20px;color:white">اضافة جهة اتصال جديدة</a>
+            <table id="childDataTable">
+                <thead>
+                    <tr>
+                        <th>نوع الهاتف</th>
+                        <th>رقم الهاتف</th>
+                        <th>تعديل</th>
+                        <th>حذف</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+            $(function () {
+                var childDialogOpened = false;
+            var childTable = $('#childDataTable').DataTable({
+                "ajax": {
+                    "url": '/Customers/GetCustomerPhones/@ViewBag.id',
+                    "type": 'get',
+                    "datatype": "json",
+                },
+                "columns": [
+                    { "data": "PhoneTypeName", "autowidth": true },
+                    { "data": "PhoneNo", "autowidth": true },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data) {
+                            return '<a class="popup btn btn-primary" href="/RealEstate/Customers/SavePhone?id=' + data + '&CustomerId=@ViewBag.id" style="color:white">تعديل</a>'
+                        }
+                    },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data) {
+                            return '<a class="popup btn btn-danger" href="/RealEstate/Customers/DeletePhone/' + data + '" style="color:white">حذف</a>'
+                        }
+                    }
+                ],
+                "language": {
+                    "emptyTable": "لا توجد نتائج لعرضها",
+                    "info": "عرض _START_ الى _END_ من _TOTAL_ نتيجة",
+                    "infoEmpty": "",
+                    "infoFiltered": "(نتائج بحث من اجمالي _MAX_ نتيجة)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "عرض _MENU_ نتائج ",
+                    "loadingRecords": "تحميل...",
+                    "search": "بحث: ",
+                    "zeroRecords": "لا توجد نتائج مطابقة للبحث",
+                    "paginate": {
+                        "first": "الأول",
+                        "last": "الأخير",
+                        "next": "التالي",
+                        "previous": "السابق"
+                    },
+
+                },
+                columnDefs: [
+                    { "className": "dt-center", "targets": "_all" }/* to center data on columns*/,
+                    {
+                        "targets": 'no-sort',
+                        "orderable": false
+                    }
+                ]
+            });
+
+            $('.childTableContainer').on('click', 'a.popup', function (e) {
+                e.preventDefault();
+                if (!childDialogOpened) {
+                    ChildOpenPopup($(this).attr('href'));
+                    childDialogOpened = true;
+                }
+            });
+
+            function ChildOpenPopup(pageUrl) {
+                var $childPageContent = $('<div/>');
+                $childPageContent.load(pageUrl, function () {
+                    $('#Form', $childPageContent).removeData('validator');
+                    $('#Form', $childPageContent).removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse('form');
+                });
+
+                $childDialog = $('<div class="childPopupWindow" style="overflow:auto"></div>')
+                    .html($childPageContent)
+                    .dialog({
+                        draggable: true,
+                        autoOpen: false,
+                        resizable: true,
+                        model: true,
+                        title: 'نافذة فرعية',
+                        height: 300,
+                        width: 400,
+                        close: function () {
+                            $childDialog.dialog('destroy').remove();
+                            childDialogOpened = false;
+                        }
+                    });
+
+                $('.childPopupWindow').on('submit', '#Form', function (e) {
+                    var url = $('#Form')[0].action;
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $('#Form').serialize(),
+                        success: function (data) {
+                            if (data.status) {
+                                $childDialog.dialog('close');
+                                childDialogOpened = false;
+                                childTable.ajax.reload();
+                            }
+                        }
+                    });
+                    e.preventDefault();
+                });
+                $childDialog.dialog('open');
+            };
+
+        });
+</script>

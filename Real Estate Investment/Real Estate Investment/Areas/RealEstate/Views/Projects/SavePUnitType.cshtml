@@ -1,0 +1,215 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.ProjectUnitType
+@{
+    Layout = null;
+}
+@using (Html.BeginForm("SavePUnitType", "Projects", FormMethod.Post, new { id = "Form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @if (Model != null && Model.Id > 0)
+        {
+            @Html.HiddenFor(model => model.Id)
+        }
+        @Html.HiddenFor(model => model.ProjectId)
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @*@Html.DropDownListFor(model => model.UnitTypeId, ViewBag.unitTypes as SelectList,string.Empty, htmlAttributes: new { @class = "form-control" })*@
+                <select name="UnitTypeId" id="UnitTypeId" class="form-control">
+                    <option value=""></option>
+                </select>
+                @Html.ValidationMessageFor(model => model.UnitTypeId, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.UnitTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectUnitTypeName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProjectUnitTypeName, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.ProjectUnitTypeName, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Count, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Count, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.Count, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.NameContain, ViewBag.Contain as SelectList, string.Empty, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NameContain, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.NameContain, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group" style="display:none" id="ContainDiv">
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.CharStartFrom, new { htmlAttributes = new { @class = "form-control", placeholder = "حروف" } })
+                @Html.ValidationMessageFor(model => model.CharStartFrom, "", new { @class = "text-danger", @id = "CharStartFromValidation" })
+            </div>
+            <div class="col-md-5">
+                @Html.EditorFor(model => model.NumStartFrom, new { htmlAttributes = new { @class = "form-control", placeholder = "أرقام" } })
+                @Html.ValidationMessageFor(model => model.NumStartFrom, "", new { @class = "text-danger" ,@id= "NumStartFromValidation" })
+            </div>
+            @Html.LabelFor(model => model.NumStartFrom, "الاسم يبدأ من", htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.NameIncrementIn, ViewBag.Contain as SelectList, string.Empty, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NameIncrementIn, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.NameIncrementIn, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NameIncrement, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NameIncrement, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.NameIncrement, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group" id="MainUnitSubUnitsNumDiv" style="display:none;">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MainUnitSubUnitsNum, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MainUnitSubUnitsNum, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.MainUnitSubUnitsNum, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ProjectUnitTypeDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProjectUnitTypeDescription, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.ProjectUnitTypeDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DocHeaderId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DocHeaderId, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.DocHeaderId, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="حفظ" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(function () {
+
+        var UnitsTypes = @Html.Raw(Json.Encode(ViewBag.UnitsTypes));
+
+        $(UnitsTypes).each(function (index, element) {
+            $('#UnitTypeId').append('<option value="' + element.Id + '" data-IsParent="' + element.IsParent + '">' + element.UnitTypeName + '</option>');
+        });
+
+        $('#NameContain').change(function () {
+            $('#NumStartFromValidation').text('');
+            $('#CharStartFromValidation').text('');
+            var conVal = this.value;
+            if (conVal != '') {
+                $('#ContainDiv').show();
+                if (conVal == 1) {
+                    $('#NumStartFrom').prop('disabled', false);
+                    $('#CharStartFrom').val('');
+                    $('#CharStartFrom').prop('disabled', true);
+                    $('#NameIncrementIn').val('1');
+                } else if (conVal == 2) {
+                    $('#NumStartFrom').val('');
+                    $('#NumStartFrom').prop('disabled', true);
+                    $('#CharStartFrom').prop('disabled', false);
+                    $('#NameIncrementIn').val('2');
+                } else if (conVal == 3) {
+                    $('#NumStartFrom').prop('disabled', false);
+                    $('#CharStartFrom').prop('disabled', false);
+                }
+            } else {
+                $('#NumStartFrom').prop('disabled', false);
+                $('#CharStartFrom').prop('disabled', false);
+                $('#ContainDiv').hide();
+            }
+        });
+
+        $('#CharStartFrom').keyup(function (e) {
+            var keyCode = (e.keyCode ? e.keyCode : e.which);
+            if (keyCode > 47 && keyCode < 58 || keyCode > 95 && keyCode < 107) {
+                this.value=this.value.slice(0, -1);
+                e.preventDefault();
+                return false;
+            } else {
+                this.value = this.value.toUpperCase();
+            }
+        });
+
+        $('#NameIncrementIn').change(function () {
+            var conVal = $('#NameContain').val();
+            if (conVal != '') {
+                if (conVal == 1) {
+                    $(this).val('1');
+                } else if (conVal == 2) {
+                    $(this).val('2');
+                }
+            } else {
+                $(this).val('');
+            }
+        });
+
+        $('#UnitTypeId').change(function () {
+            var isParent = $('#UnitTypeId :selected').attr('data-isparent');
+            if (isParent == "true") {
+                $('#MainUnitSubUnitsNumDiv').show();
+            } else {
+                $('#MainUnitSubUnitsNum').val('');
+                $('#MainUnitSubUnitsNumDiv').hide();
+            }
+        });
+
+        @if (Model != null)
+        {
+            if(Model.Id>0)
+            {
+                @:$('#UnitTypeId').val(@Model.UnitTypeId);
+                @:$("#NameContain").trigger("change");
+                @:$("#UnitTypeId").trigger("change");
+            }
+        }
+
+        $('#Form').submit(function (e) {
+            if ($('#NameContain').val() == 1) {
+                if ($('#NumStartFrom').val() == '')
+                {
+                    $('#NumStartFromValidation').text("من فضلك من فضلك ادخل الاسم الابتدائي");
+                    return false;
+                }
+            } else if ($('#NameContain').val() == 2)
+            {
+                if ($('#CharStartFrom').val() == '') {
+                    $('#CharStartFromValidation').text("من فضلك من فضلك ادخل الاسم الابتدائي");
+                    return false;
+                }
+            } else if ($('#NameContain').val() == 3)
+            {
+                if ($('#CharStartFrom').val() == '' || $('#NumStartFrom').val() == '') {
+                    $('#NumStartFromValidation').text("من فضلك من فضلك ادخل الاسم الابتدائي");
+                    $('#CharStartFromValidation').text("من فضلك من فضلك ادخل الاسم الابتدائي");
+                    return false;
+                }
+            }
+        });
+    });
+    
+</script>

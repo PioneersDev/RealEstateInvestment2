@@ -1,0 +1,35 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.CustomerPhone
+@{ 
+    Layout = null;
+}
+<h3>هل انت متأكد من انك تريد حذف جهة الاتصال؟</h3>
+<div>
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneType.PhoneTypeName) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.PhoneType.PhoneTypeName)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNo) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.PhoneNo)
+            </td>
+        </tr>
+    </table>
+
+    @using (Html.BeginForm("DeletePhone", "Customers", FormMethod.Post, new { id = "Form" })) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-danger" />
+        </div>
+    }
+</div>

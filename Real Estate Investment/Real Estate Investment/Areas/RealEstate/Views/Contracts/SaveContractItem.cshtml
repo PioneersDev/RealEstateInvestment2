@@ -1,0 +1,131 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.ContractItem
+@{
+    Layout = null;
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        @if (Model != null && Model.Id > 0)
+        {
+            @:تعديل بيانات بند
+        }
+        else
+        {
+            @:اضافة بند جديد
+        }
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("SaveContractItem", "Contracts", FormMethod.Post, new { id = "Form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @if (Model != null && Model.Id > 0)
+                {
+                    @Html.HiddenFor(model => model.Id)
+                }
+                @Html.HiddenFor(model => model.ContractModelId)
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ContractItemName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ContractItemName, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.ContractItemName, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-1"></div>
+                    <div id="varDiv" class="col-md-3" style="border:1px solid #ccc">
+                        <h5>قائمة المتغيرات:</h5>
+                        <ul id="variablesList"></ul>
+                    </div>
+                    <div class="col-md-6">
+                        @Html.TextAreaFor(model => model.ContractItemString, new { @class = "form-control txtDropTarget", rows = "35", cols = "80", Style = "direction: rtl;" })
+                        @Html.ValidationMessageFor(model => model.ContractItemString, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.ContractItemString, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button id="resultbtn" class="btn btn-primary">عرض شكل البند النهائي</button>
+                    </div>
+                </div>
+
+                <div id="resultDiv" class="form-group" style="display:none;">
+                    <div class="col-md-12">
+                        <textarea id="resultTextArea" class="form-control" style="direction: rtl;" rows="20" cols="80"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="حفظ" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    $(function () {
+        var Variables = [];
+        $.get('/Contracts/GetContractsVariables', function (data) {
+            $.each(data, function (index, element) {
+                Variables.push(element);
+                //$('#variablesList').append('<li data-name="' + element.VarName + '" class="draggable">' + element.VarDescription + '</li>');
+                $('<li data-name="' + element.VarName + '" class="draggable">' + element.VarDescription + '</li>').appendTo('#variablesList').draggable({ helper: 'clone' });
+            });
+        });
+
+        $(document).on('click', '#variablesList li', function () {
+            $("#ContractItemString").insertAtCaret($(this).attr('data-name'));
+            return false;
+        });
+
+        $("#ContractItemString").droppable({
+            accept: ".draggable",
+            drop: function (ev, ui) {
+                $(this).insertAtCaret(ui.draggable.attr('data-name'));
+            }
+        });
+
+        $('#resultbtn').click(function () {
+            var text = $('#ContractItemString').val();
+            $.each(Variables, function (index, variable) {
+                var expression = "\\B" + variable.VarName + "\\b";
+                var regex = new RegExp(expression, 'gi');
+                text = text.replace(regex, "(" + variable.VarDescription + ")");
+            });
+            $('#resultDiv').show();
+            $('#resultTextArea').val('');
+            $('#resultTextArea').val(text);
+            return false;
+        });
+    });
+
+    $.fn.insertAtCaret = function (myValue) {
+        return this.each(function () {
+            if (document.selection) {
+                this.focus();
+                sel = document.selection.createRange();
+                sel.text = myValue;
+                this.focus();
+            }
+            else if (this.selectionStart || this.selectionStart == '0') {
+                var startPos = this.selectionStart;
+                var endPos = this.selectionEnd;
+                var scrollTop = this.scrollTop;
+                this.value = this.value.substring(0, startPos) + myValue + this.value.substring(endPos, this.value.length);
+                this.focus();
+                this.selectionStart = startPos + myValue.length;
+                this.selectionEnd = startPos + myValue.length;
+                this.scrollTop = scrollTop;
+            } else {
+                this.value += myValue;
+                this.focus();
+            }
+        });
+    };
+</script>

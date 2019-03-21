@@ -1,0 +1,107 @@
+﻿@model RealEstateInvestment.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+<link href="~/Areas/PAYROLL/Content/jquery-ui.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+
+
+<style>
+    #Back {
+        background-image: url();
+    }
+</style>
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new account.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+ 
+  
+  
+    <div class="form-group">
+
+        @Html.LabelFor(m => m.ApplicationId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4">
+            @Html.DropDownListFor(a => a.ApplicationId, ViewBag.apps as SelectList, new { @class = "form-control text-left", id = "App" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Role, new { @class = "col-md-2 control-label" })
+        <div class="col-md-4" id="RolesCon">
+            @Html.DropDownListFor(a => a.Role, ViewBag.Roles as SelectList, new { @class = "form-control text-left", id = "Role" })
+        </div> 
+
+    </div>
+   
+
+
+    <div class="form-group">
+        <div class="col-md-2">
+            <input type="submit" class="btn btn-success" value="Register" />
+        </div>
+    </div>
+}
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+
+<script>
+    var count = 0;
+    var index = 0;
+    var account = 0;
+    $(document).ready(function () {
+
+
+      
+    
+
+       
+
+       
+
+
+
+
+
+
+        $('#App').change(function () {
+
+            var appid = $('#App').val();
+
+            $.ajax({
+                type: "get",
+                dataType: 'html',
+                url: '/Home/getRoles/' + appid,
+                success: function (data) {
+                    $('#RolesCon').empty();
+                    $('#RolesCon').append(data);
+                }
+            });
+
+          
+        })
+
+    });
+</script>
+

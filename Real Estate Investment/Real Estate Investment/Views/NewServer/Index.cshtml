@@ -1,0 +1,80 @@
+﻿@model RealEstateInvestment.Models.FirstUseViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--IE Compatibility modes-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--Mobile first-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>تسجيل الدخول</title>
+
+    <!-- Bootstrap -->
+    <link href="~/assets/lib/bootstrap/css/bootstrap.rtl.css" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/assets/lib/font-awesome/css/font-awesome.css">
+
+    <!-- Metis core stylesheet -->
+    <link rel="stylesheet" href="~/assets/css/main.rtl.css">
+
+    <!-- metisMenu stylesheet -->
+    <link rel="stylesheet" href="~/assets/lib/metismenu/metisMenu.css">
+
+    <!-- onoffcanvas stylesheet -->
+    <link rel="stylesheet" href="~/assets/lib/onoffcanvas/onoffcanvas.css">
+
+    <!-- animate.css stylesheet -->
+    <link rel="stylesheet" href="~/assets/lib/animate.css/animate.css">
+    <style media="screen">
+        body {
+            direction: rtl;
+        }
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="~/assets/js/html5shiv.min.js"></script>
+    <script src="~/assets/js/respond.min.js"></script>
+        <![endif]-->
+</head>
+<body class="login">
+    <div class="form-signin">
+        <div class="tab-content">
+            <div id="login" class="tab-pane active">
+                @using (Html.BeginForm("Save", "NewServer", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control bottom", placeholder = "كلمة المرور" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+
+                    @Html.EditorFor(model => model.Ip, new { htmlAttributes = new { @class = "form-control bottom", placeholder = "عنوان السرفر" } })
+                    @Html.ValidationMessageFor(model => model.Ip, "", new { @class = "text-danger" })
+
+
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control bottom", placeholder = "اسم المستخدم" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+
+                    @Html.EditorFor(model => model.dbPassword, new { htmlAttributes = new { @class = "form-control bottom", placeholder = "كلمة مرور الداتابيز" } })
+                    @Html.ValidationMessageFor(model => model.dbPassword, "", new { @class = "text-danger" })
+
+                    <input type="submit" value="حفظ" class="btn btn-lg btn-success btn-block" />
+
+                }
+            </div>
+        </div>
+    </div>
+    <!--jQuery -->
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <!--Bootstrap -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

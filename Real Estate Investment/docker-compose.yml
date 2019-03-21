@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+  realestateinvestment:
+    image: realestateinvestment
+    build:
+      context: .\Real Estate Investment
+      dockerfile: Dockerfile

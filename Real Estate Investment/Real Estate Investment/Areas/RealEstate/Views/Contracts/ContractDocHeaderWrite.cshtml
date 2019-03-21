@@ -1,0 +1,74 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.ViewModels.ContractWriteViewModel
+@{
+    Layout = null;
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        استخراج عقد جديد
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("ContractDocHeaderWrite", "Contracts", FormMethod.Post, new { id = "BasicForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(a => a.Id)
+                <table id="chdataTable" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center">المتغير</th>
+                            <th class="text-center">القيمة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Variables.Count(); i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.Hidden("Variables[" + @i + "].VarId", Model.Variables[i].VarId)
+                                    @Html.Hidden("Variables[" + @i + "].VarName", Model.Variables[i].VarName)
+                                    @Html.Hidden("Variables[" + @i + "].VarType", Model.Variables[i].VarType)
+                                    @Html.Hidden("Variables[" + @i + "].VarDescription", Model.Variables[i].VarDescription)
+                                    @Model.Variables[i].VarDescription
+                                </td>
+                                <td>
+                                    @switch (Model.Variables[i].VarType)
+                                    {
+                                        case "string":
+                                            @Html.TextBox("Variables[" + @i + "].VarValue", Model.Variables[i].VarValue, new { @class = "form-control" })
+                                            break;
+                                        case "int":
+                                        case "decimal":
+                                            @Html.TextBox("Variables[" + @i + "].VarValue", Model.Variables[i].VarValue, new { @class = "form-control", type = "number" })
+                                            break;
+                                        case "datetime":
+                                            @Html.TextBox("Variables[" + @i + "].VarValue", Model.Variables[i].VarValue, new { @class = "form-control datepicker", autocomplete = "off" })
+                                            break;
+                                    }
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="استخراج العقد" class="btn btn-success" id="submit_btn" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    $(function () {
+
+        $('.datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            orientation: "bottom left"
+        });
+
+    });
+</script>

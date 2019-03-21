@@ -1,0 +1,146 @@
+﻿@{
+    Layout = null;
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        خصائص نظام الدفع
+    </div>
+    <div class="panel-body">
+        <div style="width:90%;margin:0 auto;" class="childTableContainer">
+            <a class="popup btn btn-primary" href="/RealEstate/Payments/SavePaymentMethodHeaderDetail?id=0&PaymentMethodHeaderId=@ViewBag.id" style="margin-bottom:20px;margin-top:20px;color:white">اضافة خاصية جديدة</a>
+            <table id="childDataTable">
+                <thead>
+                    <tr>
+                        <th>الكود</th>
+                        <th>نوع الدفعة</th>
+                        <th>النسبة</th>
+                        <th>المبلغ</th>
+                        <th>يبدأ بعد</th>
+                        <th>فترة الاستحقاق</th>
+                        <th>عدد الأقساط</th>
+                        <th class="no-sort">تعديل</th>
+                        <th class="no-sort">حذف</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+            var childDialogOpened = false;
+            var childTable = $('#childDataTable').DataTable({
+                "ajax": {
+                    "url": '/Payments/GetPaymentMethodHeaderDetails/@ViewBag.id',
+                    "type": 'get',
+                    "datatype": "json",
+                },
+                "columns": [
+                    { "data": "Id", "autowidth": true },
+                    { "data": "PaymentTypeName", "autowidth": true },
+                    {
+                        "data": "Ratio",
+                        "autowidth": true,
+                        "render": function (data) {
+                            if (data != null)
+                                return "% "+data;
+                            else
+                                return data;
+                        }
+                    },
+                    { "data": "MinimumAmount", "autowidth": true },
+                    { "data": "StartFrom", "autowidth": true },
+                    { "data": "Period", "autowidth": true },
+                    { "data": "PaymentsCounts", "autowidth": true },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data) {
+                            return '<a class="popup btn btn-primary" href="/RealEstate/Payments/SavePaymentMethodHeaderDetail?id=' + data + '&PaymentMethodHeaderId=@ViewBag.id"style="color:white">تعديل</a>'
+                        }
+                    },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data) {
+                            return '<a class="popup btn btn-danger" href="/RealEstate/Payments/DeletePaymentMethodHeaderDetail/' + data + '"style="color:white">حذف</a>'
+                        }
+                    }
+                ],
+                "language": {
+                    "emptyTable": "لا توجد نتائج لعرضها",
+                    "info": "عرض _START_ الى _END_ من _TOTAL_ نتيجة",
+                    "infoEmpty": "",
+                    "infoFiltered": "(نتائج بحث من اجمالي _MAX_ نتيجة)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "عرض _MENU_ نتائج ",
+                    "loadingRecords": "تحميل...",
+                    "search": "بحث: ",
+                    "zeroRecords": "لا توجد نتائج مطابقة للبحث",
+                    "paginate": {
+                        "first": "الأول",
+                        "last": "الأخير",
+                        "next": "التالي",
+                        "previous": "السابق"
+                    },
+
+                },
+                columnDefs: [
+                    { "className": "dt-center", "targets": "_all" }/* to center data on columns*/,
+                    {
+                        "targets": 'no-sort',
+                        "orderable": false
+                    }
+                ]
+            });
+
+            $('.childTableContainer').on('click', 'a.popup', function (e) {
+                e.preventDefault();
+                if (!childDialogOpened) {
+                    ChildOpenPopup($(this).attr('href'));
+                    childDialogOpened = true;
+                }
+            });
+
+            function ChildOpenPopup(pageUrl) {
+                var $childPageContent = $('<div/>');
+                $childPageContent.load(pageUrl, function () {
+                    $('#Form', $childPageContent).removeData('validator');
+                    $('#Form', $childPageContent).removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse('form');
+                });
+
+                $childDialog = $('<div class="childPopupWindow" style="overflow:auto"></div>')
+                    .html($childPageContent)
+                    .dialog({
+                        draggable: true,
+                        autoOpen: false,
+                        resizable: true,
+                        model: true,
+                        title: 'نافذة فرعية',
+                        height: 490,
+                        width: 690,
+                        close: function () {
+                            $childDialog.dialog('destroy').remove();
+                            childDialogOpened = false;
+                        }
+                    });
+
+                $('.childPopupWindow').on('submit', '#Form', function (e) {
+                    var url = $('#Form')[0].action;
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $('#Form').serialize(),
+                        success: function (data) {
+                            if (data.status) {
+                                $childDialog.dialog('close');
+                                childDialogOpened = false;
+                                childTable.ajax.reload();
+                            }
+                        }
+                    });
+                    e.preventDefault();
+                });
+                $childDialog.dialog('open');
+            };
+
+        });
+</script>

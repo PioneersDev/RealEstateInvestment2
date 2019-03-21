@@ -1,0 +1,313 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.UnitViewModel
+@{
+    Layout = null;
+}
+<div style="border:1px solid black;padding:0px;background-color:#FAFAFA;margin-left:10px;padding-top:10px;" class="row dataForm">
+    <div class="col-md-12">
+        <div class="row" style="margin-right:10px;">
+            <h2>بيانات الوحدة</h2>
+            @using (Html.BeginForm("SaveUnit", "Units", FormMethod.Post, new { id = "Form", @style = "margin-top:20px;" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    @if (Model != null && Model.unit.Id > 0)
+                    {
+                        @Html.HiddenFor(model => model.unit.Id)
+                    }
+
+                    @Html.HiddenFor(model => model.unit.ProjectId)
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.DropDownListFor(model => model.unit.Perecent, ViewBag.nullDropDownList as SelectList, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.unit.Perecent, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @Html.LabelFor(model => model.unit.Perecent, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.unit.MaintenanceDeposit, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.unit.MaintenanceDeposit, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.unit.MaintenanceDeposit, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.unit.MainUnitId, ViewBag.ParentsUnits as SelectList, string.Empty, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.unit.MainUnitId, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.unit.MainUnitId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.unit.UnitNo, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.unit.UnitNo, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.unit.UnitNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+                        @if (Model.isParent == false)
+                        {
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.unit.FloorNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.unit.FloorNumber, "", new { @class = "text-danger" })
+                                </div>
+                                @Html.LabelFor(model => model.unit.FloorNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </div>
+                        }
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.unit.StatusId, ViewBag.Statuses as SelectList, String.Empty, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.unit.StatusId, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.unit.StatusId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.unit.UnitContractAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.unit.UnitContractAddress, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.unit.UnitContractAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.unit.DocHeaderId, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.unit.DocHeaderId, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.unit.DocHeaderId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.unit.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.unit.Description, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.unit.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.unit.ProjectUnitTypeId, ViewBag.projectUnitTypes as SelectList, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.unit.ProjectUnitTypeId, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.unit.ProjectUnitTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.unit.UnitName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.unit.UnitName, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.unit.UnitName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.unit.TotalMeters, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.unit.TotalMeters, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.unit.TotalMeters, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.unit.NetPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.unit.NetPrice, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.unit.NetPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.unit.TotalPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.unit.TotalPrice, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.unit.TotalPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.unit.MeterPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.unit.MeterPrice, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.unit.MeterPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.unit.Garage)
+                                    @Html.ValidationMessageFor(model => model.unit.Garage, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            @Html.LabelFor(model => model.unit.Garage, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.unit.GarageMetes, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.unit.GarageMetes, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.unit.GarageMetes, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.unit.GaragePrice, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.unit.GaragePrice, "", new { @class = "text-danger" })
+                            </div>
+                            @Html.LabelFor(model => model.unit.GaragePrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="حفظ التعديلات" class="btn btn-success" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div style="border:1px solid black;padding:0px;background-color:#FAFAFA;margin-left:10px;margin-top:10px;padding-top:10px;padding-bottom:10px;" class="row tableContainer">
+    <div class="col-md-offset-2 col-md-8">
+        <h2>محتويات الوحدة</h2>
+        <a class="popup btn btn-primary" href="/RealEstate/Units/SaveUnitContent?id=0&UnitId=@Model.unit.Id" style="margin-bottom:20px;margin-top:20px;">اضف محتوى جديد للوحدة</a>
+        <table id="unitContentTable" style="margin-top:20px;margin-bottom:20px;">
+            <thead>
+                <tr>
+                    <th>نوع المحتوى</th>
+                    <th>مساحة المحتوى</th>
+                    <th>عدد المحتوى</th>
+                    <th>تفاصيل المحتوى</th>
+                    <th>تعديل</th>
+                    <th>حذف</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $(function () {
+        var dialogOpened = false;
+        var oTable =$('#unitContentTable').DataTable({
+            "ajax": {
+                "url": '/Units/GetUnitContents/@Model.unit.Id',
+                "type": 'get',
+                "datatype": "json",
+            },
+            "columns": [
+                { "data": "ContentName", "autowidth": true },
+                { "data": "ContentMeters", "autowidth": true },
+                { "data": "ContentCount", "autowidth": true },
+                { "data": "ContentDetail", "autowidth": true },
+                {
+                    "data": function (row, type, val, meta) {
+                        var data = { Id:row.Id, UnitId:row.UnitId };
+                        return data;
+                    },
+                    "width": "50px",
+                    "render": function (data) {
+                        return '<a class="popup btn btn-primary" href="/RealEstate/Units/SaveUnitContent?id=' + data.Id + '&UnitId=' + data.UnitId + '">تعديل</a>'
+                    }
+                },
+                {
+                    "data": "Id", "width": "50px", "render": function (data) {
+                        return '<a class="popup btn btn-danger" href="/RealEstate/Units/DeleteUnitContent/' + data + '">حذف</a>'
+                    }
+                }
+            ],
+            "language": {
+                "emptyTable": "لا توجد نتائج لعرضها",
+                "info": "عرض _START_ الى _END_ من _TOTAL_ نتيجة",
+                "infoEmpty": "",
+                "infoFiltered": "(نتائج بحث من اجمالي _MAX_ نتيجة)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "عرض _MENU_ نتائج ",
+                "loadingRecords": "تحميل...",
+                "search": "بحث: ",
+                "zeroRecords": "لا توجد نتائج مطابقة للبحث",
+                "paginate": {
+                    "first": "الأول",
+                    "last": "الأخير",
+                    "next": "التالي",
+                    "previous": "السابق"
+                },
+
+            },
+            columnDefs: [
+                { "className": "dt-center", "targets": "_all" }/* to center data on columns*/,
+                {
+                    "targets": 'no-sort',
+                    "orderable": false
+                }
+            ],
+            "searching": false
+        });
+        $('.tableContainer').on('click', 'a.popup', function (e) {
+            e.preventDefault();
+            if (!dialogOpened) {
+                OpenPopup($(this).attr('href'));
+                dialogOpened = true;
+            }
+        });
+
+        function OpenPopup(pageUrl) {
+            var $pageContent = $('<div/>');
+            $pageContent.load(pageUrl, function () {
+                $('#popupForm', $pageContent).removeData('validator');
+                $('#popupForm', $pageContent).removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse('form');
+            });
+
+            $dialog = $('<div class="popupWindow" style="overflow:auto"></div>')
+                .html($pageContent)
+                .dialog({
+                    draggable: true,
+                    autoOpen: false,
+                    resizable: true,
+                    model: true,
+                    title: 'نافذة فرعية',
+                    height: 550,
+                    width: 600,
+                    close: function () {
+                        $dialog.dialog('destroy').remove();
+                        dialogOpened = false;
+                    }
+                });
+
+            $('.popupWindow').on('submit', '#popupForm', function (e) {
+                var url = $('#popupForm')[0].action;
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: $('#popupForm').serialize(),
+                    success: function (data) {
+                        if (data.status) {
+                            $dialog.dialog('close');
+                            dialogOpened = false;
+                            oTable.ajax.reload();
+                        }
+                    }
+                });
+                e.preventDefault();
+            });
+            $dialog.dialog('open');
+        };
+    });
+</script>

@@ -1,0 +1,138 @@
+﻿@{ 
+    Layout = null;
+}
+<div style="width:90%;margin:0 auto;" class="childTableContainer">
+    @*<a class="popup btn btn-primary" href="/RealEstate/Projects/SaveUnit?id=0&ProjectId=@ViewBag.id" style="margin-bottom:20px;margin-top:20px;">اضافة وحدات جديدة</a>*@
+    <table id="childDataTable">
+        <thead>
+            <tr>
+                <th>كود الوحدة</th>
+                <th>نوع الوحدة</th>
+                <th>اسم الوحدة</th>
+                <th>اجمالي المساحة بالمتر</th>
+                <th>اجمالي السعر</th>
+                <th>كود الوحدة الرئيسية</th>
+                <th>رقم الوحدة</th>
+                @*<th>تعديل</th>
+                <th>التفاصيل</th>
+                <th>حذف</th>*@
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+    $(function () {
+            var childDialogOpened = false;
+            var childTable = $('#childDataTable').DataTable({
+                "ajax": {
+                    "url": '/Projects/GetProjectUnits/@ViewBag.id',
+                    "type": 'get',
+                    "datatype": "json",
+                },
+                "columns": [
+                    { "data": "Id", "autowidth": true },
+                    { "data": "UnitTypeName", "autowidth": true },
+                    { "data": "UniteName", "autowidth": true },
+                    { "data": "TotalMeters", "autowidth": true }, 
+                    { "data": "TotalPrice", "autowidth": true },
+                    { "data": "MainUnitId", "autowidth": true },
+                    { "data": "UnitNo", "autowidth": true },
+                    @*{
+                        "data": "Id", "width": "50px", "render": function (data) {
+                            return '<a class="popup btn btn-primary" href="/RealEstate/Projects/SaveUnit?id=' + data + '&ProjectId=@ViewBag.id">تعديل</a>'
+                        }
+                    },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data) {
+                            return '<a class="popup btn btn-danger" href="/RealEstate/Projects/UnitDetails/' + data + '">التفاصيل</a>'
+                        }
+                    },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data) {
+                            return '<a class="popup btn btn-danger" href="/RealEstate/Projects/DeleteUnit/' + data + '">حذف</a>'
+                        }
+                    }*@
+                ],
+                "language": {
+                    "emptyTable": "لا توجد نتائج لعرضها",
+                    "info": "عرض _START_ الى _END_ من _TOTAL_ نتيجة",
+                    "infoEmpty": "",
+                    "infoFiltered": "(نتائج بحث من اجمالي _MAX_ نتيجة)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "عرض _MENU_ نتائج ",
+                    "loadingRecords": "تحميل...",
+                    "search": "بحث: ",
+                    "zeroRecords": "لا توجد نتائج مطابقة للبحث",
+                    "paginate": {
+                        "first": "الأول",
+                        "last": "الأخير",
+                        "next": "التالي",
+                        "previous": "السابق"
+                    },
+
+                },
+                columnDefs: [
+                    { "className": "dt-center", "targets": "_all" }/* to center data on columns*/,
+                    {
+                        "targets": 'no-sort',
+                        "orderable": false
+                    }
+                ]
+            });
+
+            $('.childTableContainer').on('click', 'a.popup', function (e) {
+                e.preventDefault();
+                if (!childDialogOpened) {
+                    ChildOpenPopup($(this).attr('href'));
+                    childDialogOpened = true;
+                }
+            });
+
+            function ChildOpenPopup(pageUrl) {
+                debugger;
+                var $childPageContent = $('<div/>');
+                $childPageContent.load(pageUrl, function () {
+                    $('#Form', $childPageContent).removeData('validator');
+                    $('#Form', $childPageContent).removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse('form');
+                });
+
+                $childDialog = $('<div class="childPopupWindow" style="overflow:auto"></div>')
+                    .html($childPageContent)
+                    .dialog({
+                        draggable: true,
+                        autoOpen: false,
+                        resizable: true,
+                        model: true,
+                        title: 'نافذة فرعية',
+                        height: 300,
+                        width: 400,
+                        close: function () {
+                            $childDialog.dialog('destroy').remove();
+                            childDialogOpened = false;
+                        }
+                    });
+
+                $('.childPopupWindow').on('submit', '#Form', function (e) {
+                    var url = $('#Form')[0].action;
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $('#Form').serialize(),
+                        success: function (data) {
+                            if (data.status) {
+                                $childDialog.dialog('close');
+                                childDialogOpened = false;
+                                childTable.ajax.reload();
+                            }
+                        }
+                    });
+                    e.preventDefault();
+                });
+                $childDialog.dialog('open');
+            };
+
+        });
+</script>

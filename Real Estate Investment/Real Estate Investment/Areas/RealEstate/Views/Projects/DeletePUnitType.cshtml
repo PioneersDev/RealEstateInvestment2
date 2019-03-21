@@ -1,0 +1,139 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.ProjectUnitType
+@{
+    Layout = null;
+}
+<h3>هل انت متأكد من انك تريد حذف هذا النموذج؟</h3>
+<div>
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitType.UnitTypeName) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.UnitType.UnitTypeName)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectUnitTypeName) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.ProjectUnitTypeName)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Count) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.Count)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NameContain) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @if (Model.NameContain == 1)
+                {
+                    @:أرقام
+                }
+                else if (Model.NameContain == 2)
+                {
+                    @:حروف
+                }
+                else if (Model.NameContain == 3)
+                {
+                    @:أرقام وحروف
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NumStartFrom) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.NumStartFrom)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CharStartFrom) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.CharStartFrom)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NameIncrementIn) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @if (Model.NameIncrementIn == 1)
+                {
+                    @:أرقام
+                }
+                else if (Model.NameIncrementIn == 2)
+                {
+                    @:حروف
+                }
+                else if (Model.NameIncrementIn == 3)
+                {
+                    @:أرقام وحروف
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NameIncrement) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.NameIncrement)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MainUnitSubUnitsNum) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.MainUnitSubUnitsNum)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectUnitTypeDescription) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.ProjectUnitTypeDescription)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DocHeaderId) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.DocHeaderId)
+            </td>
+        </tr>
+    </table>
+
+    @using (Html.BeginForm("DeletePUnitType", "Projects", FormMethod.Post, new { id = "Form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-danger" />
+        </div>
+    }
+</div>

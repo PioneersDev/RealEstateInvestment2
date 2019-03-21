@@ -1,0 +1,41 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.ViewModels.ContractAgreeViewModel
+@{
+    Layout = null;
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        تغيير حالة عقد
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("ContractAgreeSave", "Contracts", FormMethod.Post, new { id = "popupForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.IsApprove)
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Remarks, new { @class="form-control" ,@cols = 80, @rows = 10 })
+                    </div>
+                    @Html.LabelFor(model => model.Remarks, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit"
+                               @if (Model.IsApprove == true) { @: value="موافقة"
+                                                                  @: class="btn btn-success"
+                                                              } else { 
+                                                                    @: value="رفض"
+                                                                  @: class="btn btn-danger"
+                                                              } />
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

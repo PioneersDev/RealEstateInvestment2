@@ -1,0 +1,9 @@
+﻿@model IEnumerable<RealEstateInvestment.Areas.RealEstate.Models.DTO.DocDetailDTO>
+@foreach (var item in Model)
+{
+    <a href="/RealEstate/Documents/GetDoc/@item.Id" data-fancybox="gallery" data-caption="@item.Name">
+        <img src="@Url.Action("GetDoc", "Documents", new { id = item.Id })" alt="@item.Name" style="width: 240px;height:280px;border: 1px solid black;"/>
+    </a>
+}
+<link href="~/Plugins/fancybox/jquery.fancybox.min.css" rel="stylesheet" />
+<script src="~/Plugins/fancybox/jquery.fancybox.min.js"></script>

@@ -1,0 +1,71 @@
+﻿@model List<RealEstateInvestment.Areas.RealEstate.Models.Unit>
+@{
+    Layout = null;
+}
+@* Start Tree CSS *@ 
+<style>
+    .loadingP{
+        background-image:url('../../../../Content/images/Spinner-1s-200px.gif');
+        width:15px;
+        display:inline-block;
+    }
+    .treeview .collapse {
+        width: 15px;
+        background-image: url('../../../../Content/images/ui-icons_454545_256x240.png');
+        background-repeat: no-repeat;
+        background-position: -100px -20px;
+        display: inline-block;
+        cursor: pointer;
+    }
+    .treeview .expand {
+        width: 15px;
+        background-image: url('../../../../Content/images/ui-icons_454545_256x240.png');
+        background-repeat: no-repeat;
+        background-position: -83px -22px;
+        display: inline-block;
+        cursor: pointer;
+    }
+    .treeview ul{
+        font:14px Arial,Sans-serif;
+        margin:0px;
+        padding-right:20px;
+        list-style:none;
+    }
+    .treeview > li > a {
+        font-weight:bold;
+    }
+    .treeview li a {
+        padding: 4px;
+        font-size: 16px;
+        display: inline-block;
+        text-decoration: none;
+        width: auto;
+    }
+</style>
+@* End Tree CSS *@
+<div style="border:1px solid black;padding:0px;background-color:#FAFAFA" class="treeContainer">
+    <a class="popup btn btn-success" href="/RealEstate/Units/SaveUnit?id=0&ProjectId=@(Model.Count > 0 ? Model.FirstOrDefault().ProjectId : ViewBag.ProjectId)" style="margin: 10px 10px;">اضف وحدة جديدة</a>
+    <input type="text" id="treeSearch" style="width: 90%;display: block;margin: 10px auto;" />
+    @{
+        <div class="treeview">
+            @{
+                if (Model != null && Model.Count() > 0)
+                {
+                    @*Here load Treeiew menues*@
+                    <ul>
+                        @foreach (var i in Model)
+                        {
+                            <li>
+                                @* This is class for collapsible button for tree and data-loaded="false" means its sub menu not loaded yet from database*@
+                                <span class="collapse collapsible" data-loaded="false" pid="@i.Id">&nbsp;</span>
+                                <span>
+                                    <a class="showAside" href="/RealEstate/Units/OpenUnitData?id=@(i.Id)&ProjectId=@(i.ProjectId)">@(i.UnitName)</a>&nbsp;<a class="popup" href="/RealEstate/Units/DeleteUnit/@i.Id" style="color:red"><i class="fa fa-trash"></i></a>
+                                </span>
+                            </li>
+                        }
+                    </ul>
+                }
+            }
+        </div>
+    }
+</div>
