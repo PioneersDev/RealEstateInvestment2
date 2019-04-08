@@ -141,3 +141,10 @@
         </div>
     }
 </div>
+<script>
+    $(function () {
+        $('#popupForm').submit(function (e) {
+            $(':input[type="submit"]').prop('disabled', true);
+        });
+    });
+</script>

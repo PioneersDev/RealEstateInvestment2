@@ -315,10 +315,8 @@
     @RenderSection("scripts", required: false)
     <script>
         function ParentRecursion(HeaderLi) {
-            debugger;
             var HeaderLiParent = HeaderLi.closest('ul').parent();
             if (HeaderLiParent.length) {
-                debugger;
                 ParentRecursion(HeaderLiParent);
             }
             var AnchorClosestUl = HeaderLi.closest('ul');
@@ -330,7 +328,6 @@
         }
 
         $(function () {
-            debugger;
              var Anchor = $('@string.Format("#Menu{0}" , Request.Params["aid"])');
              if (Anchor.length)
              {
@@ -344,7 +341,6 @@
                 ParentRecursion(HeaderLi);
              }
             $(document).on("click", "#alertDropDown .menu li a", function () {
-                debugger;
                 var id = $(this).attr("data-noteid");
                 $.ajax({
                     url: "/Notifications/RemoveAlert/" + id,

@@ -11,7 +11,6 @@
         @using (Html.BeginForm("AddUnit", "Units", FormMethod.Post, new { id = "popupForm" }))
         {
             @Html.AntiForgeryToken()
-
             <div class="form-horizontal">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.ProjectId)
@@ -171,7 +170,6 @@
 <script>
     $(function () {
         $('input[type=radio][name=isParentUnit]').change(function () {
-            debugger;
             var list = null;
             if (this.value == 'true') {
                 $('#ParentId').hide();
@@ -205,25 +203,27 @@
         });
 
         $('#NetPrice').keyup(function (e) {
-            debugger;
             var NetPriceVal = this.value;
             var TotalMeters = $('#TotalMeters').val();
             $('#MeterPrice').val(Math.trunc(NetPriceVal / TotalMeters));
         });
 
         $('#TotalMeters').keyup(function (e) {
-            debugger;
             var TotalMeters = this.value;
             var NetPriceVal = $('#NetPrice').val();
             $('#MeterPrice').val(Math.trunc(NetPriceVal / TotalMeters));
         });
 
         $('#popupForm').submit(function (e) {
+            debugger;
+            $(':input[type="submit"]').prop('disabled', true);
             var isparentval = $('input[type=radio][name=isParentUnit]:checked').val();
             if (isparentval == 'false' && $('#MainUnitId').val() == '') {
                 $('#MainUnitIdValidation').text("من فضلك اختر الوحدة الرئيسية");
+                $(':input[type="submit"]').prop('disabled', false);
                 return false;
             }
         });
+
     });
 </script>

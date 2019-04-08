@@ -95,7 +95,7 @@
                 });
             });
 
-            $(document).on('submit', '.dataForm #Form', function (e) {
+            $(document).off('submit').on('submit', '.dataForm #Form', function (e) {
                 var url = $('#Form')[0].action;
                 $.ajax({
                     type: "POST",
@@ -140,7 +140,8 @@
                         }
                     });
 
-                $(document).on('submit', '.popupWindow #popupForm', function (e) {
+                $(document).off('submit').on('submit', '.popupWindow #popupForm', function (e) {
+                    debugger;
                     var url = $('#popupForm')[0].action;
                     $.ajax({
                         type: "POST",
