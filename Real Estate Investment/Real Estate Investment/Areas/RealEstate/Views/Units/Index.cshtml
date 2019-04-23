@@ -96,6 +96,7 @@
             });
 
             $(document).off('submit').on('submit', '.dataForm #Form', function (e) {
+                debugger;
                 var url = $('#Form')[0].action;
                 $.ajax({
                     type: "POST",

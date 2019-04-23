@@ -24,7 +24,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+            modelBuilder.Entity<PaymentMethodDetail>().Property(a => a.Ratio).HasPrecision(12, 10);
             base.OnModelCreating(modelBuilder);
             //Configure default schema
             modelBuilder.HasDefaultSchema("con");

@@ -328,7 +328,8 @@
             $('#InstallmentTotal').keyup();
         });
 
-        $('#InstallmentTotal').keyup(function () {
+        $(document).on('keyup','#InstallmentTotal',function () {
+            debugger;
             var oTable = $('#chdataTable').DataTable();
             var len = oTable.page.len();
             oTable.page.len(200).draw();

@@ -345,11 +345,19 @@
     <Compile Include="MigrationsDb\dbContainer\201812231717368_InitialDatabaseCreation.Designer.cs">
       <DependentUpon>201812231717368_InitialDatabaseCreation.cs</DependentUpon>
     </Compile>
+    <Compile Include="MigrationsDb\dbContainer\201904081430402_AlterPercisionInPaymentMethodDetail.cs" />
+    <Compile Include="MigrationsDb\dbContainer\201904081430402_AlterPercisionInPaymentMethodDetail.Designer.cs">
+      <DependentUpon>201904081430402_AlterPercisionInPaymentMethodDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="MigrationsDb\dbContainer\Configuration.cs" />
     <Compile Include="MigrationsDb\dbContainer\dbContainerInitializer.cs" />
     <Compile Include="MigrationsSecurity\ApplicationDbContext\201812231717127_InitialDatabaseCreation.cs" />
     <Compile Include="MigrationsSecurity\ApplicationDbContext\201812231717127_InitialDatabaseCreation.Designer.cs">
       <DependentUpon>201812231717127_InitialDatabaseCreation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsSecurity\ApplicationDbContext\201904090918154_MaximizePercesion.cs" />
+    <Compile Include="MigrationsSecurity\ApplicationDbContext\201904090918154_MaximizePercesion.Designer.cs">
+      <DependentUpon>201904090918154_MaximizePercesion.cs</DependentUpon>
     </Compile>
     <Compile Include="MigrationsSecurity\ApplicationDbContext\Configuration.cs" />
     <Compile Include="MigrationsSecurity\ApplicationDbContext\ApplicationDbInitializer.cs" />
@@ -604,7 +612,6 @@
     <Content Include="assets\lib\cleave.js\addons\cleave-phone.mh.js" />
     <Content Include="assets\lib\cleave.js\addons\cleave-phone.mk.js" />
     <Content Include="assets\lib\cleave.js\addons\cleave-phone.ml.js" />
-    <Content Include="assets\lib\cleave.js\addons\cleave-phone.mm.js" />
     <Content Include="assets\lib\cleave.js\addons\cleave-phone.mn.js" />
     <Content Include="assets\lib\cleave.js\addons\cleave-phone.mo.js" />
     <Content Include="assets\lib\cleave.js\addons\cleave-phone.mp.js" />
@@ -2292,8 +2299,14 @@
     <EmbeddedResource Include="MigrationsDb\dbContainer\201812231717368_InitialDatabaseCreation.resx">
       <DependentUpon>201812231717368_InitialDatabaseCreation.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsDb\dbContainer\201904081430402_AlterPercisionInPaymentMethodDetail.resx">
+      <DependentUpon>201904081430402_AlterPercisionInPaymentMethodDetail.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MigrationsSecurity\ApplicationDbContext\201812231717127_InitialDatabaseCreation.resx">
       <DependentUpon>201812231717127_InitialDatabaseCreation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsSecurity\ApplicationDbContext\201904090918154_MaximizePercesion.resx">
+      <DependentUpon>201904090918154_MaximizePercesion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
