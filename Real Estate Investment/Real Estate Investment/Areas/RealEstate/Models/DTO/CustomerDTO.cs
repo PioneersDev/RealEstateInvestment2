@@ -12,6 +12,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Models.DTO
         public string NameEng { get; set; }
         public string Address { get; set; }
         public string IdNumber { get; set; }
+        public string IdNumberForAgent { get; set; }
         public string IdissuePlace { get; set; }
         public DateTime?  IdExpiryDate { get; set; }
         public string Occupation { get; set; }

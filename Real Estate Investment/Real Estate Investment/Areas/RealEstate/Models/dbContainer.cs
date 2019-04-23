@@ -20,6 +20,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
         public dbContainer() : base("dbconn")
         {
             Database.SetInitializer(new dbContainerInitializer());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<dbContainer, RealEstateInvestment.MigrationsDb.dbContainer.Configuration>());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -13,6 +13,7 @@ namespace RealEstateInvestment.MigrationsDb.dbContainer
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
             MigrationsDirectory = @"MigrationsDb\dbContainer";
         }
 

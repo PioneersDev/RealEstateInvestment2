@@ -124,7 +124,8 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                     var oldcustomer = _db.Customers.Find(customer.Id);
                     if (oldcustomer != null)
                     {
-                        oldcustomer.NameArab = customer.NameArab; oldcustomer.NameEng = customer.NameEng; oldcustomer.Address = customer.Address; oldcustomer.CountryId = customer.CountryId; oldcustomer.CityId = customer.CityId; oldcustomer.DistrictId = customer.DistrictId; oldcustomer.Email = customer.Email; oldcustomer.IdExpiryDate = customer.IdExpiryDate; oldcustomer.IdissuePlace = customer.IdissuePlace; oldcustomer.IdNumber = customer.IdNumber; oldcustomer.IDTypeId = customer.IDTypeId; oldcustomer.NationalityId = customer.NationalityId; oldcustomer.Occupation = customer.Occupation; oldcustomer.ReligionId = customer.ReligionId; oldcustomer.TypeId = customer.TypeId;
+                        oldcustomer.NameArab = customer.NameArab; oldcustomer.NameEng = customer.NameEng; oldcustomer.Address = customer.Address; oldcustomer.CountryId = customer.CountryId; oldcustomer.CityId = customer.CityId; oldcustomer.DistrictId = customer.DistrictId; oldcustomer.Email = customer.Email; oldcustomer.IdExpiryDate = customer.IdExpiryDate; oldcustomer.IdissuePlace = customer.IdissuePlace; oldcustomer.IdNumber = customer.IdNumber;
+                        oldcustomer.IdNumberForAgent = customer.IdNumberForAgent; oldcustomer.IDTypeId = customer.IDTypeId; oldcustomer.NationalityId = customer.NationalityId; oldcustomer.Occupation = customer.Occupation; oldcustomer.ReligionId = customer.ReligionId; oldcustomer.TypeId = customer.TypeId;
                         message = " تم تعديل بيانات العميل " + customer.NameArab + " بنجاح ";
                         className = "info";
                     }

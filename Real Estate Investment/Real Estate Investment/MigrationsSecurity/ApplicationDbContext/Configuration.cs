@@ -13,7 +13,9 @@ namespace RealEstateInvestment.MigrationsSecurity.ApplicationDbContext
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
             MigrationsDirectory = @"MigrationsSecurity\ApplicationDbContext";
+
         }
 
         protected override void Seed(ApplicationDbContext context)

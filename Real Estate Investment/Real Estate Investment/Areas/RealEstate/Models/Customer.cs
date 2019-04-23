@@ -30,6 +30,9 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
         [Display(Name = "رقم الهوية")]
         public string IdNumber { get; set; }
 
+        [Display(Name = "رقم الهوية للوكيل أو الولي")]
+        public string IdNumberForAgent { get; set; }
+
         [Display(Name = "محل الميلاد")]
         public string IdissuePlace { get; set; }
 
