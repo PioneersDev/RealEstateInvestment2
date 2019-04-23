@@ -64,6 +64,8 @@ namespace RealEstateInvestment.Models
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, RealEstateInvestment.MigrationsSecurity.ApplicationDbContext.Configuration>());
+
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

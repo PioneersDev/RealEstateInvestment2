@@ -202,6 +202,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Models.ReportModels
         public string Address { get; set; }
 
         public string IdNumber { get; set; }
+        public string IdNumberForAgent { get; set; }
 
         public string IdissuePlace { get; set; }
 

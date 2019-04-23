@@ -404,6 +404,7 @@ namespace RealEstateInvestment.Areas.RealEstate.BL
                 NameArab = model.customer.NameArab,
                 NameEng = model.customer.NameEng,
                 IdNumber = model.customer.IdNumber,
+                IdNumberForAgent = model.customer.IdNumberForAgent,
                 IDTypeName = model.customer.TypeId.IdName,
                 NationalityName = model.customer.Nationality.NationalityName,
                 Address = model.customer.Address
