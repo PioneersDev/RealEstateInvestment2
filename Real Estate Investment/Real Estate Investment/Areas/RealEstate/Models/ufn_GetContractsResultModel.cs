@@ -28,5 +28,6 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
         public int? DocHeaderId { get; set; }
         public string DocHeaderName { get; set; }
         public long RequestId { get; set; }
+        public bool JournalDone { get; set; }
     }
 }

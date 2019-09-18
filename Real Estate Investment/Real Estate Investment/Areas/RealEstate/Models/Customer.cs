@@ -60,6 +60,8 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
         public int? IDTypeId { get; set; }
         public TypeId TypeId { get; set; }
 
+        public decimal? AccountNumber { get; set; }
+
         [Display(Name = "الدولة")]
         public int? CountryId { get; set; }
         [ForeignKey("CountryId")]

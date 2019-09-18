@@ -44,12 +44,16 @@ namespace RealEstateInvestment.MigrationsDb.dbContainer
             , new DocType { Id = 1, Name = "نموذج" }
             , new DocType { Id = 2, Name = "عقد" });
 
+            context.PaymentTypeProperties.AddOrUpdate(p => p.Id
+            , new PaymentTypeProperty { Id = 1, Name = "تعاقد" }
+            , new PaymentTypeProperty { Id = 2, Name = "صيانة" });
+
             context.PaymentTypes.AddOrUpdate(p => p.Id
-            , new PaymentType { Id = 1, Name = "دفعة تعاقد", PayAddition = false }
-            , new PaymentType { Id = 2, Name = "دفعة أولى", PayAddition = false }
-            , new PaymentType { Id = 3, Name = "دفعة استلام", PayAddition = false }
-            , new PaymentType { Id = 4, Name = "دفعة صيانة", PayAddition = true }
-            , new PaymentType { Id = 5, Name = "أقساط ربع سنوية", PayAddition = false });
+            , new PaymentType { Id = 1, Name = "دفعة تعاقد", PaymentTypePropertyId=1 }
+            , new PaymentType { Id = 2, Name = "دفعة أولى", PaymentTypePropertyId =null}
+            , new PaymentType { Id = 3, Name = "دفعة استلام", PaymentTypePropertyId = null }
+            , new PaymentType { Id = 4, Name = "دفعة صيانة", PaymentTypePropertyId = 2 }
+            , new PaymentType { Id = 5, Name = "أقساط ربع سنوية", PaymentTypePropertyId = null });
 
             context.ContractSyses.AddOrUpdate(p => p.VarId
             , new ContractSys { VarId = 1, VarName = "@1", VarDescription = "غرامة التأخير في سداد أي قسط (نسبة من القسط)", VarValue = "2.5", VarType = "decimal", IsTafqet = true, IsMoney = false }
@@ -88,7 +92,7 @@ namespace RealEstateInvestment.MigrationsDb.dbContainer
             , new Project { Id = 1, CountryId = 1, CityId = 1, DistrictId = 2, ProjectName = "ستون ريزدنس", ProjectContentDetails = "مناطق للفيلات ومناطق ادارية وتجارية بالاضافة لمناطق عمارات سكنية", Location = "قطعة الأرض رقم (4) بالطريق الدائري- التجمع الخامس- مدينة القاهرة الجديدة", ProjectDescription = "مشروع مجتمع عمراني متكامل" });
             context.ProjectOwners.AddOrUpdate(p => p.Id
             , new ProjectOwner { Id = 1, ProjectId = 1, ProjectOwnerId = 1, IsMainOwner = false, MainOwnerId = 2, ProjectOwnerDelegateName = "هشام أحمد عبد اللطيف العوضي", ProjectOwnerDelegateRepresent = "رئيس مجلس الادارة", ProjectOwnerDetails = "يمتلك عدد من البنايات السكنية" });
-            context.PaymentMethodHeaders.AddOrUpdate(p => p.Id, new PaymentMethodHeader { Id = 1, Name = "6 سنوات", TotalYearPeriod = 6 });
+            context.PaymentMethodHeaders.AddOrUpdate(p => p.Id, new PaymentMethodHeader { Id = 1, Name = "6 سنوات", TotalMonthPeriod = 72 });
             context.PaymentMethodDetails.AddOrUpdate(p => p.Id
             , new PaymentMethodDetail { Id = 1, PaymentMethodHeaderId = 1, PaymentTypeId = 1, IsRatioNotAmount = true, Ratio = 10, MinimumAmount = null, StartFrom = 0, Period = 0, PaymentsCounts = 0 }
             , new PaymentMethodDetail { Id = 2, PaymentMethodHeaderId = 1, PaymentTypeId = 2, IsRatioNotAmount = true, Ratio = 6.665m, MinimumAmount = null, StartFrom = 3, Period = 0, PaymentsCounts = 0 }

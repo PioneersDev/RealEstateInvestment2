@@ -9,7 +9,7 @@
             <tr>
                 <th>كود النوع</th>
                 <th>النوع</th>
-                <th>دفعة اضافية</th>
+                <th>طبيعة الدفعة</th>
                 <th class="no-sort">تعديل</th>
                 <th class="no-sort">حذف</th>
             </tr>
@@ -30,16 +30,7 @@
                 "columns": [
                     { "data": "Id", "autowidth": true },
                     { "data": "Name", "autowidth": true },
-                    {
-                        "data": "PayAddition",
-                        "autowidth": true,
-                        "render": function (data) {
-                            if (data == true)
-                                return '<input type="checkbox" value="' + data + '" checked onclick="return false;"/>';
-                            else
-                                return '<input type="checkbox" value="' + data + '" onclick="return false;"/>';
-                        }
-                    },
+                    { "data": "PaymentTypePropertyName", "autowidth": true },
                     {
                         "data": "Id", "width": "50px", "render": function (data) {
                             return '<a class="popup btn btn-primary" href="/RealEstate/Payments/SavePymentType/' + data + '">تعديل</a>'

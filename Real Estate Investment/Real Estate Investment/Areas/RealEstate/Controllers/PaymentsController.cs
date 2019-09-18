@@ -23,7 +23,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
 
         public ActionResult GetPymentTypes()
         {
-            var types = _db.PaymentTypes.Select(a => new { Id = a.Id, Name = a.Name, PayAddition = a.PayAddition }).OrderBy(a => a.Id).ToList();
+            var types = _db.PaymentTypes.Select(a => new { Id = a.Id, Name = a.Name, PaymentTypePropertyName = a.PaymentTypeProperty.Name }).OrderBy(a => a.Id).ToList();
             return Json(new { data = types }, JsonRequestBehavior.AllowGet);
         }
 
@@ -31,6 +31,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
         public ActionResult SavePymentType(int id)
         {
             var type = _db.PaymentTypes.Find(id);
+            ViewBag.PaymentTypeProperties = new SelectList(_db.PaymentTypeProperties.ToList(), "Id", "Name");
             return View(type);
         }
 
@@ -48,7 +49,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                     var oldtype = _db.PaymentTypes.Find(type.Id);
                     if (oldtype != null)
                     {
-                        oldtype.Name = type.Name; oldtype.PayAddition = type.PayAddition;
+                        oldtype.Name = type.Name; oldtype.PaymentTypePropertyId = type.PaymentTypePropertyId;
                         message = " تم تعديل بيانات النوع " + type.Name + " بنجاح ";
                         className = "info";
                     }
@@ -70,7 +71,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
         [HttpGet]
         public ActionResult DeletePymentType(int id)
         {
-            var type = _db.PaymentTypes.Find(id);
+            var type = _db.PaymentTypes.Include("PaymentTypeProperty").FirstOrDefault(a=>a.Id==id);
             if (type != null)
             {
                 return View(type);
@@ -119,7 +120,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             int startRec = Convert.ToInt32(Request.Form.GetValues("start")[0]);
             int pageSize = Convert.ToInt32(Request.Form.GetValues("length")[0]);
             // Loading.
-            var paymentHeaders = _db.PaymentMethodHeaders.Select(a => new PaymentMethodHeaderDTO { Id = a.Id, Name = a.Name, TotalYearPeriod = a.TotalYearPeriod }).AsQueryable();
+            var paymentHeaders = _db.PaymentMethodHeaders.Select(a => new PaymentMethodHeaderDTO { Id = a.Id, Name = a.Name, TotalMonthPeriod = a.TotalMonthPeriod }).AsQueryable();
             // Total record count.
             int totalRecords = paymentHeaders.Count();
             // Apply search
@@ -129,7 +130,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             {
                 paymentHeaders = paymentHeaders.Where(p => p.Id.ToString().ToLower().Contains(search.ToLower()) ||
                 p.Name.ToLower().Contains(search.ToLower()) ||
-                p.TotalYearPeriod.ToString().ToLower().Contains(search.ToLower()));
+                p.TotalMonthPeriod.ToString().ToLower().Contains(search.ToLower()));
             }
             // Sorting.
             paymentHeaders = SortPaymentMethodHeadersByColumnWithOrder(order, orderDir, paymentHeaders);
@@ -141,7 +142,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
 
         public ActionResult GetAllPaymentMethodHeaders()
         {
-            var paymentHeaders = _db.PaymentMethodHeaders.Select(a => new PaymentMethodHeader { Id = a.Id, Name = a.Name, TotalYearPeriod = a.TotalYearPeriod }).OrderBy(a => a.Id).ToList();
+            var paymentHeaders = _db.PaymentMethodHeaders.Select(a => new PaymentMethodHeader { Id = a.Id, Name = a.Name, TotalMonthPeriod = a.TotalMonthPeriod }).OrderBy(a => a.Id).ToList();
             return Json(new { data = paymentHeaders }, JsonRequestBehavior.AllowGet);
         }
 
@@ -176,7 +177,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                         break;
                     case "2":
                         // Setting.   
-                        paymentHeaders = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? paymentHeaders.OrderByDescending(p => p.TotalYearPeriod) : paymentHeaders.OrderBy(p => p.TotalYearPeriod);
+                        paymentHeaders = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? paymentHeaders.OrderByDescending(p => p.TotalMonthPeriod) : paymentHeaders.OrderBy(p => p.TotalMonthPeriod);
                         break;
                     default:
                         // Setting.   
@@ -212,7 +213,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                     var oldpaymentHeader = _db.PaymentMethodHeaders.Find(paymentHeader.Id);
                     if (oldpaymentHeader != null)
                     {
-                        oldpaymentHeader.Name = paymentHeader.Name; oldpaymentHeader.TotalYearPeriod = paymentHeader.TotalYearPeriod;
+                        oldpaymentHeader.Name = paymentHeader.Name; oldpaymentHeader.TotalMonthPeriod = paymentHeader.TotalMonthPeriod;
                         message = " تم تعديل بيانات نظام الدفع " + paymentHeader.Name + " بنجاح ";
                         className = "info";
                     }
@@ -291,7 +292,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                 PaymentDetail = new PaymentMethodDetail() { PaymentMethodHeaderId = PaymentMethodHeaderId,MinimumAmount=null };
                 ViewBag.PaymentTypes = new SelectList(_db.PaymentTypes.ToList(), "Id", "Name");
             }
-            ViewBag.TotalYearPeriod = _db.PaymentMethodHeaders.Find(PaymentMethodHeaderId).TotalYearPeriod;
+            ViewBag.TotalMonthPeriod = _db.PaymentMethodHeaders.Find(PaymentMethodHeaderId).TotalMonthPeriod;
             return View(PaymentDetail);
         }
 

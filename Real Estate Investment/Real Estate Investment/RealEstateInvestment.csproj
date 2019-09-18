@@ -250,14 +250,19 @@
     <Compile Include="Areas\RealEstate\BL\ContractApproveLogic.cs" />
     <Compile Include="Areas\RealEstate\BL\ContractLogic.cs" />
     <Compile Include="Areas\RealEstate\BL\ExcelColumn.cs" />
+    <Compile Include="Areas\RealEstate\BL\FromDataTable.cs" />
+    <Compile Include="Areas\RealEstate\BL\GlobalApiVariables.cs" />
+    <Compile Include="Areas\RealEstate\BL\HandelConnectionStrings.cs" />
     <Compile Include="Areas\RealEstate\BL\ToDataTable.cs" />
     <Compile Include="Areas\RealEstate\BL\StringExtensions.cs" />
     <Compile Include="Areas\RealEstate\BL\UnitLogic.cs" />
     <Compile Include="Areas\RealEstate\Controllers\ContractsController.cs" />
+    <Compile Include="Areas\RealEstate\Controllers\CustomerAPIController.cs" />
     <Compile Include="Areas\RealEstate\Controllers\CustomersController.cs" />
     <Compile Include="Areas\RealEstate\Controllers\DocumentsController.cs" />
     <Compile Include="Areas\RealEstate\Controllers\IdsTypesController.cs" />
     <Compile Include="Areas\RealEstate\Controllers\LocationsController.cs" />
+    <Compile Include="Areas\RealEstate\Controllers\MarketingCompanyController.cs" />
     <Compile Include="Areas\RealEstate\Controllers\NationaltiesController.cs" />
     <Compile Include="Areas\RealEstate\Controllers\OwnersController.cs" />
     <Compile Include="Areas\RealEstate\Controllers\PaymentsController.cs" />
@@ -285,16 +290,19 @@
     <Compile Include="Areas\RealEstate\Models\DTO\DocDetailDTO.cs" />
     <Compile Include="Areas\RealEstate\Models\DTO\DocHeadersDTO.cs" />
     <Compile Include="Areas\RealEstate\Models\DTO\DocHeaderSubmit.cs" />
+    <Compile Include="Areas\RealEstate\Models\DTO\MarketingCompanyDTO.cs" />
     <Compile Include="Areas\RealEstate\Models\DTO\OwnerDTO.cs" />
     <Compile Include="Areas\RealEstate\Models\DTO\PaymentMethodHeaderDTO.cs" />
     <Compile Include="Areas\RealEstate\Models\DTO\ProjectDTO.cs" />
     <Compile Include="Areas\RealEstate\Models\DTO\RequestDetailsDTO.cs" />
     <Compile Include="Areas\RealEstate\Models\DTO\UnitDTO.cs" />
     <Compile Include="Areas\RealEstate\Models\Installment.cs" />
+    <Compile Include="Areas\RealEstate\Models\MarketingCompany.cs" />
     <Compile Include="Areas\RealEstate\Models\Owner.cs" />
     <Compile Include="Areas\RealEstate\Models\PaymentMethodDetail.cs" />
     <Compile Include="Areas\RealEstate\Models\PaymentMethodHeader.cs" />
     <Compile Include="Areas\RealEstate\Models\PaymentType.cs" />
+    <Compile Include="Areas\RealEstate\Models\PaymentTypeProperty.cs" />
     <Compile Include="Areas\RealEstate\Models\ProjectOwner.cs" />
     <Compile Include="Areas\RealEstate\Models\RealEstateViewMoldels.cs" />
     <Compile Include="Areas\RealEstate\Models\ReportModels\ContractTemplateRpt.cs" />
@@ -308,9 +316,15 @@
     <Compile Include="Areas\RealEstate\Models\Unit.cs" />
     <Compile Include="Areas\RealEstate\Models\UnitDocument.cs" />
     <Compile Include="Areas\RealEstate\Models\UnitViewModel.cs" />
+    <Compile Include="Areas\RealEstate\Models\ViewModels\AccountDTO.cs" />
+    <Compile Include="Areas\RealEstate\Models\ViewModels\AccountOperationResult.cs" />
     <Compile Include="Areas\RealEstate\Models\ViewModels\ContractAgreeViewModel.cs" />
     <Compile Include="Areas\RealEstate\Models\ViewModels\ContractWriteViewModel.cs" />
+    <Compile Include="Areas\RealEstate\Models\ViewModels\DETAIL_TYPE.cs" />
+    <Compile Include="Areas\RealEstate\Models\ViewModels\CreateJournalEntriesParams.cs" />
+    <Compile Include="Areas\RealEstate\Models\ViewModels\MULTIPLECHEQUE_TYPE.cs" />
     <Compile Include="Areas\RealEstate\Models\ViewModels\PayInstallmentViewModel.cs" />
+    <Compile Include="Areas\RealEstate\Models\ViewModels\PayRealEstateInstallmentParams.cs" />
     <Compile Include="Areas\RealEstate\RealEstateAreaRegistration.cs" />
     <Compile Include="Areas\RealEstate\ReportsDataSet\dsContractTemplate.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -348,6 +362,50 @@
     <Compile Include="MigrationsDb\dbContainer\201904081430402_AlterPercisionInPaymentMethodDetail.cs" />
     <Compile Include="MigrationsDb\dbContainer\201904081430402_AlterPercisionInPaymentMethodDetail.Designer.cs">
       <DependentUpon>201904081430402_AlterPercisionInPaymentMethodDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsDb\dbContainer\201907160808462_AddCustomerAccount.cs" />
+    <Compile Include="MigrationsDb\dbContainer\201907160808462_AddCustomerAccount.Designer.cs">
+      <DependentUpon>201907160808462_AddCustomerAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsDb\dbContainer\201907211307408_FixTotalMetersToDecimal.cs" />
+    <Compile Include="MigrationsDb\dbContainer\201907211307408_FixTotalMetersToDecimal.Designer.cs">
+      <DependentUpon>201907211307408_FixTotalMetersToDecimal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsDb\dbContainer\201907241002173_AddMarketingCompanyAndPaymentTypePropertyTables.cs" />
+    <Compile Include="MigrationsDb\dbContainer\201907241002173_AddMarketingCompanyAndPaymentTypePropertyTables.Designer.cs">
+      <DependentUpon>201907241002173_AddMarketingCompanyAndPaymentTypePropertyTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsDb\dbContainer\201907241053395_FixMarketingCompanyTable.cs" />
+    <Compile Include="MigrationsDb\dbContainer\201907241053395_FixMarketingCompanyTable.Designer.cs">
+      <DependentUpon>201907241053395_FixMarketingCompanyTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsDb\dbContainer\201907250910593_AddMarktingCompanyToContractAndAddTicketIdAndTiketDateAndJornalIdToContractAndInstallment.cs" />
+    <Compile Include="MigrationsDb\dbContainer\201907250910593_AddMarktingCompanyToContractAndAddTicketIdAndTiketDateAndJornalIdToContractAndInstallment.Designer.cs">
+      <DependentUpon>201907250910593_AddMarktingCompanyToContractAndAddTicketIdAndTiketDateAndJornalIdToContractAndInstallment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsDb\dbContainer\201907290924319_ADDJORNALFLAGINCONTRACTANDSTUTUSININSTALLMENT.cs" />
+    <Compile Include="MigrationsDb\dbContainer\201907290924319_ADDJORNALFLAGINCONTRACTANDSTUTUSININSTALLMENT.Designer.cs">
+      <DependentUpon>201907290924319_ADDJORNALFLAGINCONTRACTANDSTUTUSININSTALLMENT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsDb\dbContainer\201907291206374_AddAccountsToProject.cs" />
+    <Compile Include="MigrationsDb\dbContainer\201907291206374_AddAccountsToProject.Designer.cs">
+      <DependentUpon>201907291206374_AddAccountsToProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsDb\dbContainer\201907301058051_AddRECEIVINGJOURNALID.cs" />
+    <Compile Include="MigrationsDb\dbContainer\201907301058051_AddRECEIVINGJOURNALID.Designer.cs">
+      <DependentUpon>201907301058051_AddRECEIVINGJOURNALID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsDb\dbContainer\201907301726572_RemoveStatusId.cs" />
+    <Compile Include="MigrationsDb\dbContainer\201907301726572_RemoveStatusId.Designer.cs">
+      <DependentUpon>201907301726572_RemoveStatusId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsDb\dbContainer\201908011135115_FixAccountNumber.cs" />
+    <Compile Include="MigrationsDb\dbContainer\201908011135115_FixAccountNumber.Designer.cs">
+      <DependentUpon>201908011135115_FixAccountNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsDb\dbContainer\201909171551398_addCHEQUEINBOXID.cs" />
+    <Compile Include="MigrationsDb\dbContainer\201909171551398_addCHEQUEINBOXID.Designer.cs">
+      <DependentUpon>201909171551398_addCHEQUEINBOXID.cs</DependentUpon>
     </Compile>
     <Compile Include="MigrationsDb\dbContainer\Configuration.cs" />
     <Compile Include="MigrationsDb\dbContainer\dbContainerInitializer.cs" />
@@ -2017,6 +2075,71 @@
     <Content Include="Plugins\jquery-ui-themes-1.12.1\themes\vader\theme.css" />
     <Content Include="Plugins\notify\notify.js" />
     <Content Include="Plugins\notify\notify.min.js" />
+    <Content Include="Plugins\select2\css\select2.css" />
+    <Content Include="Plugins\select2\css\select2.min.css" />
+    <Content Include="Plugins\select2\js\i18n\af.js" />
+    <Content Include="Plugins\select2\js\i18n\ar.js" />
+    <Content Include="Plugins\select2\js\i18n\az.js" />
+    <Content Include="Plugins\select2\js\i18n\bg.js" />
+    <Content Include="Plugins\select2\js\i18n\bn.js" />
+    <Content Include="Plugins\select2\js\i18n\bs.js" />
+    <Content Include="Plugins\select2\js\i18n\ca.js" />
+    <Content Include="Plugins\select2\js\i18n\cs.js" />
+    <Content Include="Plugins\select2\js\i18n\da.js" />
+    <Content Include="Plugins\select2\js\i18n\de.js" />
+    <Content Include="Plugins\select2\js\i18n\dsb.js" />
+    <Content Include="Plugins\select2\js\i18n\el.js" />
+    <Content Include="Plugins\select2\js\i18n\en.js" />
+    <Content Include="Plugins\select2\js\i18n\es.js" />
+    <Content Include="Plugins\select2\js\i18n\et.js" />
+    <Content Include="Plugins\select2\js\i18n\eu.js" />
+    <Content Include="Plugins\select2\js\i18n\fa.js" />
+    <Content Include="Plugins\select2\js\i18n\fi.js" />
+    <Content Include="Plugins\select2\js\i18n\fr.js" />
+    <Content Include="Plugins\select2\js\i18n\gl.js" />
+    <Content Include="Plugins\select2\js\i18n\he.js" />
+    <Content Include="Plugins\select2\js\i18n\hi.js" />
+    <Content Include="Plugins\select2\js\i18n\hr.js" />
+    <Content Include="Plugins\select2\js\i18n\hsb.js" />
+    <Content Include="Plugins\select2\js\i18n\hu.js" />
+    <Content Include="Plugins\select2\js\i18n\hy.js" />
+    <Content Include="Plugins\select2\js\i18n\id.js" />
+    <Content Include="Plugins\select2\js\i18n\is.js" />
+    <Content Include="Plugins\select2\js\i18n\it.js" />
+    <Content Include="Plugins\select2\js\i18n\ja.js" />
+    <Content Include="Plugins\select2\js\i18n\ka.js" />
+    <Content Include="Plugins\select2\js\i18n\km.js" />
+    <Content Include="Plugins\select2\js\i18n\ko.js" />
+    <Content Include="Plugins\select2\js\i18n\lt.js" />
+    <Content Include="Plugins\select2\js\i18n\lv.js" />
+    <Content Include="Plugins\select2\js\i18n\mk.js" />
+    <Content Include="Plugins\select2\js\i18n\ms.js" />
+    <Content Include="Plugins\select2\js\i18n\nb.js" />
+    <Content Include="Plugins\select2\js\i18n\ne.js" />
+    <Content Include="Plugins\select2\js\i18n\nl.js" />
+    <Content Include="Plugins\select2\js\i18n\pl.js" />
+    <Content Include="Plugins\select2\js\i18n\ps.js" />
+    <Content Include="Plugins\select2\js\i18n\pt-BR.js" />
+    <Content Include="Plugins\select2\js\i18n\pt.js" />
+    <Content Include="Plugins\select2\js\i18n\ro.js" />
+    <Content Include="Plugins\select2\js\i18n\ru.js" />
+    <Content Include="Plugins\select2\js\i18n\sk.js" />
+    <Content Include="Plugins\select2\js\i18n\sl.js" />
+    <Content Include="Plugins\select2\js\i18n\sq.js" />
+    <Content Include="Plugins\select2\js\i18n\sr-Cyrl.js" />
+    <Content Include="Plugins\select2\js\i18n\sr.js" />
+    <Content Include="Plugins\select2\js\i18n\sv.js" />
+    <Content Include="Plugins\select2\js\i18n\th.js" />
+    <Content Include="Plugins\select2\js\i18n\tk.js" />
+    <Content Include="Plugins\select2\js\i18n\tr.js" />
+    <Content Include="Plugins\select2\js\i18n\uk.js" />
+    <Content Include="Plugins\select2\js\i18n\vi.js" />
+    <Content Include="Plugins\select2\js\i18n\zh-CN.js" />
+    <Content Include="Plugins\select2\js\i18n\zh-TW.js" />
+    <Content Include="Plugins\select2\js\select2.full.js" />
+    <Content Include="Plugins\select2\js\select2.full.min.js" />
+    <Content Include="Plugins\select2\js\select2.js" />
+    <Content Include="Plugins\select2\js\select2.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -2181,6 +2304,11 @@
     <Content Include="Areas\RealEstate\Views\RegisterdContracts\Index.cshtml" />
     <Content Include="Areas\RealEstate\Views\RegisterdInstallments\Index.cshtml" />
     <Content Include="Areas\RealEstate\Views\RegisterdInstallments\PayInstallment.cshtml" />
+    <Content Include="Areas\RealEstate\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\RealEstate\Views\MarketingCompany\Index.cshtml" />
+    <Content Include="Areas\RealEstate\Views\MarketingCompany\Save.cshtml" />
+    <Content Include="Areas\RealEstate\Views\MarketingCompany\Delete.cshtml" />
+    <Content Include="Areas\RealEstate\Views\RegisterdContracts\RegisterdContractSaveJournal.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -2301,6 +2429,39 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationsDb\dbContainer\201904081430402_AlterPercisionInPaymentMethodDetail.resx">
       <DependentUpon>201904081430402_AlterPercisionInPaymentMethodDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsDb\dbContainer\201907160808462_AddCustomerAccount.resx">
+      <DependentUpon>201907160808462_AddCustomerAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsDb\dbContainer\201907211307408_FixTotalMetersToDecimal.resx">
+      <DependentUpon>201907211307408_FixTotalMetersToDecimal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsDb\dbContainer\201907241002173_AddMarketingCompanyAndPaymentTypePropertyTables.resx">
+      <DependentUpon>201907241002173_AddMarketingCompanyAndPaymentTypePropertyTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsDb\dbContainer\201907241053395_FixMarketingCompanyTable.resx">
+      <DependentUpon>201907241053395_FixMarketingCompanyTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsDb\dbContainer\201907250910593_AddMarktingCompanyToContractAndAddTicketIdAndTiketDateAndJornalIdToContractAndInstallment.resx">
+      <DependentUpon>201907250910593_AddMarktingCompanyToContractAndAddTicketIdAndTiketDateAndJornalIdToContractAndInstallment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsDb\dbContainer\201907290924319_ADDJORNALFLAGINCONTRACTANDSTUTUSININSTALLMENT.resx">
+      <DependentUpon>201907290924319_ADDJORNALFLAGINCONTRACTANDSTUTUSININSTALLMENT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsDb\dbContainer\201907291206374_AddAccountsToProject.resx">
+      <DependentUpon>201907291206374_AddAccountsToProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsDb\dbContainer\201907301058051_AddRECEIVINGJOURNALID.resx">
+      <DependentUpon>201907301058051_AddRECEIVINGJOURNALID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsDb\dbContainer\201907301726572_RemoveStatusId.resx">
+      <DependentUpon>201907301726572_RemoveStatusId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsDb\dbContainer\201908011135115_FixAccountNumber.resx">
+      <DependentUpon>201908011135115_FixAccountNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsDb\dbContainer\201909171551398_addCHEQUEINBOXID.resx">
+      <DependentUpon>201909171551398_addCHEQUEINBOXID.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationsSecurity\ApplicationDbContext\201812231717127_InitialDatabaseCreation.resx">
       <DependentUpon>201812231717127_InitialDatabaseCreation.cs</DependentUpon>

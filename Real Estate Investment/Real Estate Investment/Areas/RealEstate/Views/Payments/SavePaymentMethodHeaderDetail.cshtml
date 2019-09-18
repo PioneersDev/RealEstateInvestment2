@@ -82,7 +82,7 @@
 <script>
     $(function () {
         $('#IsRatioNotAmount').prop('checked', true);
-        var TotalYearPeriod =@ViewBag.TotalYearPeriod;
+        var TotalMonthPeriod =@ViewBag.TotalMonthPeriod;
 
         //Edit Mode
         @if(Model!=null)
@@ -112,7 +112,7 @@
 
         $('#Period').keyup(function (e) {
             var periodVal = this.value;
-            $('#PaymentsCounts').val((TotalYearPeriod * 12) / periodVal);
+            $('#PaymentsCounts').val(TotalMonthPeriod / periodVal);
         });
 
     });

@@ -1,4 +1,5 @@
 ﻿using RealEstateInvestment.Areas.RealEstate.Models;
+using RealEstateInvestment.CLS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,12 @@ using System.Web.Mvc;
 
 namespace RealEstateInvestment.Areas.RealEstate.Controllers
 {
+    [CustomAuthorize("IdsTypes")]
     public class IdsTypesController : Controller
     {
         private dbContainer _db = new dbContainer();
 
-        /*************************************Nationalties*****************************************/
+        /*************************************IdsTypes*****************************************/
         public ActionResult Index()
         {
             return View();

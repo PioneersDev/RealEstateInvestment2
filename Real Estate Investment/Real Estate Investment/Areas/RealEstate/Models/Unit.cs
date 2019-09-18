@@ -25,7 +25,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
 
         [Required(ErrorMessage = "يجب عليك تحديد مساحة الوحدة")]
         [Display(Name = "المساحة بالمتر")]
-        public int TotalMeters { get; set; }
+        public decimal TotalMeters { get; set; }
 
         [Required(ErrorMessage = "يجب عليك تحديد اجمالي قيمةالوحدة")]
         [Display(Name = "اجمالي القيمة")]

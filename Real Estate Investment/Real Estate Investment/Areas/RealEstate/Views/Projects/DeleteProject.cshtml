@@ -118,6 +118,24 @@
                         @Html.DisplayFor(model => model.MainOwnerName)
                     </td>
                 </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.InstallmentAccount) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.InstallmentAccount)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MintananceAccount) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.MintananceAccount)
+                    </td>
+                </tr>
             </table>
 
             @using (Html.BeginForm("DeleteProject", "Projects", FormMethod.Post, new { id = "popupForm" }))

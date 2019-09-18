@@ -477,7 +477,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             int startRec = Convert.ToInt32(Request.Form.GetValues("start")[0]);
             int pageSize = Convert.ToInt32(Request.Form.GetValues("length")[0]);
             // Loading.
-            var contractsRequests = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (null, null, 1)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, Remarks = a.Remarks, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, ContractTypeId = a.ContractTypeId, ContractTypeName = a.ContractTypeName, ContractModelId = a.ContractModelId, ContractModelName = a.ContractModelName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId }).AsQueryable();
+            var contractsRequests = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (null, null, 1)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, Remarks = a.Remarks, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, ContractTypeId = a.ContractTypeId, ContractTypeName = a.ContractTypeName, ContractModelId = a.ContractModelId, ContractModelName = a.ContractModelName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, FirstInstallmentDate = a.FirstInstallmentDate, MarketingCompanyId = a.MarketingCompanyId, MarketingCompanyName = a.MarketingCompanyName, MarketingCompanyPayValue = a.MarketingCompanyPayValue }).AsQueryable();
             // Total record count.
             int totalRecords = contractsRequests.Count();
             // Apply search
@@ -490,7 +490,8 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                 p.ProjectName.ToLower().Contains(search.ToLower()) ||
                 p.UnitName.ToLower().Contains(search.ToLower()) ||
                 p.CustomerName.ToLower().Contains(search.ToLower()) ||
-                p.ContractDate.ToString().ToLower().Contains(search.ToLower()));
+                p.ContractDate.ToString().ToLower().Contains(search.ToLower()) ||
+                p.MarketingCompanyName.ToLower().Contains(search.ToLower()));
             }
             // Sorting.
             contractsRequests = SortContractsRequestsByColumnWithOrder(order, orderDir, contractsRequests);
@@ -532,6 +533,10 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                         // Setting.   
                         contractsRequests = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? contractsRequests.OrderByDescending(p => p.ContractDate) : contractsRequests.OrderBy(p => p.ContractDate);
                         break;
+                    case "6":
+                        // Setting.   
+                        contractsRequests = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? contractsRequests.OrderByDescending(p => p.MarketingCompanyName) : contractsRequests.OrderBy(p => p.MarketingCompanyName);
+                        break;
                     default:
                         // Setting.   
                         contractsRequests = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? contractsRequests.OrderByDescending(p => p.Id) : contractsRequests.OrderBy(p => p.Id);
@@ -549,12 +554,12 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
         public ActionResult ContractRequestSave(int id)
         {
             ContractRequestViewModel contractRequest = new ContractRequestViewModel();
-            contractRequest.Request = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, ContractTypeId = a.ContractTypeId, ContractTypeName = a.ContractTypeName, ContractModelId = a.ContractModelId, ContractModelName = a.ContractModelName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId,Remarks=a.Remarks }).FirstOrDefault();
+            contractRequest.Request = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, ContractTypeId = a.ContractTypeId, ContractTypeName = a.ContractTypeName, ContractModelId = a.ContractModelId, ContractModelName = a.ContractModelName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, Remarks = a.Remarks, FirstInstallmentDate = a.FirstInstallmentDate, MarketingCompanyId = a.MarketingCompanyId, MarketingCompanyName = a.MarketingCompanyName, MarketingCompanyPayValue = a.MarketingCompanyPayValue }).FirstOrDefault();
             contractRequest.InstallmentData = _db.Database.SqlQuery<InstallmentDataSerializer>("SELECT * FROM [con].[ufn_GetRequestInstallmentData] (" + id + ")").ToList();
             contractRequest.DeliverySpecificationData = _db.Database.SqlQuery<DeliverySpecificationSerializer>("SELECT * FROM[con].[ufn_GetRequestDeliverySpecificationData](" + id + ")").ToList();
             if (id > 0)
             {
-                PopulateDropDownList(contractRequest.Request.ProjectId, contractRequest.Request.UnitId, contractRequest.Request.CustomerId, contractRequest.Request.PaymentMethodHeaderId, contractRequest.Request.ContractTypeId, contractRequest.Request.ContractModelId);
+                PopulateDropDownList(contractRequest.Request.ProjectId, contractRequest.Request.UnitId, contractRequest.Request.CustomerId, contractRequest.Request.PaymentMethodHeaderId, contractRequest.Request.ContractTypeId, contractRequest.Request.ContractModelId, contractRequest.Request.MarketingCompanyId);
             }
             else
             {
@@ -580,7 +585,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                 if (contractRequest.Request.Id > 0)
                 {
                     //Edit
-                    var oldRequest = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + contractRequest.Request.Id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, ContractTypeId = a.ContractTypeId, ContractTypeName = a.ContractTypeName, ContractModelId = a.ContractModelId, ContractModelName = a.ContractModelName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId }).FirstOrDefault();
+                    var oldRequest = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + contractRequest.Request.Id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, ContractTypeId = a.ContractTypeId, ContractTypeName = a.ContractTypeName, ContractModelId = a.ContractModelId, ContractModelName = a.ContractModelName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, FirstInstallmentDate = a.FirstInstallmentDate, MarketingCompanyId = a.MarketingCompanyId, MarketingCompanyName = a.MarketingCompanyName, MarketingCompanyPayValue = a.MarketingCompanyPayValue }).FirstOrDefault();
                     if (oldRequest != null)
                     {
                         ReqId = contractLogic.EditContract(contractRequest, ApproveSystem, ApproveSystemFirstStep, ApproveSystemFirstStepPendingStatus);
@@ -614,13 +619,21 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                     status = true;
                 }
             }
+            //just to get errors in details for debug
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    var x = error;
+                }
+            }
             return new JsonResult { Data = new { status = status, message = message, className = className } };
         }
 
         public ActionResult ContractRequestDetails(int id)
         {
             RequestDetailsDTO model = new RequestDetailsDTO();
-            model.Request = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, ContractTypeId = a.ContractTypeId, ContractTypeName = a.ContractTypeName, ContractModelId = a.ContractModelId, ContractModelName = a.ContractModelName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId }).FirstOrDefault();
+            model.Request = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, ContractTypeId = a.ContractTypeId, ContractTypeName = a.ContractTypeName, ContractModelId = a.ContractModelId, ContractModelName = a.ContractModelName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, FirstInstallmentDate = a.FirstInstallmentDate, MarketingCompanyId = a.MarketingCompanyId, MarketingCompanyName = a.MarketingCompanyName, MarketingCompanyPayValue = a.MarketingCompanyPayValue }).FirstOrDefault();
             model.Installments = _db.Database.SqlQuery<InstallmentDataSerializer>("SELECT * FROM [con].[ufn_GetRequestInstallmentData] (" + id + ")").ToList();
             model.DeliverySpecificationData = _db.Database.SqlQuery<DeliverySpecificationSerializer>("SELECT * FROM[con].[ufn_GetRequestDeliverySpecificationData](" + id + ")").ToList();
             if (model.Request != null)
@@ -640,6 +653,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
         }
 
         [HttpPost]
+        //for ContractRequestDetails
         public ActionResult GetAutomaticInstallments(ContractRequests contractRequest)
         {
             ContractLogic contractLogic = new ContractLogic();
@@ -648,6 +662,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
         }
 
         [HttpPost]
+        //for ContractRequestSave --->Add
         public ActionResult GetAutomaticInstallmentsView(ContractRequests contractRequest)
         {
             ContractLogic contractLogic = new ContractLogic();
@@ -656,6 +671,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             return View(vm);
         }
 
+        //for ContractRequestSave --->Edit
         public ActionResult GetAutomaticInstallmentsViewForEdit(int id)
         {
             ContractLogic contractLogic = new ContractLogic();
@@ -667,7 +683,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
         [HttpGet]
         public ActionResult ContractRequestDelete(int id)
         {
-            var contractRequest = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, ContractTypeId = a.ContractTypeId, ContractTypeName = a.ContractTypeName, ContractModelId = a.ContractModelId, ContractModelName = a.ContractModelName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId }).FirstOrDefault();
+            var contractRequest = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, ContractTypeId = a.ContractTypeId, ContractTypeName = a.ContractTypeName, ContractModelId = a.ContractModelId, ContractModelName = a.ContractModelName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, FirstInstallmentDate = a.FirstInstallmentDate, MarketingCompanyId = a.MarketingCompanyId, MarketingCompanyName = a.MarketingCompanyName, MarketingCompanyPayValue = a.MarketingCompanyPayValue }).FirstOrDefault();
             if (contractRequest != null)
             {
                 return View(contractRequest);
@@ -697,23 +713,24 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             return new JsonResult { Data = new { status = status, message = message, className = className } };
         }
 
-        private void PopulateDropDownList(object selectedProject = null, object selectedUnit = null, object selectedCustomer = null, object selectedPaymentMethodHeader = null, object selectedContractType = null, object selectedContractModel = null)
+        private void PopulateDropDownList(object selectedProject = null, object selectedUnit = null, object selectedCustomer = null, object selectedPaymentMethodHeader = null, object selectedContractType = null, object selectedContractModel = null, object selectedMarketingCompany = null)
         {
             ViewBag.Projects = new SelectList(_db.Projects.ToList(), "Id", "ProjectName", selectedProject);
             ViewBag.Units = new SelectList(_db.Units.ToList(), "Id", "UnitName", selectedUnit);
-            ViewBag.Customers = new SelectList(_db.Customers.ToList(), "Id", "NameArab", selectedCustomer);
+            ViewBag.Customers = new SelectList(_db.Customers.Select(a => new { Id = a.Id, NameArab = a.Id + " " + a.NameArab }).ToList(), "Id", "NameArab", selectedCustomer);
             ViewBag.PaymentMethodHeaders = new SelectList(_db.PaymentMethodHeaders.ToList(), "Id", "Name", selectedPaymentMethodHeader);
             ViewBag.ContractTypes = new SelectList(_db.ContractTypes.ToList(), "Id", "Name", selectedContractType);
             if (selectedContractType != null)
                 ViewBag.ContractModels = new SelectList(_db.ContractModels.Where(a => a.ContractTypeId == (int)selectedContractType).ToList(), "Id", "Name", selectedContractModel);
             else
                 ViewBag.ContractModels = new SelectList(new List<ContractModel> { }, "Id", "Name");
+            ViewBag.MarketingCompanies = new SelectList(_db.MarketingCompany.ToList(), "Id", "Name", selectedMarketingCompany);
         }
 
         /*************************************Contract DocHeader Operations*****************************************/
         public ActionResult ContractDocHeaderOperations(int? id)
         {
-            var contractRequest = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, ContractTypeId = a.ContractTypeId, ContractTypeName = a.ContractTypeName, ContractModelId = a.ContractModelId, ContractModelName = a.ContractModelName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId }).FirstOrDefault();
+            var contractRequest = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, ContractTypeId = a.ContractTypeId, ContractTypeName = a.ContractTypeName, ContractModelId = a.ContractModelId, ContractModelName = a.ContractModelName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, FirstInstallmentDate = a.FirstInstallmentDate, MarketingCompanyId = a.MarketingCompanyId, MarketingCompanyName = a.MarketingCompanyName, MarketingCompanyPayValue = a.MarketingCompanyPayValue }).FirstOrDefault();
             ViewBag.id = id;
             ViewBag.docHeaderId = contractRequest.DocHeaderId;
             ViewBag.step = contractRequest.Step;
@@ -778,7 +795,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             {
                 ContractLogic contractLogic = new ContractLogic();
                 ContractRequestViewModel contractRequest = new ContractRequestViewModel();
-                contractRequest.Request = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + doc.Id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId,ContractModelId=a.ContractModelId,ContractTypeId=a.ContractTypeId,Remarks=a.Remarks }).FirstOrDefault();
+                contractRequest.Request = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + doc.Id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, ContractModelId = a.ContractModelId, ContractTypeId = a.ContractTypeId, Remarks = a.Remarks, FirstInstallmentDate = a.FirstInstallmentDate, MarketingCompanyId = a.MarketingCompanyId, MarketingCompanyName = a.MarketingCompanyName, MarketingCompanyPayValue = a.MarketingCompanyPayValue }).FirstOrDefault();
                 contractRequest.InstallmentData = _db.Database.SqlQuery<InstallmentDataSerializer>("SELECT * FROM [con].[ufn_GetRequestInstallmentData] (" + doc.Id + ")").ToList();
                 contractRequest.DeliverySpecificationData = _db.Database.SqlQuery<DeliverySpecificationSerializer>("SELECT * FROM[con].[ufn_GetRequestDeliverySpecificationData](" + doc.Id + ")").ToList();
                 contractRequest.Request.UserId = User.Identity.GetUserId<int>();
@@ -852,11 +869,11 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             return Json(Table, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ContractAgreeSave(int id,bool isApprove)
+        public ActionResult ContractAgreeSave(int id, bool isApprove)
         {
             ContractAgreeViewModel model = new ContractAgreeViewModel();
-            model.Id = id;model.IsApprove = isApprove;
-            var Request = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, ContractModelId = a.ContractModelId, ContractTypeId = a.ContractTypeId, Remarks = a.Remarks }).FirstOrDefault();
+            model.Id = id; model.IsApprove = isApprove;
+            var Request = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, ContractModelId = a.ContractModelId, ContractTypeId = a.ContractTypeId, Remarks = a.Remarks, FirstInstallmentDate = a.FirstInstallmentDate, MarketingCompanyId = a.MarketingCompanyId, MarketingCompanyName = a.MarketingCompanyName, MarketingCompanyPayValue = a.MarketingCompanyPayValue }).FirstOrDefault();
             model.Remarks = Request.Remarks;
             return View(model);
         }
@@ -873,12 +890,12 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                 using (ContractApproveLogic logic = new ContractApproveLogic())
                 {
                     ContractRequestViewModel contractRequest = new ContractRequestViewModel();
-                    contractRequest.Request = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + model.Id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, ContractModelId = a.ContractModelId, ContractTypeId = a.ContractTypeId, Remarks = a.Remarks }).FirstOrDefault();
+                    contractRequest.Request = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + model.Id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, ContractModelId = a.ContractModelId, ContractTypeId = a.ContractTypeId, Remarks = a.Remarks, FirstInstallmentDate = a.FirstInstallmentDate, MarketingCompanyId = a.MarketingCompanyId, MarketingCompanyName = a.MarketingCompanyName, MarketingCompanyPayValue = a.MarketingCompanyPayValue }).FirstOrDefault();
                     contractRequest.InstallmentData = _db.Database.SqlQuery<InstallmentDataSerializer>("SELECT * FROM [con].[ufn_GetRequestInstallmentData] (" + model.Id + ")").ToList();
                     contractRequest.DeliverySpecificationData = _db.Database.SqlQuery<DeliverySpecificationSerializer>("SELECT * FROM[con].[ufn_GetRequestDeliverySpecificationData](" + model.Id + ")").ToList();
                     contractRequest.Request.Remarks = model.Remarks;
                     contractRequest.Request.UserId = User.Identity.GetUserId<int>();
-                    ReqId = logic.ChangeContractStatus(contractRequest,model.IsApprove);
+                    ReqId = logic.ChangeContractStatus(contractRequest, model.IsApprove);
                     if (ReqId > 0)
                     {
                         if (model.IsApprove)
@@ -931,11 +948,12 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                 using (ContractApproveLogic logic = new ContractApproveLogic())
                 {
                     ContractRequestViewModel contractRequest = new ContractRequestViewModel();
-                    contractRequest.Request = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + doc.Id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, ContractModelId = a.ContractModelId, ContractTypeId = a.ContractTypeId, Remarks = a.Remarks }).FirstOrDefault();
+                    contractRequest.Request = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (" + doc.Id + ", null, null)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, ContractModelId = a.ContractModelId, ContractTypeId = a.ContractTypeId, Remarks = a.Remarks, FirstInstallmentDate = a.FirstInstallmentDate, MarketingCompanyId = a.MarketingCompanyId, MarketingCompanyName = a.MarketingCompanyName, MarketingCompanyPayValue = a.MarketingCompanyPayValue }).FirstOrDefault();
                     contractRequest.InstallmentData = _db.Database.SqlQuery<InstallmentDataSerializer>("SELECT * FROM [con].[ufn_GetRequestInstallmentData] (" + doc.Id + ")").ToList();
                     contractRequest.DeliverySpecificationData = _db.Database.SqlQuery<DeliverySpecificationSerializer>("SELECT * FROM[con].[ufn_GetRequestDeliverySpecificationData](" + doc.Id + ")").ToList();
                     contractRequest.Request.UserId = User.Identity.GetUserId<int>();
                     contractRequest.Request.DocHeaderId = doc.DocHeaderId;
+                    contractRequest.UserName = User.Identity.GetUserName();
                     ContractId = logic.RegisterContract(contractRequest);
                     if (ContractId == 0)
                         throw new Exception("Contract Not Registered");

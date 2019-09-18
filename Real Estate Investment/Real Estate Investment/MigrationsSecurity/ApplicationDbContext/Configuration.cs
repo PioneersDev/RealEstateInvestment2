@@ -55,7 +55,8 @@ namespace RealEstateInvestment.MigrationsSecurity.ApplicationDbContext
             //, new Menu { MenuId = 28, ApplicationId = 1, MenuName = "/RealEstate/RegisterdContracts/Index", MenuText = "ÇáÚÞæÏ ÇáãÓÌáÉ", MainMenu = 22, Section = null, Show = true }
             //, new Menu { MenuId = 29, ApplicationId = 1, MenuName = "/RealEstate/RegisterdInstallments/Index", MenuText = "ÇáÃÞÓÇØ ÇáãÓÌáÉ", MainMenu = 22, Section = null, Show = true }
             //, new Menu { MenuId = 30, ApplicationId = 1, MenuName = "", MenuText = "ãÓÊäÏÇÊ", MainMenu = 4, Section = null, Show = true }
-            //, new Menu { MenuId = 31, ApplicationId = 1, MenuName = "/RealEstate/Documents/Index", MenuText = "ÓÍÈ æÇÓÊÑÌÇÚ ÇáãÓÊäÏÇÊ", MainMenu = 30, Section = null, Show = true });
+            //, new Menu { MenuId = 31, ApplicationId = 1, MenuName = "/RealEstate/Documents/Index", MenuText = "ÓÍÈ æÇÓÊÑÌÇÚ ÇáãÓÊäÏÇÊ", MainMenu = 30, Section = null, Show = true }
+            //, new Menu { MenuId = 32, ApplicationId = 1, MenuName = "/RealEstate/MarketingCompany/Index", MenuText = "ÔÑßÇÊ ÇáÊÓæíÞ", MainMenu = 5, Section = null, Show = true });
 
             //context.Roles.AddOrUpdate(p => p.Id, new ApplicationRole { Name = "Owner", Description = "Basic Owner Role" });
 

@@ -62,7 +62,7 @@ body {
 #left {
   transition: all 0.3s ease-in-out;
   width: 250px;
-  z-index: 999;
+  z-index: 0;
 }
 #left {
   position: absolute;

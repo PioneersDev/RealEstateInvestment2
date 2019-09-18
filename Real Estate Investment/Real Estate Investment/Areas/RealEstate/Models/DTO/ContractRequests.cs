@@ -88,5 +88,17 @@ namespace RealEstateInvestment.Areas.RealEstate.Models.DTO
 
         [Display(Name = "كود العقد")]
         public long? ContractId { get; set; }
+
+        [Display(Name = "تاريخ أول قسط")]
+        public DateTime? FirstInstallmentDate { get; set; }
+
+        [Display(Name = "شركة التسويق")]
+        [Required(ErrorMessage = "يجب عليك اختيار شركة التسويق")]
+        public int? MarketingCompanyId { get; set; }
+
+        public string MarketingCompanyName { get; set; }
+
+        [Display(Name = "حصة شركة التسويق")]
+        public decimal? MarketingCompanyPayValue { get; set; }
     }
 }

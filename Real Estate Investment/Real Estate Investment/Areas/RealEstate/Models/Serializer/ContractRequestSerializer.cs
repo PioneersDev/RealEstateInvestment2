@@ -33,5 +33,11 @@ namespace RealEstateInvestment.Areas.RealEstate.Models.Serializer
         public int UnitTotalValue { get; set; }
 
         public int? DocHeaderId { get; set; }
+
+        public string FirstInstallmentDate { get; set; }
+
+        public int? MarketingCompanyId { get; set; }
+
+        public decimal? MarketingCompanyPayValue { get; set; }
     }
 }

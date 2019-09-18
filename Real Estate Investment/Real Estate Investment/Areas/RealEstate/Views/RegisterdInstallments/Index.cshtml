@@ -19,9 +19,13 @@
                 <th>نوع القسط</th>
                 <th>تاريخ الدفع</th>
                 <th>مبلغ القسط</th>
+                <th class="no-sort">رقم الايصال</th>
+                <th class="no-sort">تاريخ الايصال</th>
                 <th class="no-sort">تم الدفع</th>
                 <th>تاريخ الدفع</th>
+                <th>رقم الحافظة</th>
                 <th class="no-sort">ملاحظات</th>
+                <th class="no-sort">الحالة</th>
                 <th>المجمع</th>
                 <th class="no-sort">طرق الاتصال بالعميل</th>
                 <th class="no-sort">دفع القسط</th>
@@ -31,9 +35,11 @@
 </div>
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
+    <link href="~/Plugins/select2/css/select2.min.css" rel="stylesheet" />
+    <script src="~/Plugins/select2/js/select2.min.js"></script>
     <script>
         $(function () {
-            var groupColumn = 10;
+            var groupColumn = 14;
             var dialogOpened = false;
             var oTable = $('#dataTable').DataTable({
                 "processing": true,
@@ -50,7 +56,7 @@
                     api.column(groupColumn, { page: 'current' }).data().each(function (group, i) {
                         if (last !== group) {
                             $(rows).eq(i).before(
-                                '<tr class="group"><td colspan="12">' + group + '</td></tr>'
+                                '<tr class="group"><td colspan="16">' + group + '</td></tr>'
                             );
                             last = group;
                         }
@@ -75,6 +81,19 @@
                         }
                     },
                     { "data": "PayValue", "autowidth": true },
+                    { "data": "TICKETID", "autowidth": true },
+                    {
+                        "data": "TICKETDATE",
+                        "autowidth": true,
+                        "render": function (data, type, row) {
+                            if (data != null) {
+                                var date = new Date(parseInt(data.substr(6)));
+                                var month = date.getMonth() + 1;
+                                return date.getDate() + "/" + month + "/" + date.getFullYear();
+                            } else
+                                return "";
+                        }
+                    },
                     {
                         "data": "IsPaid",
                         "autowidth": true,
@@ -102,6 +121,10 @@
                         }
                     },
                     {
+                        "data": "CHEQUEINBOXID",
+                        "autowidth": true
+                    },
+                    {
                         "data": "PayNote",
                         "autowidth": true,
                         "render": function (data, type, row) {
@@ -110,6 +133,7 @@
                             return '<textarea style="resize:none;width:100%;" readonly>' + data + '</textarea>';
                         }
                     },
+                    { "data": "STATUSNAME", "autowidth": true },
                     { "data": "GroupColumn", "autowidth": true },
                     {
                         "data": "CustomerId", "width": "50px", "render": function (data) {
@@ -118,10 +142,16 @@
                     },
                     {
                         "data": "Id", "width": "50px", "render": function (data, type, row, meta) {
-                            if (row.IsPaid)
+                            debugger;
+                            if (row.JOURNALTYPEID != 5 && row.STATUSID ==2)
+                             {
+                                if (row.IsPaid)
+                                    return '<a class="popup btn btn-danger" href="/RealEstate/RegisterdInstallments/PayInstallment/' + data + '" style="pointer-events: none; display: inline-block;" disabled>دفع القسط</a>';
+                                else
+                                        return '<a class="popup btn btn-danger" href="/RealEstate/RegisterdInstallments/PayInstallment/' + data + '" >دفع القسط</a>';
+                            } else {
                                 return '<a class="popup btn btn-danger" href="/RealEstate/RegisterdInstallments/PayInstallment/' + data + '" style="pointer-events: none; display: inline-block;" disabled>دفع القسط</a>';
-                            else
-                                return '<a class="popup btn btn-danger" href="/RealEstate/RegisterdInstallments/PayInstallment/' + data + '" >دفع القسط</a>';
+                            }
                         }
                     }
                 ],

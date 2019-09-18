@@ -49,6 +49,14 @@ namespace RealEstateInvestment.Areas.RealEstate.Models.DTO
         [Display(Name = "مفتاح المستندات")]
         public int? DocHeaderId { get; set; }
 
+        [Display(Name = "حساب الصيانة")]
+        [Required(ErrorMessage = "يجب عليك ادخال رقم حساب الصيانة")]
+        public int? MintananceAccount { get; set; }
+
+        [Display(Name = "حساب الدفعات")]
+        [Required(ErrorMessage = "يجب عليك ادخال رقم حساب الدفعات")]
+        public int? InstallmentAccount { get; set; }
+
         public string Country { get; set; }
 
         public string City { get; set; }

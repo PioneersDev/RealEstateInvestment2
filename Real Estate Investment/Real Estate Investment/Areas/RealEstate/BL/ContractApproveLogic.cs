@@ -1,9 +1,12 @@
 ﻿using RealEstateInvestment.Areas.RealEstate.Models;
 using RealEstateInvestment.Areas.RealEstate.Models.DTO;
+using RealEstateInvestment.Areas.RealEstate.Models.ViewModels;
 using RealEstateInvestment.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 
 namespace RealEstateInvestment.Areas.RealEstate.BL
@@ -212,61 +215,78 @@ namespace RealEstateInvestment.Areas.RealEstate.BL
         public int RegisterContract(ContractRequestViewModel model)
         {
             int MaxContractId = 0;
-            try
+            using (DbContextTransaction transaction = _db.Database.BeginTransaction())
             {
-                try { MaxContractId = _db.Contracts.Max(a => a.Id) + 1; } catch { MaxContractId = 1; }
-                Contract contract = new Contract
+                try
                 {
-                    Id = MaxContractId,
-                    ProjectId = model.Request.ProjectId,
-                    UnitId = model.Request.UnitId,
-                    CustomerId = model.Request.CustomerId,
-                    ContractDate = model.Request.ContractDate,
-                    PaymentMethodHeaderId = model.Request.PaymentMethodHeaderId,
-                    UnitTotalValue = model.Request.UnitTotalValue,
-                    DocHeaderId = model.Request.DocHeaderId.Value,
-                    ContractTypeId = model.Request.ContractTypeId,
-                    ContractModelId = model.Request.ContractModelId,
-                    RequestId = model.Request.Id
-                };
-                _db.Contracts.Add(contract);
-
-                int MaxInstallmentId = 0;
-                try { MaxInstallmentId = _db.Installments.Max(a => a.Id) + 1; } catch { MaxInstallmentId = 1; }
-                foreach (var item in model.InstallmentData)
-                {
-                    Installment installment = new Installment
+                    try { MaxContractId = _db.Contracts.Max(a => a.Id) + 1; } catch { MaxContractId = 1; }
+                    Contract contract = new Contract
                     {
-                        Id = MaxInstallmentId++,
-                        ContractId = MaxContractId,
-                        CustomerId = item.CustomerId,
-                        PaymentMethodDetailId = item.PaymentMethodDetailId,
-                        Serial = item.Serial,
-                        PayDate = item.PayDate,
-                        PayValue = item.PayValue,
-                        PayNote = item.PayNote,
-                        TransactionDate = item.TransactionDate,
-                        IsPaid = item.IsPaid,
-                        RefId = item.RefId
+                        Id = MaxContractId,
+                        ProjectId = model.Request.ProjectId,
+                        UnitId = model.Request.UnitId,
+                        CustomerId = model.Request.CustomerId,
+                        ContractDate = model.Request.ContractDate,
+                        PaymentMethodHeaderId = model.Request.PaymentMethodHeaderId,
+                        UnitTotalValue = model.Request.UnitTotalValue,
+                        DocHeaderId = model.Request.DocHeaderId.Value,
+                        ContractTypeId = model.Request.ContractTypeId,
+                        ContractModelId = model.Request.ContractModelId,
+                        RequestId = model.Request.Id,
+                        FirstInstallmentDate = model.Request.FirstInstallmentDate,
+                        MarketingCompanyId = model.Request.MarketingCompanyId,
+                        MarketingCompanyPayValue = model.Request.MarketingCompanyPayValue,
+                        JournalDone = false
                     };
-                    _db.Installments.Add(installment);
-                }
+                    _db.Contracts.Add(contract);
 
-                int MaxDeliverySpecificationId = 0;
-                try { MaxDeliverySpecificationId = _db.ContractDeliverySpecifications.Max(a => a.Id) + 1; } catch { MaxDeliverySpecificationId = 1; }
-                foreach (var item in model.DeliverySpecificationData)
-                {
-                    ContractDeliverySpecification deliverySpecification = new ContractDeliverySpecification
+                    int MaxInstallmentId = 0;
+                    try { MaxInstallmentId = _db.Installments.Max(a => a.Id) + 1; } catch { MaxInstallmentId = 1; }
+                    foreach (var item in model.InstallmentData)
                     {
-                        Id = MaxDeliverySpecificationId++,
-                        ContractId = MaxContractId,
-                        DeliverySpecificationString = item.Name
-                    };
-                    _db.ContractDeliverySpecifications.Add(deliverySpecification);
+                        Installment installment = new Installment
+                        {
+                            Id = MaxInstallmentId++,
+                            ContractId = MaxContractId,
+                            CustomerId = item.CustomerId,
+                            PaymentMethodDetailId = item.PaymentMethodDetailId,
+                            Serial = item.Serial,
+                            PayDate = item.PayDate,
+                            PayValue = item.PayValue,
+                            PayNote = item.PayNote,
+                            TransactionDate = item.TransactionDate,
+                            IsPaid = item.IsPaid,
+                            RefId = item.RefId,
+                            CHEQUENO = item.CHEQUENO,
+                            BANKNAME = item.BANKNAME,
+                            BANKBRANCH = item.BANKBRANCH,
+                            PayProperty = item.PayProperty,
+                            JOURNALTYPEID = item.JOURNALTYPEID
+                        };
+                        _db.Installments.Add(installment);
+                    }
+
+                    int MaxDeliverySpecificationId = 0;
+                    try { MaxDeliverySpecificationId = _db.ContractDeliverySpecifications.Max(a => a.Id) + 1; } catch { MaxDeliverySpecificationId = 1; }
+                    foreach (var item in model.DeliverySpecificationData)
+                    {
+                        ContractDeliverySpecification deliverySpecification = new ContractDeliverySpecification
+                        {
+                            Id = MaxDeliverySpecificationId++,
+                            ContractId = MaxContractId,
+                            DeliverySpecificationString = item.Name
+                        };
+                        _db.ContractDeliverySpecifications.Add(deliverySpecification);
+                    }
+                    _db.SaveChanges();
+                    transaction.Commit();
                 }
-                _db.SaveChanges();
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return 0;
+                }
             }
-            catch (Exception e) { return 0; }
             return MaxContractId;
         }
     }
@@ -351,7 +371,7 @@ namespace RealEstateInvestment.Areas.RealEstate.BL
         public IQueryable<ContractRequests> FilterData()
         {
             var UserSteps = GetUserSteps();
-            var Data = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (null, null, 1)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, ContractModelId = a.ContractModelId, ContractModelName = a.ContractModelName, ContractTypeId = a.ContractTypeId, ContractTypeName = a.ContractTypeName, Remarks = a.Remarks }).Where(a => UserSteps.Contains(a.Step) && a.Status == StepPendingStatus(a.Step)).AsQueryable();
+            var Data = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (null, null, 1)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, ContractModelId = a.ContractModelId, ContractModelName = a.ContractModelName, ContractTypeId = a.ContractTypeId, ContractTypeName = a.ContractTypeName, Remarks = a.Remarks, FirstInstallmentDate = a.FirstInstallmentDate, MarketingCompanyId = a.MarketingCompanyId, MarketingCompanyName = a.MarketingCompanyName, MarketingCompanyPayValue = a.MarketingCompanyPayValue }).Where(a => UserSteps.Contains(a.Step) && a.Status == StepPendingStatus(a.Step)).AsQueryable();
             return Data;
         }
 

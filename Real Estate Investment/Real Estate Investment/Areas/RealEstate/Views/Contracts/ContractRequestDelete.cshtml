@@ -91,6 +91,39 @@
                         @Html.DisplayFor(model => model.UnitTotalValue)
                     </td>
                 </tr>
+                @if (Model.MarketingCompanyId != null)
+                {
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MarketingCompanyId) : &nbsp; &nbsp;
+                        </th>
+
+                        <td>
+                            @Html.DisplayFor(model => model.MarketingCompanyName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MarketingCompanyPayValue) : &nbsp; &nbsp;
+                        </th>
+
+                        <td>
+                            @Html.DisplayFor(model => model.MarketingCompanyPayValue)
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MarketingCompanyId) : &nbsp; &nbsp;
+                        </th>
+
+                        <td>
+                            لم يتم تحديد شركة تسويق
+                        </td>
+                    </tr>
+                }
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.DocHeaderId) : &nbsp; &nbsp;

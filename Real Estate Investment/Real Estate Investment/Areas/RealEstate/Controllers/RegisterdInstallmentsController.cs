@@ -1,9 +1,11 @@
-﻿using RealEstateInvestment.Areas.RealEstate.Models;
+﻿using RealEstateInvestment.Areas.RealEstate.BL;
+using RealEstateInvestment.Areas.RealEstate.Models;
 using RealEstateInvestment.Areas.RealEstate.Models.ViewModels;
 using RealEstateInvestment.CLS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -42,10 +44,11 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 installments = installments.Where(p => p.Id.ToString().ToLower().Contains(search.ToLower()) ||
-                p.CustomerId.ToString().ToLower().Contains(search.ToLower())||
+                p.CustomerId.ToString().ToLower().Contains(search.ToLower()) ||
                 p.ContractId.ToString().ToLower().Contains(search.ToLower()) ||
                 p.PayDate.ToString().ToLower().Contains(search.ToLower()) ||
-                p.TransactionDate.ToString().ToLower().Contains(search.ToLower()));
+                p.TransactionDate.ToString().ToLower().Contains(search.ToLower()) ||
+                p.CHEQUEINBOXID.ToString().ToLower().Contains(search.ToLower()));
             }
             // Sorting.
             installments = SortByColumnWithOrder(order, orderDir, installments);
@@ -112,8 +115,21 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
         public ActionResult PayInstallment(int id)
         {
             PayInstallmentViewModel model = new PayInstallmentViewModel();
+            ViewBag.Accounts = new SelectList(_db.Database.SqlQuery<AccountDTO>("SELECT [ACCOUNTID],CONCAT([ACCOUNTID],' ',[ACCOUNTNAMEA])[ACCOUNTNAMEA] FROM [GL_SQUER].[dbo].[ACCOUNT]").ToList(), "ACCOUNTID", "ACCOUNTNAMEA");
             model.Id = id;
             return View(model);
+        }
+
+        public JsonResult SearchById(string term)
+        {
+            var result= _db.Database.SqlQuery<AccountDTO>("SELECT [ACCOUNTID],[ACCOUNTNAMEA] FROM [GL_SQUER].[dbo].[ACCOUNT]").Where(a=>a.ACCOUNTID.ToString().StartsWith(term)).Select(a=>new { ACCOUNTID=a.ACCOUNTID, ACCOUNTNAMEA=a.ACCOUNTNAMEA}).Take(20).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult searchByName(string term, int id)
+        {
+            var result = _db.Database.SqlQuery<AccountDTO>("SELECT [ACCOUNTID],[ACCOUNTNAMEA] FROM [GL_SQUER].[dbo].[ACCOUNT]").Where(a => a.ACCOUNTNAMEA.ToString().StartsWith(term)).Take(20).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -127,12 +143,56 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                 if (model.Id > 0)
                 {
                     //Edit
-                    var oldinstallment = _db.Installments.Find(model.Id);
+                    var oldinstallment = _db.Installments.Include("Contract.Project").Include("Customer").FirstOrDefault(a=>a.Id==model.Id);
                     if (oldinstallment != null)
                     {
-                        oldinstallment.IsPaid = true; oldinstallment.TransactionDate = DateTime.Now;oldinstallment.RefId = model.RefId; oldinstallment.PayNote = model.Remarks;
-                          message = " تم دفع القسط كود " + model.Id + " بنجاح ";
-                        className = "info";
+                        decimal sysacc = 0;
+                        if (oldinstallment.PayProperty == 2)
+                            sysacc = oldinstallment.Contract.Project.MintananceAccount.Value;
+                        else
+                            sysacc = oldinstallment.Contract.Project.InstallmentAccount.Value;
+                        PayRealEstateInstallmentParams param = new PayRealEstateInstallmentParams();
+                        param.InstallmentId = oldinstallment.Id;
+                        param.TicketId = oldinstallment.TICKETID.Value;
+                        param.mULTIPLECHEQUE_TYPE = new List<MULTIPLECHEQUE_TYPE>();
+                        param.mULTIPLECHEQUE_TYPE.Add(new MULTIPLECHEQUE_TYPE{ accountid = oldinstallment.Customer.AccountNumber.Value, currid = 1, currrate = 1, remarksa = model.Remarks, remarkse = model.Remarks, ticketdate = oldinstallment.TICKETDATE.Value, SysAccount = sysacc,ACTIONTYPE=null,bankbranch=null,bankname=null,chequeno= oldinstallment.CHEQUENO.Value.ToString(), chequevalue= oldinstallment.PayValue, COMPANYNAME=null,duedate=DateTime.Now,InstallmentId= oldinstallment.Id, LOGINUSER=null,MACHINEIP=null,MACHINENAME=null,USERNAME=null });
+                        param.mULTIPLECHEQUE_TYPE.Add(new MULTIPLECHEQUE_TYPE { accountid = 110803, currid = 1, currrate = 1, remarksa = model.Remarks, remarkse = model.Remarks, ticketdate = oldinstallment.TICKETDATE.Value, SysAccount = model.BankAccount, ACTIONTYPE = null, bankbranch = null, bankname = null, chequeno = oldinstallment.CHEQUENO.Value.ToString(), chequevalue = oldinstallment.PayValue, COMPANYNAME = null, duedate = DateTime.Now, InstallmentId = oldinstallment.Id, LOGINUSER = null, MACHINEIP = null, MACHINENAME = null, USERNAME = null });
+                        param.CompanyName = "GL_SQUER";
+                        try
+                        {
+                            HttpResponseMessage response = GlobalApiVariables.WebApiClient.PostAsJsonAsync("PayRealEstateInstallment", param).Result;
+                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                            {
+                                var Result = response.Content.ReadAsAsync<CreateJournalEntriesResult>().Result;
+                                if (Result.STATUS)
+                                {
+                                    oldinstallment.IsPaid = true; oldinstallment.TransactionDate = DateTime.Now; oldinstallment.PayNote = model.Remarks;
+                                    message = " تم دفع القسط كود " + model.Id + " بنجاح ";
+                                    className = "info";
+                                }
+                                else
+                                {
+                                    //throw new Exception(" Installment Not Payed Correctly " + Result.MESSAGE);
+                                    message = " Installment Not Payed Correctly " + Result.MESSAGE;
+                                    className = "error";
+                                    status = true;
+                                }
+                            }
+                            else
+                            {
+                                //throw new Exception("Error in Calling API");
+                                message = "Error in Calling API";
+                                className = "error";
+                                status = true;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            //throw ex;
+                            message = ex.Message;
+                            className = "error";
+                            status = true;
+                        }
                     }
                 }
                 else

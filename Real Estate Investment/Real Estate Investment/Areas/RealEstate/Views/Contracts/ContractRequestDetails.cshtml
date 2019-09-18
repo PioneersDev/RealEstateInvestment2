@@ -124,6 +124,39 @@
                         @Html.DisplayFor(model => model.Request.UnitTotalValue)
                     </td>
                 </tr>
+                @if (Model.Request.MarketingCompanyId != null)
+                {
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Request.MarketingCompanyId) : &nbsp; &nbsp;
+                        </th>
+
+                        <td>
+                            @Html.DisplayFor(model => model.Request.MarketingCompanyName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Request.MarketingCompanyPayValue) : &nbsp; &nbsp;
+                        </th>
+
+                        <td>
+                            @Html.DisplayFor(model => model.Request.MarketingCompanyPayValue)
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Request.MarketingCompanyId) : &nbsp; &nbsp;
+                        </th>
+
+                        <td>
+                            لم يتم تحديد شركة تسويق
+                        </td>
+                    </tr>
+                }
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.Request.DocHeaderId) : &nbsp; &nbsp;
@@ -161,6 +194,8 @@
                             <th>نوع الدفعة</th>
                             <th>تاريخ الدفع</th>
                             <th>القيمة</th>
+                            <th>رقم الشيك</th>
+                            <th>اسم البنك</th>
                         </tr>
                     </thead>
                 </table>
@@ -192,6 +227,8 @@
                         }
                     },
                     { "data": "PayValue", "autowidth": true },
+                    { "data": "CHEQUENO", "autowidth": true },
+                    { "data": "BANKNAME", "autowidth": true },
                 ],
                 "language": {
                     "emptyTable": "لا توجد نتائج لعرضها",

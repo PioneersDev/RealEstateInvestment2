@@ -20,6 +20,12 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
         public DateTime TransactionDate { get; set; }
         public bool IsPaid { get; set; }
         public int? RefId { get; set; }
+        public int? STATUSID { get; set; }
+        public string STATUSNAME { get; set; }
+        public int JOURNALTYPEID { get; set; }
         public string GroupColumn { get; set; }
+        public int? TICKETID { get; set; }
+        public DateTime? TICKETDATE { get; set; }
+        public int? CHEQUEINBOXID { get; set; }
     }
 }

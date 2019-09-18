@@ -34,11 +34,35 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
 
         public string PayNote { get; set; }
 
+        public byte? PayProperty { get; set; }
+
         public DateTime? TransactionDate { get; set; }
 
         public bool IsPaid { get; set; }
 
         public int? RefId { get; set; }//ده هيبقى فيه الكود المحاسبي بتاع برنامج الgl
+
+        public int? CHEQUENO { get; set; }
+
+        public string BANKNAME { get; set; }
+
+        public string BANKBRANCH { get; set; }
+
+        public int? JOURNALID { get; set; }
+
+        public int? TICKETID { get; set; }
+
+        public int? JOURNALTYPEID { get; set; }
+
+        public bool DELETED { get; set; }
+
+        public int? REVERSED { get; set; }
+
+        public DateTime? TICKETDATE { get; set; }
+
+        public int? RECEIVINGJOURNALID { get; set; }
+
+        public int? CHEQUEINBOXID { get; set; }
 
         [ForeignKey("ContractId")]
         public Contract Contract { get; set; }

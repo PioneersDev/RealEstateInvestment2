@@ -29,5 +29,6 @@ namespace RealEstateInvestment.Areas.RealEstate.Models.DTO
         public string City { get; set; }
         public int? DistrictId { get; set; }
         public string District { get; set; }
+        public decimal? AccountNumber { get; set; }
     }
 }

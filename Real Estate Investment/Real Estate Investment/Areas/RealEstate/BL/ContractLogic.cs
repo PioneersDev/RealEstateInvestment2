@@ -38,7 +38,7 @@ namespace RealEstateInvestment.Areas.RealEstate.BL
                 Request Request = new Request();
                 try { Request.Id = _context.Requests.Max(a => a.Id) + 1; } catch { Request.Id = 1; }
                 Request.UserId = contractRequest.Request.UserId; Request.RequestTypeId = 1; Request.Step = ApproveSystemFirstStep.Id; Request.Status = ApproveSystemFirstStepPendingStatus.Id;
-                Request.RequestContent = new JavaScriptSerializer().Serialize(new ContractRequestSerializer { Id = null, ProjectId = contractRequest.Request.ProjectId, UnitId = contractRequest.Request.UnitId, CustomerId = contractRequest.Request.CustomerId, SubCustomerId = null, ContractDate = contractRequest.Request.ContractDate.ToString("MM/dd/yyyy"), PaymentMethodHeaderId = contractRequest.Request.PaymentMethodHeaderId, InstallmentData = new List<InstallmentDataSerializerDTO>(InstallmentData.Select(a => new InstallmentDataSerializerDTO { Id = a.Id, ContractId = a.ContractId, CustomerId = a.CustomerId, PaymentMethodDetailId = a.PaymentMethodDetailId, Serial = a.Serial, PayDate = a.PayDate.ToString("MM/dd/yyyy"), PayValue = a.PayValue, PayNote = a.PayNote, TransactionDate = a.TransactionDate.Value.ToString("MM/dd/yyyy"), IsPaid = a.IsPaid, RefId = a.RefId })), DeliverySpecificationData = contractRequest.DeliverySpecificationData, ContractTypeId = contractRequest.Request.ContractTypeId, ContractModelId = contractRequest.Request.ContractModelId, UnitTotalValue = contractRequest.Request.UnitTotalValue, DocHeaderId = null });
+                Request.RequestContent = new JavaScriptSerializer().Serialize(new ContractRequestSerializer { Id = null, ProjectId = contractRequest.Request.ProjectId, UnitId = contractRequest.Request.UnitId, CustomerId = contractRequest.Request.CustomerId, SubCustomerId = null, ContractDate = contractRequest.Request.ContractDate.ToString("MM/dd/yyyy"), PaymentMethodHeaderId = contractRequest.Request.PaymentMethodHeaderId, InstallmentData = new List<InstallmentDataSerializerDTO>(InstallmentData.Select(a => new InstallmentDataSerializerDTO { Id = a.Id, ContractId = a.ContractId, CustomerId = a.CustomerId, PaymentMethodDetailId = a.PaymentMethodDetailId, Serial = a.Serial, PayDate = a.PayDate.ToString("MM/dd/yyyy"), PayValue = a.PayValue, PayNote = a.PayNote, TransactionDate = a.TransactionDate.Value.ToString("MM/dd/yyyy"), IsPaid = a.IsPaid, RefId = a.RefId, CHEQUENO = a.CHEQUENO, BANKNAME = a.BANKNAME, BANKBRANCH = a.BANKBRANCH, PayProperty = a.PayProperty, JOURNALTYPEID = a.JOURNALTYPEID })), DeliverySpecificationData = contractRequest.DeliverySpecificationData, ContractTypeId = contractRequest.Request.ContractTypeId, ContractModelId = contractRequest.Request.ContractModelId, UnitTotalValue = contractRequest.Request.UnitTotalValue, DocHeaderId = contractRequest.Request.DocHeaderId, FirstInstallmentDate = (contractRequest.Request.FirstInstallmentDate!=null? contractRequest.Request.FirstInstallmentDate.Value.ToString("MM/dd/yyyy"):""), MarketingCompanyId = contractRequest.Request.MarketingCompanyId, MarketingCompanyPayValue = contractRequest.Request.MarketingCompanyPayValue });
                 _context.Requests.Add(Request);
                 _context.SaveChanges();
                 return Request.Id;
@@ -57,7 +57,7 @@ namespace RealEstateInvestment.Areas.RealEstate.BL
                 }
                 var oldRequest = _context.Requests.Find(contractRequest.Request.Id);
                 oldRequest.UserId = contractRequest.Request.UserId; oldRequest.Step = ApproveSystemStep.Id; oldRequest.Status = ApproveSystemStatus.Id;
-                oldRequest.RequestContent = new JavaScriptSerializer().Serialize(new ContractRequestSerializer { Id = null, ProjectId = contractRequest.Request.ProjectId, UnitId = contractRequest.Request.UnitId, CustomerId = contractRequest.Request.CustomerId, SubCustomerId = null, ContractDate = contractRequest.Request.ContractDate.ToString("MM/dd/yyyy"), PaymentMethodHeaderId = contractRequest.Request.PaymentMethodHeaderId, InstallmentData = new List<InstallmentDataSerializerDTO>(InstallmentData.Select(a => new InstallmentDataSerializerDTO { Id = a.Id, ContractId = a.ContractId, CustomerId = a.CustomerId, PaymentMethodDetailId = a.PaymentMethodDetailId, Serial = a.Serial, PayDate = a.PayDate.ToString("MM/dd/yyyy"), PayValue = a.PayValue, PayNote = a.PayNote, TransactionDate = a.TransactionDate.Value.ToString("MM/dd/yyyy"), IsPaid = a.IsPaid, RefId = a.RefId })), DeliverySpecificationData = contractRequest.DeliverySpecificationData, ContractTypeId = contractRequest.Request.ContractTypeId, ContractModelId = contractRequest.Request.ContractModelId, UnitTotalValue = contractRequest.Request.UnitTotalValue, DocHeaderId = contractRequest.Request.DocHeaderId }); oldRequest.Remarks = contractRequest.Request.Remarks;
+                oldRequest.RequestContent = new JavaScriptSerializer().Serialize(new ContractRequestSerializer { Id = null, ProjectId = contractRequest.Request.ProjectId, UnitId = contractRequest.Request.UnitId, CustomerId = contractRequest.Request.CustomerId, SubCustomerId = null, ContractDate = contractRequest.Request.ContractDate.ToString("MM/dd/yyyy"), PaymentMethodHeaderId = contractRequest.Request.PaymentMethodHeaderId, InstallmentData = new List<InstallmentDataSerializerDTO>(InstallmentData.Select(a => new InstallmentDataSerializerDTO { Id = a.Id, ContractId = a.ContractId, CustomerId = a.CustomerId, PaymentMethodDetailId = a.PaymentMethodDetailId, Serial = a.Serial, PayDate = a.PayDate.ToString("MM/dd/yyyy"), PayValue = a.PayValue, PayNote = a.PayNote, TransactionDate = a.TransactionDate.Value.ToString("MM/dd/yyyy"), IsPaid = a.IsPaid, RefId = a.RefId, CHEQUENO = a.CHEQUENO, BANKNAME = a.BANKNAME, BANKBRANCH = a.BANKBRANCH, PayProperty = a.PayProperty, JOURNALTYPEID = a.JOURNALTYPEID })), DeliverySpecificationData = contractRequest.DeliverySpecificationData, ContractTypeId = contractRequest.Request.ContractTypeId, ContractModelId = contractRequest.Request.ContractModelId, UnitTotalValue = contractRequest.Request.UnitTotalValue, DocHeaderId = contractRequest.Request.DocHeaderId, FirstInstallmentDate = contractRequest.Request.FirstInstallmentDate.Value.ToString("MM/dd/yyyy"), MarketingCompanyId = contractRequest.Request.MarketingCompanyId, MarketingCompanyPayValue = contractRequest.Request.MarketingCompanyPayValue }); oldRequest.Remarks = contractRequest.Request.Remarks;
                 _context.SaveChanges();
                 return oldRequest.Id;
             }
@@ -84,7 +84,17 @@ namespace RealEstateInvestment.Areas.RealEstate.BL
                     TotalBasicInstallment = d.MinimumAmount.Value;
             }
 
-            var installmentPayValue = (request.UnitTotalValue - TotalBasicInstallment)/ paymentMethodDetails.Where(a => a.PaymentsCounts>0).Select(a=>a.PaymentsCounts).FirstOrDefault();
+            var installmentPayValue = (request.UnitTotalValue - TotalBasicInstallment) / paymentMethodDetails.Where(a => a.PaymentsCounts > 0).Select(a => a.PaymentsCounts).FirstOrDefault();
+
+            DateTime? UsedDate = null;
+            if (request.FirstInstallmentDate != null)
+            {
+                UsedDate = request.FirstInstallmentDate.Value;
+            }
+            else
+            {
+                UsedDate = request.ContractDate;
+            }
 
             foreach (var detail in paymentMethodDetails)
             {
@@ -100,11 +110,34 @@ namespace RealEstateInvestment.Areas.RealEstate.BL
                 else
                     PValue = detail.MinimumAmount.Value;
 
+                var PayProp = detail.PaymentType.PaymentTypePropertyId;
+                int? JornalTypeId = null;
+                if (PayProp != null)
+                {
+                    if (PayProp == 1)
+                    {
+                        JornalTypeId = 5;
+                    }
+                    else
+                    {
+                        JornalTypeId = 3;
+                    }
+                }
+                else
+                {
+                    JornalTypeId = 3;
+                }
+
                 if (detail.PaymentsCounts > 0)
                 {
                     int startFrom = detail.StartFrom;
                     for (int i = 0; i < detail.PaymentsCounts; i++)
                     {
+                        DateTime dateTime = DateTime.Now;
+                        if (i == 0)
+                            dateTime = UsedDate.Value;
+                        else
+                            dateTime = UsedDate.Value.AddMonths(startFrom);
                         serializer.Add(new InstallmentDataSerializer
                         {
                             Id = null,
@@ -113,12 +146,14 @@ namespace RealEstateInvestment.Areas.RealEstate.BL
                             PaymentMethodDetailId = detail.Id,
                             Serial = ++ser,
                             payName = PayName,
-                            PayDate = request.ContractDate.AddMonths(startFrom),
+                            PayDate = dateTime,
                             PayValue = installmentPayValue,
                             PayNote = null,
                             TransactionDate = DateTime.Now,
                             IsPaid = false,
                             RefId = null,
+                            PayProperty = PayProp,
+                            JOURNALTYPEID = JornalTypeId,
                             PayCount = detail.PaymentsCounts,
                         });
                         startFrom = startFrom + detail.Period;
@@ -126,6 +161,7 @@ namespace RealEstateInvestment.Areas.RealEstate.BL
                 }
                 else
                 {
+                    DateTime dateTime = request.ContractDate.AddMonths(detail.StartFrom);
                     serializer.Add(new InstallmentDataSerializer
                     {
                         Id = null,
@@ -134,12 +170,14 @@ namespace RealEstateInvestment.Areas.RealEstate.BL
                         PaymentMethodDetailId = detail.Id,
                         Serial = ++ser,
                         payName = PayName,
-                        PayDate = request.ContractDate.AddMonths(detail.StartFrom),
+                        PayDate = dateTime,
                         PayValue = PValue,
                         PayNote = null,
                         TransactionDate = DateTime.Now,
                         IsPaid = false,
                         RefId = null,
+                        PayProperty = PayProp,
+                        JOURNALTYPEID = JornalTypeId,
                         PayCount = detail.PaymentsCounts,
                     });
                 }

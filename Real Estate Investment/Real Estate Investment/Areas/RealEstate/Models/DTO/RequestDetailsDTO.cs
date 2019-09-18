@@ -8,6 +8,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Models.DTO
 {
     public class RequestDetailsDTO
     {
+        public int? id { get; set; }
         public ContractRequests Request { get; set; }
         public List<InstallmentDataSerializer> Installments { get; set; }
         public List<DeliverySpecificationSerializer> DeliverySpecificationData { get; set; }

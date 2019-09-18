@@ -18,177 +18,200 @@
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-horizontal">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @if (Model.Request != null && Model.Request.Id > 0)
-                {
-                    @Html.HiddenFor(model => model.Request.Id)
-                }
-                @Html.HiddenFor(model => model.Request.ContractId)
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @if (Model.Request != null && Model.Request.Id > 0)
+            {
+                @Html.HiddenFor(model => model.Request.Id)
+            }
+            @Html.HiddenFor(model => model.Request.ContractId)
 
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.Request.ProjectId, ViewBag.Projects as SelectList, string.Empty, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Request.ProjectId, "", new { @class = "text-danger" })
-                    </div>
-                    @Html.LabelFor(model => model.Request.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Request.ProjectId, ViewBag.Projects as SelectList, string.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Request.ProjectId, "", new { @class = "text-danger" })
                 </div>
+                @Html.LabelFor(model => model.Request.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
 
-                @*  *@
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <input type="radio" name="isParentUnit" id="NoParentUnit" value="false" /> وحدة فرعية
-                    </div>
-                    <div class="col-md-4">
-                        <input type="radio" name="isParentUnit" id="YesParentUnit" value="true" /> وحدة رئيسية
-                    </div>
-                    <div class="col-md-4">
-                    </div>
+            @*  *@
+            <div class="form-group">
+                <div class="col-md-4">
+                    <input type="radio" name="isParentUnit" id="NoParentUnit" value="false" /> وحدة فرعية
                 </div>
-                @*  *@
-
-                <div class="form-group" id="MainUnitDiv" style="display:none;">
-                    <div class="col-md-10">
-                        <select id="MainUnitId" class="form-control">
-                            <option></option>
-                        </select>
-                    </div>
-                    @Html.LabelFor(model => model.Request.UnitId, "الوحدة الرئيسية", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    <input type="radio" name="isParentUnit" id="YesParentUnit" value="true" /> وحدة رئيسية
                 </div>
-
-                <div class="form-group" id="UnitDiv" style="display:none;">
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.Request.UnitId, ViewBag.Units as SelectList, string.Empty, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Request.UnitId, "", new { @class = "text-danger" })
-                    </div>
-                    @Html.LabelFor(model => model.Request.UnitId, htmlAttributes: new { @class = "control-label col-md-2" })
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.Request.CustomerId, ViewBag.Customers as SelectList, string.Empty, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Request.CustomerId, "", new { @class = "text-danger" })
-                    </div>
-                    @Html.LabelFor(model => model.Request.CustomerId, htmlAttributes: new { @class = "control-label col-md-2" })
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Request.ContractDate, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Request.ContractDate, "", new { @class = "text-danger" })
-                    </div>
-                    @Html.LabelFor(model => model.Request.ContractDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.Request.PaymentMethodHeaderId, ViewBag.PaymentMethodHeaders as SelectList, string.Empty, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Request.PaymentMethodHeaderId, "", new { @class = "text-danger" })
-                    </div>
-                    @Html.LabelFor(model => model.Request.PaymentMethodHeaderId, htmlAttributes: new { @class = "control-label col-md-2" })
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.Request.ContractTypeId, ViewBag.ContractTypes as SelectList, string.Empty, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Request.ContractTypeId, "", new { @class = "text-danger" })
-                    </div>
-                    @Html.LabelFor(model => model.Request.ContractTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.Request.ContractModelId, ViewBag.ContractModels as SelectList, string.Empty, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Request.ContractModelId, "", new { @class = "text-danger" })
-                    </div>
-                    @Html.LabelFor(model => model.Request.ContractModelId, htmlAttributes: new { @class = "control-label col-md-2" })
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Request.UnitTotalValue, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Request.UnitTotalValue, "", new { @class = "text-danger" })
-                    </div>
-                    @Html.LabelFor(model => model.Request.UnitTotalValue, htmlAttributes: new { @class = "control-label col-md-2" })
-                </div>
-
-                <div id="DeliverySpecificationDataDiv">
-                    <table class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="text-center">مواصفة التسليم</th>
-                                <th class="text-center">عمليات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="DeliverySpecificationData">
-                            <tr>
-                                <td>
-                                    <input type="text" name="deliverSpecificationName" id="deliverSpecificationName" class="form-control" />
-                                </td>
-                                <td>
-                                    <button id="AddSpecification" class="btn btn-primary col-lg-12">اضافة</button>
-                                </td>
-                            </tr>
-                            @if (Model.Request != null && Model.Request.Id > 0)
-                            {
-                                if (Model.DeliverySpecificationData != null)
-                                {
-                                    var i = 0;
-                                    foreach (var item in Model.DeliverySpecificationData)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <input type="hidden" name="DeliverySpecificationData[@i].Id" class="idDataArranged" value="@item.Id">
-                                                <input type="text" name="DeliverySpecificationData[@i].Name" class="form-control nameDataArranged" readonly value="@item.Name" />
-                                            </td>
-                                            <td>
-                                                <button id="deleteSpecification" class="btn btn-danger col-lg-12">حذف</button>
-                                            </td>
-                                        </tr>
-                                        i++;
-                                    }
-                                }
-                            }
-                        </tbody>
-                    </table>
-                </div>
-
-                @if (Model.Request == null)
-                {
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button type="button" class="btn btn-danger" onclick="generateRequest();return false;"> اعرض الأقساط</button>
-                        </div>
-                    </div>
-                }
-
-                @if (Model.Request != null)
-                {
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button type="button" class="btn btn-danger" onclick="generateRequest();return false;"> اعد حساب الأقساط</button>
-                        </div>
-                    </div>
-                }
-
-                <div id="InstallmentDataDiv">
-                    @if (Model.Request != null && Model.Request.Id > 0)
-                    {
-                        @Html.Action("GetAutomaticInstallmentsViewForEdit", "Contracts", new { id = Model.Request.Id });
-                    }
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="حفظ" class="btn btn-success" id="submit_btn" />
-                    </div>
+                <div class="col-md-4">
                 </div>
             </div>
+            @*  *@
+
+            <div class="form-group" id="MainUnitDiv" style="display:none;">
+                <div class="col-md-10">
+                    <select id="MainUnitId" class="form-control">
+                        <option></option>
+                    </select>
+                </div>
+                @Html.LabelFor(model => model.Request.UnitId, "الوحدة الرئيسية", htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+
+            <div class="form-group" id="UnitDiv" style="display:none;">
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Request.UnitId, ViewBag.Units as SelectList, string.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Request.UnitId, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => model.Request.UnitId, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Request.CustomerId, ViewBag.Customers as SelectList, string.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Request.CustomerId, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => model.Request.CustomerId, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Request.ContractDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Request.ContractDate, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => model.Request.ContractDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Request.PaymentMethodHeaderId, ViewBag.PaymentMethodHeaders as SelectList, string.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Request.PaymentMethodHeaderId, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => model.Request.PaymentMethodHeaderId, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Request.ContractTypeId, ViewBag.ContractTypes as SelectList, string.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Request.ContractTypeId, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => model.Request.ContractTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Request.ContractModelId, ViewBag.ContractModels as SelectList, string.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Request.ContractModelId, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => model.Request.ContractModelId, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Request.UnitTotalValue, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Request.UnitTotalValue, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => model.Request.UnitTotalValue, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Request.MarketingCompanyId, ViewBag.MarketingCompanies as SelectList, string.Empty, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Request.MarketingCompanyId, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => model.Request.MarketingCompanyId, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+
+            <div class="form-group" id="MarketingCompanyPayValueDiv" style="display:none;">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Request.MarketingCompanyPayValue, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Request.MarketingCompanyPayValue, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => model.Request.MarketingCompanyPayValue, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+
+            <div class="form-group" id="FirstInstallmentDateDiv" style="display:none;">
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Request.FirstInstallmentDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Request.FirstInstallmentDate, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => model.Request.FirstInstallmentDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            </div>
+
+            <div id="DeliverySpecificationDataDiv">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center">مواصفة التسليم</th>
+                            <th class="text-center">عمليات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="DeliverySpecificationData">
+                        <tr>
+                            <td>
+                                <input type="text" name="deliverSpecificationName" id="deliverSpecificationName" class="form-control" />
+                            </td>
+                            <td>
+                                <button id="AddSpecification" class="btn btn-primary col-lg-12">اضافة</button>
+                            </td>
+                        </tr>
+                        @if (Model.Request != null && Model.Request.Id > 0)
+                        {
+                            if (Model.DeliverySpecificationData != null)
+                            {
+                                var i = 0;
+                                foreach (var item in Model.DeliverySpecificationData)
+                                {
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" name="DeliverySpecificationData[@i].Id" class="idDataArranged" value="@item.Id">
+                                            <input type="text" name="DeliverySpecificationData[@i].Name" class="form-control nameDataArranged" readonly value="@item.Name" />
+                                        </td>
+                                        <td>
+                                            <button id="deleteSpecification" class="btn btn-danger col-lg-12">حذف</button>
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            @if (Model.Request == null)
+            {
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="button" class="btn btn-danger" onclick="generateRequest();return false;"> اعرض الأقساط</button>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Request != null)
+            {
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="button" class="btn btn-danger" onclick="generateRequest();return false;"> اعد حساب الأقساط</button>
+                    </div>
+                </div>
+            }
+
+            <div id="InstallmentDataDiv">
+                @if (Model.Request != null && Model.Request.Id > 0)
+                {
+                    @Html.Action("GetAutomaticInstallmentsViewForEdit", "Contracts", new { id = Model.Request.Id });
+                }
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="حفظ" class="btn btn-success" id="submit_btn" />
+                </div>
+            </div>
+        </div>
         }
     </div>
 </div>
 <script>
-    //var dataSet = [];
 
     function generateRequest() {
         debugger;
@@ -199,7 +222,8 @@
             CustomerId: $('#Request_CustomerId').val(),
             ContractDate: $('#Request_ContractDate').val(),
             PaymentMethodHeaderId: $('#Request_PaymentMethodHeaderId').val(),
-            UnitTotalValue: $('#Request_UnitTotalValue').val()
+            UnitTotalValue: $('#Request_UnitTotalValue').val(),
+            FirstInstallmentDate: $('#Request_FirstInstallmentDate').val()
         };
         if (requestObj.ProjectId, requestObj.UnitId, requestObj.CustomerId, requestObj.ContractDate, requestObj.PaymentMethodHeaderId, requestObj.UnitTotalValue) {
             $.ajax({
@@ -227,7 +251,7 @@
         {
             if(Model.Request.MainUnitId!=null)
             {
-                @:function func() { $.get('/RealEstate/Units/GetUnitByIsParent?isParentUnit=' + true + '&ProjectId=' + $('#Request_ProjectId').val() + '&MainUnitId=null', function (response) { $('#MainUnitId').empty().append('<option></option>'); $.each(response, function (index, element) { $('#MainUnitId').append('<option value=' + element.Id + '>' + element.UnitName + '</option>'); }); $('#MainUnitId').val('@Model.Request.MainUnitId'); }); $.get('/RealEstate/Units/GetUnitByIsParent?isParentUnit=' + false + '&ProjectId=' + $('#Request_ProjectId').val() + '&MainUnitId=' + @Model.Request.MainUnitId + '', function (response) { $('#Request_UnitId').empty().append('<option></option>'); $.each(response, function (index, element) { $('#Request_UnitId').append('<option value=' + element.Id + '>' + element.UnitName + '</option>'); }); $('#Request_UnitId').val('@Model.Request.UnitId');});}
+                @:function func() { $.get('/RealEstate/Units/GetUnitByIsParent?isParentUnit=' + true + '&ProjectId=' + $('#Request_ProjectId').val() + '&MainUnitId=null', function (response) { $('#MainUnitId').empty().append('<option></option>'); $.each(response, function (index, element) { $('#MainUnitId').append('<option value=' + element.Id + '>' + element.UnitName + '</option>'); }); $('#MainUnitId').val('@Model.Request.MainUnitId'); $('#MainUnitId').select2(); }); $.get('/RealEstate/Units/GetUnitByIsParent?isParentUnit=' + false + '&ProjectId=' + $('#Request_ProjectId').val() + '&MainUnitId=' + @Model.Request.MainUnitId + '', function (response) { $('#Request_UnitId').empty().append('<option></option>'); $.each(response, function (index, element) { $('#Request_UnitId').append('<option value=' + element.Id + '>' + element.UnitName + '</option>'); }); $('#Request_UnitId').val('@Model.Request.UnitId'); }); }
 
 
                 @:$('#NoParentUnit').prop('checked', true);
@@ -237,7 +261,7 @@
             }
             else
             {
-                @:function func2() { $.get('/RealEstate/Units/GetUnitByIsParent?isParentUnit=' + true + '&ProjectId=' + $('#Request_ProjectId').val() + '&MainUnitId=null', function (response) { $('#Request_UnitId').empty().append('<option></option>'); $.each(response, function (index, element) { $('#Request_UnitId').append('<option value=' + element.Id + '>' + element.UnitName + '</option>');});$('#UnitId').val('@Model.Request.UnitId');});}
+                @:function func2() { $.get('/RealEstate/Units/GetUnitByIsParent?isParentUnit=' + true + '&ProjectId=' + $('#Request_ProjectId').val() + '&MainUnitId=null', function (response) { $('#Request_UnitId').empty().append('<option></option>'); $.each(response, function (index, element) { $('#Request_UnitId').append('<option value=' + element.Id + '>' + element.UnitName + '</option>'); }); $('#UnitId').val('@Model.Request.UnitId'); $('#Request_UnitId').select2({ placeholder: 'الوحدة' }); }); }
 
                 @:$('#YesParentUnit').prop('checked', true);
                 @:$('#UnitDiv').show();
@@ -245,8 +269,16 @@
             }
             @:var sum = 0;
             @:var basicInstallments = $('input[data-paycount="0"]');
-            @:$.each(basicInstallments, function(index, element) {sum += Number(element.value);});
+            @:$.each(basicInstallments, function (index, element) { sum += Number(element.value); });
             @:$('#InstallmentTotal').val($('#Request_UnitTotalValue').val() - sum);
+            if(Model.Request.MarketingCompanyId!=null)
+            {
+                @:$('#MarketingCompanyPayValueDiv').show();
+            }
+            if(Model.Request.ContractTypeId==1)
+            {
+                @:$('#FirstInstallmentDateDiv').show();
+            }
         }
 
 
@@ -256,6 +288,7 @@
         });
 
         $('input[type=radio][name=isParentUnit]').change(function () {
+            debugger;
             if (this.value == 'true') {
                 $('#UnitDiv').show();
                 $('#MainUnitId').val('');
@@ -265,6 +298,7 @@
                     $.each(response, function (index, element) {
                         $('#Request_UnitId').append('<option value=' + element.Id + '>' + element.UnitName + '</option>');
                     });
+                    $('#Request_UnitId').select2({ placeholder: 'الوحدة' });
                 });
             }
             else if (this.value == 'false') {
@@ -282,6 +316,7 @@
                     $.each(response, function (index, element) {
                         $('#MainUnitId').append('<option value=' + element.Id + '>' + element.UnitName + '</option>');
                     });
+                    $('#MainUnitId').select2({ placeholder: 'الوحدة الرئيسية' });
                 });
             }
         });
@@ -308,8 +343,25 @@
                         $('#Request_ContractModelId').append('<option value=' + element.Id + '>' + element.Name + '</option>');
                     });
                 });
+                if (val == 1) {
+                    $('#FirstInstallmentDateDiv').show();
+                } else {
+                    $('#Request_FirstInstallmentDate').val('');
+                    $('#FirstInstallmentDateDiv').hide();
+                }
             } else {
                 $('#Request_ContractModelId').empty().append('<option></option>');
+                $('#Request_FirstInstallmentDate').val('');
+                $('#FirstInstallmentDateDiv').hide();
+            }
+        });
+
+        $('#Request_MarketingCompanyId').change(function () {
+            if (this.value != '') {
+                $('#MarketingCompanyPayValueDiv').show();
+            } else {
+                $('#Request_MarketingCompanyPayValue').val('');
+                $('#MarketingCompanyPayValueDiv').hide();
             }
         });
 
@@ -328,7 +380,7 @@
             $('#InstallmentTotal').keyup();
         });
 
-        $(document).on('keyup','#InstallmentTotal',function () {
+        $(document).on('keyup', '#InstallmentTotal', function () {
             debugger;
             var oTable = $('#chdataTable').DataTable();
             var len = oTable.page.len();
@@ -343,18 +395,37 @@
             oTable.page.len(len).draw();
         });
 
+        $(document).on('keyup', '#InstallmentDay', function () {
+            debugger;
+            var oTable = $('#chdataTable').DataTable();
+            var len = oTable.page.len();
+            oTable.page.len(200).draw();
+            var val = this.value;
+            var Installments = $('input[data-paydate]');
+            Installments = $(Installments).not('input[data-paydate="0"]');
+            $.each(Installments, function (index, element) {
+                debugger;
+                var value = $(element).val().split("/");
+                var d = new Date(value[2], value[1] - 1, value[0]);
+                var newVal = d.setDate(val);
+                var month = d.getMonth() + 1;
+                $(element).val(d.getDate() + "/" + month + "/" + d.getFullYear());
+            })
+            oTable.page.len(len).draw();
+        });
+
         $('#AddSpecification').click(function (e) {
             e.preventDefault();
             var deliverSpecificationName = $('#deliverSpecificationName').val();
-            var tr = '<tr>'+
+            var tr = '<tr>' +
                 '<td>' +
                 '<input type="hidden" name="DeliverySpecificationData[' + (item++) + '].Id" class="idDataArranged" value="' + (item++) + '">' +
-                '<input type="text" name="DeliverySpecificationData[' + (item++) + '].Name" class="form-control nameDataArranged" readonly value="' + deliverSpecificationName + '"/>'+
-                        '</td>'+
-                        '<td>'+
-                            '<button id="deleteSpecification" class="btn btn-danger col-lg-12">حذف</button>'+
-                        '</td>'+
-                    '</tr>';
+                '<input type="text" name="DeliverySpecificationData[' + (item++) + '].Name" class="form-control nameDataArranged" readonly value="' + deliverSpecificationName + '"/>' +
+                '</td>' +
+                '<td>' +
+                '<button id="deleteSpecification" class="btn btn-danger col-lg-12">حذف</button>' +
+                '</td>' +
+                '</tr>';
             $('#DeliverySpecificationData').append(tr);
             $('#deliverSpecificationName').val('');
         });
@@ -380,5 +451,8 @@
                 $(element).attr('name', 'DeliverySpecificationData[' + index + '].Name');
             });
         });
+        $('#MainUnitId').select2({placeholder: 'الوحدة الرئيسية'});
+        $('#Request_CustomerId').select2({ placeholder: 'العميل' });
+        $('#Request_MarketingCompanyId').select2({placeholder: 'شركة التسويق'});
     });
 </script>

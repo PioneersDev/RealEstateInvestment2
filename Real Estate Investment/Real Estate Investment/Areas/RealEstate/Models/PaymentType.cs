@@ -15,11 +15,14 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
         [Display(Name ="كود النوع")]
         public int Id { get; set; }
 
-        [Required(ErrorMessage ="يجب عليك ادخال النوع ")]
+        [Required(ErrorMessage ="يجب عليك ادخال اسم النوع ")]
         [Display(Name = " النوع")]
         public string Name { get; set; }
 
-        [Display(Name ="دفعة اضافية؟")]
-        public bool PayAddition { get; set; }//true--> في حالة الصيانة مثلا او اي دفعات اضافية
+        [Display(Name ="طبيعة النوع")]
+        public byte? PaymentTypePropertyId { get; set; }
+
+        [ForeignKey("PaymentTypePropertyId")]
+        public PaymentTypeProperty PaymentTypeProperty { get; set; }
     }
 }

@@ -45,7 +45,8 @@ namespace RealEstateInvestment.MigrationsSecurity.ApplicationDbContext
             , new Menu { MenuId = 28, ApplicationId = 1, MenuName = "/RealEstate/RegisterdContracts/Index", MenuText = "العقود المسجلة", MainMenu = 22, Section = null, Show = true }
             , new Menu { MenuId = 29, ApplicationId = 1, MenuName = "/RealEstate/RegisterdInstallments/Index", MenuText = "الأقساط المسجلة", MainMenu = 22, Section = null, Show = true }
             , new Menu { MenuId = 30, ApplicationId = 1, MenuName = "", MenuText = "مستندات", MainMenu = 4, Section = null, Show = true }
-            , new Menu { MenuId = 31, ApplicationId = 1, MenuName = "/RealEstate/Documents/Index", MenuText = "سحب واسترجاع المستندات", MainMenu = 30, Section = null, Show = true });
+            , new Menu { MenuId = 31, ApplicationId = 1, MenuName = "/RealEstate/Documents/Index", MenuText = "سحب واسترجاع المستندات", MainMenu = 30, Section = null, Show = true }
+            ,new Menu { MenuId=32, ApplicationId = 1, MenuName = "/RealEstate/MarketingCompany/Index", MenuText = "شركات التسويق", MainMenu = 5, Section = null, Show = true });
 
             context.Roles.AddOrUpdate(p => p.Id, new ApplicationRole { Name = "Owner", Description = "Basic Owner Role" });
 

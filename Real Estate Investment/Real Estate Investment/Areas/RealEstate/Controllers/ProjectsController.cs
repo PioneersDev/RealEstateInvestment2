@@ -5,6 +5,7 @@ using RealEstateInvestment.Areas.RealEstate.Models.DTO;
 using RealEstateInvestment.CLS;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -48,7 +49,9 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                 City = a.Project.City.CityName,
                 District = a.Project.District.DistrictName,
                 Location = a.Project.Location,
-                DocHeaderId=a.Project.DocHeaderId
+                DocHeaderId = a.Project.DocHeaderId,
+                MintananceAccount = a.Project.MintananceAccount,
+                InstallmentAccount = a.Project.InstallmentAccount
             }
             ).AsQueryable();
             // Total record count.
@@ -145,43 +148,60 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             string className = null;
             if (ModelState.IsValid)
             {
-                if (project.Id > 0)
+                try
                 {
-                    //Edit
-                    var oldproject = _db.Projects.Find(project.Id);
-                    var oldOwner = _db.ProjectOwners.Where(a => a.ProjectId == project.Id).FirstOrDefault();
-                    if (oldproject != null)
+                    if (project.Id > 0)
                     {
-                        //Edit Project Data
-                        oldproject.ProjectName = project.ProjectName; oldproject.ProjectDescription = project.ProjectDescription; oldproject.ProjectContentDetails = project.ProjectContentDetails; oldproject.TransmissionDate = project.TransmissionDate; oldproject.CountryId = project.CountryId; oldproject.CityId = project.CityId; oldproject.DistrictId = project.DistrictId; oldproject.Location = project.Location; oldproject.DocHeaderId = project.DocHeaderId;
+                        //Edit
+                        var oldproject = _db.Projects.Find(project.Id);
+                        var oldOwner = _db.ProjectOwners.Where(a => a.ProjectId == project.Id).FirstOrDefault();
+                        if (oldproject != null)
+                        {
+                            //Edit Project Data
+                            oldproject.ProjectName = project.ProjectName; oldproject.ProjectDescription = project.ProjectDescription; oldproject.ProjectContentDetails = project.ProjectContentDetails; oldproject.TransmissionDate = project.TransmissionDate; oldproject.CountryId = project.CountryId; oldproject.CityId = project.CityId; oldproject.DistrictId = project.DistrictId; oldproject.Location = project.Location; oldproject.DocHeaderId = project.DocHeaderId; oldproject.InstallmentAccount = project.InstallmentAccount; oldproject.MintananceAccount = project.MintananceAccount;
 
-                        //Edit Project Owner
-                        oldOwner.ProjectOwnerId = project.ProjectOwnerId; oldOwner.ProjectOwnerDelegateName = project.ProjectOwnerDelegateName; oldOwner.ProjectOwnerDelegateRepresent = project.ProjectOwnerDelegateRepresent; oldOwner.ProjectOwnerDetails = project.ProjectOwnerDetails; oldOwner.IsMainOwner = project.IsMainOwner;
-                        if (project.IsMainOwner == true)
-                            oldOwner.MainOwnerId = oldOwner.ProjectOwnerId;
-                        else
-                            oldOwner.MainOwnerId = project.MainOwnerId;
-                        message = " تم تعديل بيانات مشروع " + project.ProjectName + " بنجاح ";
-                        className = "info";
+                            //Edit Project Owner
+                            oldOwner.ProjectOwnerId = project.ProjectOwnerId; oldOwner.ProjectOwnerDelegateName = project.ProjectOwnerDelegateName; oldOwner.ProjectOwnerDelegateRepresent = project.ProjectOwnerDelegateRepresent; oldOwner.ProjectOwnerDetails = project.ProjectOwnerDetails; oldOwner.IsMainOwner = project.IsMainOwner;
+                            if (project.IsMainOwner == true)
+                                oldOwner.MainOwnerId = oldOwner.ProjectOwnerId;
+                            else
+                                oldOwner.MainOwnerId = project.MainOwnerId;
+                            message = " تم تعديل بيانات مشروع " + project.ProjectName + " بنجاح ";
+                            className = "info";
+                        }
                     }
+                    else
+                    {
+                        //Create
+                        var NewProject = Mapper.Map<ProjectDTO, Project>(project);
+                        try { NewProject.Id = _db.Projects.Max(a => a.Id) + 1; } catch { NewProject.Id = 1; }
+                        _db.Projects.Add(NewProject);
+                        var NewProjectOwner = Mapper.Map<ProjectDTO, ProjectOwner>(project);
+                        try { NewProjectOwner.Id = _db.ProjectOwners.Max(a => a.Id) + 1; } catch { NewProjectOwner.Id = 1; }
+                        NewProjectOwner.ProjectId = NewProject.Id;
+                        if (NewProjectOwner.IsMainOwner == true)
+                            NewProjectOwner.MainOwnerId = NewProjectOwner.ProjectOwnerId;
+                        _db.ProjectOwners.Add(NewProjectOwner);
+                        message = " تم اضافة مشروع " + project.ProjectName + " بنجاح ";
+                        className = "success";
+                    }
+                    _db.SaveChanges();
+                    status = true;
                 }
-                else
+                catch (DbEntityValidationException e)
                 {
-                    //Create
-                    var NewProject = Mapper.Map<ProjectDTO, Project>(project);
-                    try { NewProject.Id = _db.Projects.Max(a => a.Id) + 1; } catch { NewProject.Id = 1; }
-                    _db.Projects.Add(NewProject);
-                    var NewProjectOwner = Mapper.Map<ProjectDTO, ProjectOwner>(project);
-                    try { NewProjectOwner.Id = _db.ProjectOwners.Max(a => a.Id) + 1; } catch { NewProjectOwner.Id = 1; }
-                    NewProjectOwner.ProjectId = NewProject.Id;
-                    if (NewProjectOwner.IsMainOwner == true)
-                        NewProjectOwner.MainOwnerId = NewProjectOwner.ProjectOwnerId;
-                    _db.ProjectOwners.Add(NewProjectOwner);
-                    message = " تم اضافة مشروع " + project.ProjectName + " بنجاح ";
-                    className = "success";
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
                 }
-                _db.SaveChanges();
-                status = true;
             }
             return new JsonResult { Data = new { status = status, message = message, className = className } };
         }
@@ -198,7 +218,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                 _db.Entry(Owner).Reference(s => s.ProjectMainOwnerObj).Load(); _db.Entry(Owner).Reference(s => s.ProjectOwnerObj).Load();
                 Mapper.Map<Project, ProjectDTO>(project, ProjectDTO);
                 ProjectDTO.Country = project.Country.CountryName; ProjectDTO.City = project.City.CityName; ProjectDTO.District = project.District.DistrictName;
-                ProjectDTO.ProjectOwnerName = Owner.ProjectOwnerObj.Name; ProjectDTO.MainOwnerName = Owner.ProjectMainOwnerObj.Name;
+                ProjectDTO.ProjectOwnerName = Owner.ProjectOwnerObj.Name; ProjectDTO.MainOwnerName = Owner.ProjectMainOwnerObj?.Name ?? string.Empty;
                 return View(ProjectDTO);
             }
             else
@@ -251,7 +271,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
 
         public ActionResult GetProjectUnitsTypes(int id)
         {
-            var projectUnits = _db.ProjectUnitsTypes.Where(a => a.ProjectId == id).Select(a => new { Id = a.Id, UnitTypeName = a.UnitType.UnitTypeName, ProjectUnitTypeName = a.ProjectUnitTypeName, ProjectUnitTypeDescription = a.ProjectUnitTypeDescription, Count = a.Count, NameContain=a.NameContain, NumStartFrom=a.NumStartFrom, CharStartFrom=a.CharStartFrom, NameIncrementIn=a.NameIncrementIn, NameIncrement=a.NameIncrement, MainUnitSubUnitsNum=a.MainUnitSubUnitsNum, DocHeaderId=a.DocHeaderId }).OrderBy(a => a.Id).ToList();
+            var projectUnits = _db.ProjectUnitsTypes.Where(a => a.ProjectId == id).Select(a => new { Id = a.Id, UnitTypeName = a.UnitType.UnitTypeName, ProjectUnitTypeName = a.ProjectUnitTypeName, ProjectUnitTypeDescription = a.ProjectUnitTypeDescription, Count = a.Count, NameContain = a.NameContain, NumStartFrom = a.NumStartFrom, CharStartFrom = a.CharStartFrom, NameIncrementIn = a.NameIncrementIn, NameIncrement = a.NameIncrement, MainUnitSubUnitsNum = a.MainUnitSubUnitsNum, DocHeaderId = a.DocHeaderId }).OrderBy(a => a.Id).ToList();
             return Json(new { data = projectUnits }, JsonRequestBehavior.AllowGet);
         }
 
@@ -290,7 +310,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                     var oldPUnitType = _db.ProjectUnitsTypes.Find(PUnitType.Id);
                     if (oldPUnitType != null)
                     {
-                        oldPUnitType.UnitTypeId = PUnitType.UnitTypeId;oldPUnitType.ProjectUnitTypeName = PUnitType.ProjectUnitTypeName; oldPUnitType.Count = PUnitType.Count; oldPUnitType.ProjectUnitTypeDescription = PUnitType.ProjectUnitTypeDescription;oldPUnitType.NameContain = PUnitType.NameContain;oldPUnitType.NumStartFrom = PUnitType.NumStartFrom;oldPUnitType.CharStartFrom = PUnitType.CharStartFrom;oldPUnitType.NameIncrementIn = PUnitType.NameIncrementIn;oldPUnitType.NameIncrement = PUnitType.NameIncrement;oldPUnitType.MainUnitSubUnitsNum = PUnitType.MainUnitSubUnitsNum;oldPUnitType.DocHeaderId = PUnitType.DocHeaderId;
+                        oldPUnitType.UnitTypeId = PUnitType.UnitTypeId; oldPUnitType.ProjectUnitTypeName = PUnitType.ProjectUnitTypeName; oldPUnitType.Count = PUnitType.Count; oldPUnitType.ProjectUnitTypeDescription = PUnitType.ProjectUnitTypeDescription; oldPUnitType.NameContain = PUnitType.NameContain; oldPUnitType.NumStartFrom = PUnitType.NumStartFrom; oldPUnitType.CharStartFrom = PUnitType.CharStartFrom; oldPUnitType.NameIncrementIn = PUnitType.NameIncrementIn; oldPUnitType.NameIncrement = PUnitType.NameIncrement; oldPUnitType.MainUnitSubUnitsNum = PUnitType.MainUnitSubUnitsNum; oldPUnitType.DocHeaderId = PUnitType.DocHeaderId;
                     }
                 }
                 else

@@ -13,18 +13,24 @@ namespace RealEstateInvestment.Areas.RealEstate.BL
         {
             var tb = new DataTable(typeof(T).Name);
             PropertyInfo[] props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            int columnIndex = 0;
             foreach (var prop in props)
             {
-                tb.Columns.Add(prop.Name, prop.PropertyType);
+                tb.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+                tb.Columns[prop.Name].SetOrdinal(columnIndex);
+                columnIndex++;
             }
-            foreach (var item in items)
+            if (items != null)
             {
-                var values = new object[props.Length];
-                for (var i = 0; i < props.Length; i++)
+                foreach (var item in items)
                 {
-                    values[i] = props[i].GetValue(item, null);
+                    var values = new object[props.Length];
+                    for (var i = 0; i < props.Length; i++)
+                    {
+                        values[i] = props[i].GetValue(item, null);
+                    }
+                    tb.Rows.Add(values);
                 }
-                tb.Rows.Add(values);
             }
             return tb;
         }
@@ -33,16 +39,22 @@ namespace RealEstateInvestment.Areas.RealEstate.BL
         {
             var tb = new DataTable(typeof(T).Name);
             PropertyInfo[] props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            int columnIndex = 0;
             foreach (var prop in props)
             {
-                tb.Columns.Add(prop.Name, prop.PropertyType);
+                tb.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+                tb.Columns[prop.Name].SetOrdinal(columnIndex);
+                columnIndex++;
             }
-            var values = new object[props.Length];
-            for (var i = 0; i < props.Length; i++)
+            if (obj != null)
             {
-                values[i] = props[i].GetValue(obj, null);
+                var values = new object[props.Length];
+                for (var i = 0; i < props.Length; i++)
+                {
+                    values[i] = props[i].GetValue(obj, null);
+                }
+                tb.Rows.Add(values);
             }
-            tb.Rows.Add(values);
             return tb;
         }
     }

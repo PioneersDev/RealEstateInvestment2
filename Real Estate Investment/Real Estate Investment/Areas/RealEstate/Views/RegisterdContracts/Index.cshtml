@@ -14,6 +14,7 @@
                 <th>تاريخ العقد</th>
                 <th class="no-sort">مفتاح المستندات</th>
                 <th class="no-sort">التفاصيل</th>
+                <th class="no-sort">تسجيل قيود العقد</th>
             </tr>
         </thead>
     </table>
@@ -58,6 +59,15 @@
                     {
                         "data": "RequestId", "width": "50px", "render": function (data) {
                             return '<a class="popup btn btn-primary" href="/RealEstate/Contracts/ContractRequestDetails/' + data + '">التفاصيل</a>'
+                        }
+                    },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data, type, row) {
+                            debugger;
+                            if (row.JournalDone ==false)
+                                return '<a class="popup btn btn-danger" href="/RealEstate/RegisterdContracts/RegisterdContractSaveJournal/' + data + '">تسجيل قيود العقد</a>';
+                            else
+                                return '<a class="popup btn btn-danger" href="/RealEstate/RegisterdContracts/RegisterdContractSaveJournal/' + data + '" style="pointer-events: none; display: inline-block;" disabled>تسجيل قيود العقد</a>';
                         }
                     }
                 ],

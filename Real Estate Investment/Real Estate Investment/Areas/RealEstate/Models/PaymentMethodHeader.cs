@@ -19,9 +19,9 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
         [Display(Name = "اسم النظام")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "يجب عليك ادخال عدد سنوات النظام")]
-        [Display(Name = "عدد سنوات النظام")]
-        public int TotalYearPeriod { get; set; }
+        [Required(ErrorMessage = "يجب عليك ادخال عدد شهور النظام")]
+        [Display(Name = "عدد شهور النظام")]
+        public int TotalMonthPeriod { get; set; }
 
         public ICollection<PaymentMethodDetail> PaymentMethodDetails { get; set; }
     }

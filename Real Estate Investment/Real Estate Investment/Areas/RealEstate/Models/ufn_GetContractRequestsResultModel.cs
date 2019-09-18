@@ -39,5 +39,9 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
         public int? DocHeaderId { get; set; }
         public string DocHeaderName { get; set; }
         public int? ContractId { get; set; }
+        public DateTime? FirstInstallmentDate { get; set; }
+        public int? MarketingCompanyId { get; set; }
+        public string MarketingCompanyName { get; set; }
+        public decimal? MarketingCompanyPayValue { get; set; }
     }
 }

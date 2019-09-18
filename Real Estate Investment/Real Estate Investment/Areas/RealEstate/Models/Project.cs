@@ -54,6 +54,16 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
         [Display(Name = "مفتاح المستندات")]
         public int? DocHeaderId { get; set; }
 
+        [Display(Name = "حساب الصيانة")]
+        [Required(ErrorMessage = "يجب عليك ادخال رقم حساب الصيانة")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "يجب ادخال رقم")]
+        public int? MintananceAccount { get; set; }
+
+        [Display(Name = "حساب الدفعات")]
+        [Required(ErrorMessage = "يجب عليك ادخال رقم حساب الدفعات")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "يجب ادخال رقم")]
+        public int? InstallmentAccount { get; set; }
+
         [ForeignKey("CountryId")]
         public Country Country  { get; set; }
 

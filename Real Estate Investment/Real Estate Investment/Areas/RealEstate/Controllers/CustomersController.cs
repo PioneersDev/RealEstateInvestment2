@@ -1,9 +1,13 @@
-﻿using RealEstateInvestment.Areas.RealEstate.Models;
+﻿using Microsoft.AspNet.Identity;
+using RealEstateInvestment.Areas.RealEstate.BL;
+using RealEstateInvestment.Areas.RealEstate.Models;
 using RealEstateInvestment.Areas.RealEstate.Models.DTO;
+using RealEstateInvestment.Areas.RealEstate.Models.ViewModels;
 using RealEstateInvestment.CLS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -33,7 +37,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             int startRec = Convert.ToInt32(Request.Form.GetValues("start")[0]);
             int pageSize = Convert.ToInt32(Request.Form.GetValues("length")[0]);
             // Loading.
-            var customers = _db.Customers.Select(a => new CustomerDTO { Id = a.Id, NameArab = a.NameArab, Address = a.Address, Email = a.Email, Nationality = a.Nationality.NationalityName, Country = a.Country.CountryName, City = a.City.CityName, District = a.District.DistrictName }).AsQueryable();
+            var customers = _db.Customers.Select(a => new CustomerDTO { Id = a.Id, NameArab = a.NameArab, Address = a.Address, Email = a.Email, Nationality = a.Nationality.NationalityName, Country = a.Country.CountryName, City = a.City.CityName, District = a.District.DistrictName,AccountNumber=a.AccountNumber }).AsQueryable();
             // Total record count.
             int totalRecords = customers.Count();
             // Apply search
@@ -42,11 +46,12 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 customers = customers.Where(p => p.Id.ToString().ToLower().Contains(search.ToLower()) ||
-                p.NameArab.ToLower().Contains(search.ToLower())||
-                p.Email.ToLower().Contains(search.ToLower())||
+                p.NameArab.ToLower().Contains(search.ToLower()) ||
+                p.Email.ToLower().Contains(search.ToLower()) ||
                 p.Country.ToLower().Contains(search.ToLower()) ||
                 p.City.ToLower().Contains(search.ToLower()) ||
-                p.District.ToLower().Contains(search.ToLower()));
+                p.District.ToLower().Contains(search.ToLower())||
+                p.AccountNumber.ToString().ToLower().Contains(search.ToLower()));
             }
             // Sorting.
             customers = SortCustomersByColumnWithOrder(order, orderDir, customers);
@@ -81,6 +86,10 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                     case "2":
                         // Setting.   
                         customers = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? customers.OrderByDescending(p => p.Email) : customers.OrderBy(p => p.Email);
+                        break;
+                    case "3":
+                        // Setting.   
+                        customers = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? customers.OrderByDescending(p => p.AccountNumber) : customers.OrderBy(p => p.AccountNumber);
                         break;
                     default:
                         // Setting.   
@@ -124,8 +133,49 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                     var oldcustomer = _db.Customers.Find(customer.Id);
                     if (oldcustomer != null)
                     {
-                        oldcustomer.NameArab = customer.NameArab; oldcustomer.NameEng = customer.NameEng; oldcustomer.Address = customer.Address; oldcustomer.CountryId = customer.CountryId; oldcustomer.CityId = customer.CityId; oldcustomer.DistrictId = customer.DistrictId; oldcustomer.Email = customer.Email; oldcustomer.IdExpiryDate = customer.IdExpiryDate; oldcustomer.IdissuePlace = customer.IdissuePlace; oldcustomer.IdNumber = customer.IdNumber;
-                        oldcustomer.IdNumberForAgent = customer.IdNumberForAgent; oldcustomer.IDTypeId = customer.IDTypeId; oldcustomer.NationalityId = customer.NationalityId; oldcustomer.Occupation = customer.Occupation; oldcustomer.ReligionId = customer.ReligionId; oldcustomer.TypeId = customer.TypeId;
+                        try
+                        {
+                            oldcustomer.NameArab = customer.NameArab; oldcustomer.NameEng = customer.NameEng; oldcustomer.Address = customer.Address; oldcustomer.CountryId = customer.CountryId; oldcustomer.CityId = customer.CityId; oldcustomer.DistrictId = customer.DistrictId; oldcustomer.Email = customer.Email; oldcustomer.IdExpiryDate = customer.IdExpiryDate; oldcustomer.IdissuePlace = customer.IdissuePlace; oldcustomer.IdNumber = customer.IdNumber;
+                            oldcustomer.IdNumberForAgent = customer.IdNumberForAgent; oldcustomer.IDTypeId = customer.IDTypeId; oldcustomer.NationalityId = customer.NationalityId; oldcustomer.Occupation = customer.Occupation; oldcustomer.ReligionId = customer.ReligionId; oldcustomer.TypeId = customer.TypeId;
+                            AccountOperationParams paramModel = new AccountOperationParams
+                            {
+                                CustomerId = oldcustomer.Id,
+                                CustomerNameA = oldcustomer.NameArab,
+                                CustomerNameE = oldcustomer.NameEng,
+                                UserName = User.Identity.GetUserName(),
+                                MachineIp = Request.UserHostAddress,
+                                MachineName = User.Identity.GetUserName(),
+                                LoginUser = User.Identity.GetUserId(),
+                                Operation = "Update",
+                                CompanyName = "GL_SQUER",
+                                CustomerAccount = oldcustomer.AccountNumber.Value
+                            };
+                            HttpResponseMessage response = GlobalApiVariables.WebApiClient.PostAsJsonAsync("CustomerAccountOperation", paramModel).Result;
+                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                            {
+                                var CustomerAccountOperationResult = response.Content.ReadAsAsync<AccountOperationResult>().Result;
+                                if (CustomerAccountOperationResult.Status)
+                                {
+                                    oldcustomer.AccountNumber = CustomerAccountOperationResult.AccountId;
+                                }
+                                else
+                                {
+                                    throw new Exception(" Customer Account Not Added Correctly " + CustomerAccountOperationResult.Message);
+                                }
+                            }
+                            else
+                            {
+                                //throw new Exception("Error in Calling API");
+                                message = "Error in Calling API";
+                                className = "error";
+                                status = true;
+                                return new JsonResult { Data = new { status = status, message = message, className = className } };
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
                         message = " تم تعديل بيانات العميل " + customer.NameArab + " بنجاح ";
                         className = "info";
                     }
@@ -134,7 +184,56 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                 {
                     //Create
                     try { customer.Id = _db.Customers.Max(a => a.Id) + 1; } catch { customer.Id = 1; }
-                    _db.Customers.Add(customer);
+                    try
+                    {
+                        AccountOperationParams paramModel = new AccountOperationParams
+                        {
+                            CustomerId = customer.Id,
+                            CustomerNameA = customer.NameArab,
+                            CustomerNameE = customer.NameEng,
+                            UserName = User.Identity.GetUserName(),
+                            MachineIp = Request.UserHostAddress,
+                            MachineName = User.Identity.GetUserName(),
+                            LoginUser = User.Identity.GetUserId(),
+                            Operation = "Insert",
+                            CompanyName = "GL_SQUER",
+                            CustomerAccount = null
+                        };
+                        HttpResponseMessage response = GlobalApiVariables.WebApiClient.PostAsJsonAsync("CustomerAccountOperation", paramModel).Result;
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            var CustomerAccountOperationResult = response.Content.ReadAsAsync<AccountOperationResult>().Result;
+                            if (CustomerAccountOperationResult.Status)
+                            {
+                                customer.AccountNumber = CustomerAccountOperationResult.AccountId;
+                                _db.Customers.Add(customer);
+                            }
+                            else
+                            {
+                                //throw new Exception(" Customer Account Not Added Correctly " + CustomerAccountOperationResult.Message);
+                                message = " Customer Account Not Added Correctly " + CustomerAccountOperationResult.Message;
+                                className = "error";
+                                status = true;
+                                return new JsonResult { Data = new { status = status, message = message, className = className } };
+                            }
+                        }
+                        else
+                        {
+                            //throw new Exception("Error in Calling API");
+                            message = "Error in Calling API";
+                            className = "error";
+                            status = true;
+                            return new JsonResult { Data = new { status = status, message = message, className = className } };
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //throw ex;
+                        message = "Error in Calling API";
+                        className = "error";
+                        status = true;
+                        return new JsonResult { Data = new { status = status, message = message, className = className } };
+                    }
                     message = " تم اضافة العميل " + customer.NameArab + " بنجاح ";
                     className = "success";
                 }
@@ -179,6 +278,17 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                 className = "error";
             }
             return new JsonResult { Data = new { status = status, message = message, className = className } };
+        }
+
+        public ActionResult GetCustomerList(string searchTearm)
+        {
+            var customerList = _db.Customers.Select(a => new { Id = a.Id, NameArab = a.Id + " " + a.NameArab }).ToList();
+            if (!string.IsNullOrEmpty(searchTearm))
+            {
+                customerList = customerList.Where(a => a.NameArab.Contains(searchTearm)).ToList();
+            }
+            var data = customerList.Select(a => new { id = a.Id, text = a.NameArab }).ToList();
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         private void PopulateDropDownList(object selectedCountry = null, object selectedCity = null, object selectedDistrict = null, object selectedIDType = null, object selectedReligion = null, object selectedNationality = null)

@@ -26,6 +26,9 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PaymentMethodDetail>().Property(a => a.Ratio).HasPrecision(12, 10);
+            modelBuilder.Entity<Unit>().Property(a => a.TotalMeters).HasPrecision(18, 2);
+            modelBuilder.Entity<Customer>().Property(a =>a.AccountNumber).HasPrecision(19, 0);
+            modelBuilder.Entity<Contract>().Property(a => a.MarketingCompanyPayValue).HasPrecision(18, 2);
             base.OnModelCreating(modelBuilder);
             //Configure default schema
             modelBuilder.HasDefaultSchema("con");
@@ -54,6 +57,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
         public DbSet<DocHeader> DocHeaders { get; set; }
         public DbSet<DocDetail> DocDetails { get; set; }
         public DbSet<ProjectOwner> ProjectOwners { get; set; }
+        public DbSet<PaymentTypeProperty> PaymentTypeProperties { get; set; }
         public DbSet<PaymentType> PaymentTypes { get; set; }
         public DbSet<PaymentMethodHeader> PaymentMethodHeaders { get; set; }
         public DbSet<PaymentMethodDetail> PaymentMethodDetails { get; set; }
@@ -64,5 +68,6 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
         public DbSet<Installment> Installments { get; set; }
         public DbSet<ContractSys> ContractSyses { get; set; }
         public DbSet<ContractDeliverySpecification> ContractDeliverySpecifications { get; set; }
+        public DbSet<MarketingCompany> MarketingCompany { get; set; }
     }
 }

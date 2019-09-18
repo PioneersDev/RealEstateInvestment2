@@ -14,6 +14,8 @@
                 <th>الوحدة</th>
                 <th>العميل</th>
                 <th>تاريخ العقد</th>
+                <th>شركة التسويق</th>
+                <th class="no-sort">حصة شركة التسويق</th>
                 <th class="no-sort">مفتاح المستندات</th>
                 <th class="no-sort">الحالة</th>
                 <th class="no-sort">عند</th>
@@ -28,8 +30,10 @@
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
     <link href="~/Plugins/bootstrap-datepicker-1.6.4/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Plugins/select2/css/select2.min.css" rel="stylesheet" />
     <script src="~/Plugins/bootstrap-datepicker-1.6.4/js/bootstrap-datepicker.min.js"></script>
     <script src="~/Plugins/bootstrap-datepicker-1.6.4/locales/bootstrap-datepicker.ar.min.js"></script>
+    <script src="~/Plugins/select2/js/select2.min.js"></script>
     <script>
         $(function () {
             var dialogOpened = false;
@@ -70,6 +74,8 @@
                                 return "";
                         }
                     },
+                    { "data": "MarketingCompanyName", "autowidth": true },
+                    { "data": "MarketingCompanyPayValue", "autowidth": true },
                     {
                         "data": "Id",
                         "autowidth": true,
@@ -181,7 +187,7 @@
                         model: true,
                         title: 'نافذة فرعية',
                         height: 650,
-                        width: 700,
+                        width: 1290,
                         close: function () {
                             $dialog.dialog('destroy').remove();
                             dialogOpened = false;

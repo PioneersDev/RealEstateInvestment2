@@ -51,8 +51,27 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
         [Display(Name = "نوع نموذج العقد")]
         public int ContractModelId { get; set; }
 
+        [DataType(DataType.Date)]
+        public DateTime? FirstInstallmentDate { get; set; }
+
+        [Display(Name = "شركة التسويق")]
+        [Required(ErrorMessage = "يجب عليك تحديد شركة التسويق")]
+        public int? MarketingCompanyId { get; set; }
+
+        [Display(Name = " نسبة شركة التسويق ")]
+        [Required(ErrorMessage = "يجب عليك تحديد نسبة شركة التسويق")]
+        public decimal? MarketingCompanyPayValue { get; set; }
+
+        public int? JOURNALID { get; set; }
+
+        public int? TICKETID { get; set; }
+
+        public DateTime? TICKETDATE { get; set; }
+
         [Display(Name = "رقم الطلب")]
         public long RequestId { get; set; }
+
+        public bool JournalDone { get; set; }
 
         [ForeignKey("ProjectId")]
         public Project Project { get; set; }
@@ -74,5 +93,8 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
 
         [ForeignKey("ContractModelId")]
         public ContractModel ContractModel { get; set; }
+
+        [ForeignKey("MarketingCompanyId")]
+        public MarketingCompany MarketingCompany { get; set; }
     }
 }

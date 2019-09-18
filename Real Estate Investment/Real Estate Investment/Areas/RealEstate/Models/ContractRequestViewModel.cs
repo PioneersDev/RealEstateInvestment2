@@ -12,5 +12,6 @@ namespace RealEstateInvestment.Areas.RealEstate.Models
         public ContractRequests Request { get; set; }
         public List<InstallmentDataSerializer> InstallmentData { get; set; }
         public List<DeliverySpecificationSerializer> DeliverySpecificationData { get; set; }
+        public string UserName { get; set; }
     }
 }

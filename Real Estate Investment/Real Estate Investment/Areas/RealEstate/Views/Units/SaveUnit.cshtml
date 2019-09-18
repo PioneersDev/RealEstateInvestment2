@@ -215,12 +215,9 @@
         });
 
         $('#popupForm').submit(function (e) {
-            debugger;
-            $(':input[type="submit"]').prop('disabled', false);
             var isparentval = $('input[type=radio][name=isParentUnit]:checked').val();
             if (isparentval == 'false' && $('#MainUnitId').val() == '') {
                 $('#MainUnitIdValidation').text("من فضلك اختر الوحدة الرئيسية");
-                $(':input[type="submit"]').prop('disabled', true);
                 return false;
             }
         });
