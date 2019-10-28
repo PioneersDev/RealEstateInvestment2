@@ -6,9 +6,12 @@ using RealEstateInvestment.Areas.RealEstate.Models.ViewModels;
 using RealEstateInvestment.CLS;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
+using System.Web.Http.Results;
 using System.Web.Mvc;
 
 namespace RealEstateInvestment.Areas.RealEstate.Controllers
@@ -150,17 +153,19 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                                 CompanyName = "GL_SQUER",
                                 CustomerAccount = oldcustomer.AccountNumber.Value
                             };
-                            HttpResponseMessage response = GlobalApiVariables.WebApiClient.PostAsJsonAsync("CustomerAccountOperation", paramModel).Result;
-                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                            CustomerQaed custq = new CustomerQaed();
+
+                            var response = custq.CustomerAccountOperation(paramModel);
+                            if (response != null)
                             {
-                                var CustomerAccountOperationResult = response.Content.ReadAsAsync<AccountOperationResult>().Result;
-                                if (CustomerAccountOperationResult.Status)
+                                
+                                if (response.Status)
                                 {
-                                    oldcustomer.AccountNumber = CustomerAccountOperationResult.AccountId;
+                                    oldcustomer.AccountNumber = response.AccountId;
                                 }
                                 else
                                 {
-                                    throw new Exception(" Customer Account Not Added Correctly " + CustomerAccountOperationResult.Message);
+                                    throw new Exception(" Customer Account Not Added Correctly " + response.Message);
                                 }
                             }
                             else
@@ -199,32 +204,30 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                             CompanyName = "GL_SQUER",
                             CustomerAccount = null
                         };
-                        HttpResponseMessage response = GlobalApiVariables.WebApiClient.PostAsJsonAsync("CustomerAccountOperation", paramModel).Result;
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-                            var CustomerAccountOperationResult = response.Content.ReadAsAsync<AccountOperationResult>().Result;
-                            if (CustomerAccountOperationResult.Status)
+
+                        CustomerQaed custq = new CustomerQaed();
+
+                        var response = custq.CustomerAccountOperation(paramModel);
+
+                        //HttpResponseMessage response = GlobalApiVariables.WebApiClient.PostAsJsonAsync("CustomerAccountOperation", paramModel).Result;
+
+                        //if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        //{
+                         
+                            if (response.Status)
                             {
-                                customer.AccountNumber = CustomerAccountOperationResult.AccountId;
+                                customer.AccountNumber = response.AccountId;
                                 _db.Customers.Add(customer);
                             }
                             else
                             {
                                 //throw new Exception(" Customer Account Not Added Correctly " + CustomerAccountOperationResult.Message);
-                                message = " Customer Account Not Added Correctly " + CustomerAccountOperationResult.Message;
+                                message = " Customer Account Not Added Correctly " + response.Message;
                                 className = "error";
                                 status = true;
                                 return new JsonResult { Data = new { status = status, message = message, className = className } };
                             }
-                        }
-                        else
-                        {
-                            //throw new Exception("Error in Calling API");
-                            message = "Error in Calling API";
-                            className = "error";
-                            status = true;
-                            return new JsonResult { Data = new { status = status, message = message, className = className } };
-                        }
+                     
                     }
                     catch (Exception ex)
                     {
@@ -400,5 +403,8 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             }
             base.Dispose(disposing);
         }
+
+    
+
     }
 }

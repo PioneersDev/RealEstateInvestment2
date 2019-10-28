@@ -258,6 +258,7 @@
     <Compile Include="Areas\RealEstate\BL\UnitLogic.cs" />
     <Compile Include="Areas\RealEstate\Controllers\ContractsController.cs" />
     <Compile Include="Areas\RealEstate\Controllers\CustomerAPIController.cs" />
+    <Compile Include="Areas\RealEstate\Controllers\CustomerQaed.cs" />
     <Compile Include="Areas\RealEstate\Controllers\CustomersController.cs" />
     <Compile Include="Areas\RealEstate\Controllers\DocumentsController.cs" />
     <Compile Include="Areas\RealEstate\Controllers\IdsTypesController.cs" />
@@ -2311,6 +2312,8 @@
     <Content Include="Areas\RealEstate\Views\RegisterdContracts\RegisterdContractSaveJournal.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile3.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

@@ -160,11 +160,14 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                     param.mULTIPLECHEQUE_TYPEs.Add(new MULTIPLECHEQUE_TYPE { accountid = contract.Project.InstallmentAccount.Value, ACTIONTYPE = "Insert", bankbranch = item.BANKBRANCH, bankname = item.BANKNAME, chequeno = item.CHEQUENO.Value.ToString(), chequevalue = item.PayValue, COMPANYNAME = "GL_SQUARE", currid = 1, currrate = 1, duedate = item.PayDate, InstallmentId = item.Id, LOGINUSER = User.Identity.Name, MACHINEIP = Request.UserHostAddress, MACHINENAME = "", remarksa = " قسط " + installmentType + Remark, remarkse = " قسط " + installmentType + Remark, SysAccount = 16, USERNAME = User.Identity.Name, ticketdate = ticketdate });
             }
             param.CompanyName = "GL_SQUERLOCAL";
-            HttpResponseMessage response = GlobalApiVariables.WebApiClient.PostAsJsonAsync("CreateJournalEntries", param).Result;
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                var CreateJournalEntriesResult = response.Content.ReadAsAsync<CreateJournalEntriesResult>().Result;
-                if (CreateJournalEntriesResult.STATUS)
+
+            CustomerQaed custq = new CustomerQaed();
+
+            var response = custq.CreateJournalEntries(param);
+            //var response = GlobalApiVariables.WebApiClient.PostAsJsonAsync("CreateJournalEntries", param).Result;
+           
+             
+                if (response.STATUS)
                 {
                     message = "تم انشاء قيود العقد بنجاح";
                     className = "success";
@@ -173,11 +176,11 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                 else
                 {
                     //throw new Exception(" Journal Entries Not Added Correctly " + CreateJournalEntriesResult.MESSAGE);
-                    message = " Journal Entries Not Added Correctly " + CreateJournalEntriesResult.MESSAGE;
+                    message = " Journal Entries Not Added Correctly " + response.MESSAGE;
                     className = "error";
                     status = true;
                 }
-            }
+            
             return new JsonResult { Data = new { status = status, message = message, className = className } };
         }
         /********************************************************************************************/

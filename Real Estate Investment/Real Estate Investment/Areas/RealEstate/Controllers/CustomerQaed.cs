@@ -1,24 +1,19 @@
-﻿using RealEstateInvestment.Areas.RealEstate.BL;
-using RealEstateInvestment.Areas.RealEstate.Models.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http.Results;
+using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
+using RealEstateInvestment.Areas.RealEstate.BL;
+using RealEstateInvestment.Areas.RealEstate.Models.ViewModels;
 
 namespace RealEstateInvestment.Areas.RealEstate.Controllers
 {
-    [System.Web.Http.RoutePrefix("api/CustomerAPI")]
-    public class CustomerAPIController : Controller
+    public class CustomerQaed
     {
-
-        [System.Web.Http.HttpPost]
-        [System.Web.Http.Route("CustomerAccountOperation")]
-        public JsonResult CustomerAccountOperation(AccountOperationParams model)
+        public AccountOperationResult CustomerAccountOperation(AccountOperationParams model)
         {
             string connectionString = HandelConnectionStrings.GetConnectionString(model.CompanyName);
             DataTable dataTable = new DataTable();
@@ -72,12 +67,12 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             da.Fill(dataTable);
             connection.Close();
             da.Dispose();
-            return Json(dataTable.ToCollection<AccountOperationResult>().FirstOrDefault());
+            return dataTable.ToCollection<AccountOperationResult>().FirstOrDefault();
         }
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("CreateJournalEntries")]
-        public JsonResult CreateJournalEntries(CreateJournalEntriesParams model)
+        public CreateJournalEntriesResult CreateJournalEntries(CreateJournalEntriesParams model)
         {
 
             string connectionString = HandelConnectionStrings.GetConnectionString(model.CompanyName);
@@ -107,12 +102,12 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             da.Fill(dataTable);
             connection.Close();
             da.Dispose();
-            return Json(dataTable.ToCollection<CreateJournalEntriesResult>().FirstOrDefault());
+            return dataTable.ToCollection<CreateJournalEntriesResult>().FirstOrDefault();
         }
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("PayRealEstateInstallment")]
-        public JsonResult PayRealEstateInstallment(PayRealEstateInstallmentParams model)
+        public CreateJournalEntriesResult PayRealEstateInstallment(PayRealEstateInstallmentParams model)
         {
             string connectionString = HandelConnectionStrings.GetConnectionString(model.CompanyName);
             DataTable dataTable = new DataTable();
@@ -132,7 +127,8 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             da.Fill(dataTable);
             connection.Close();
             da.Dispose();
-            return Json(dataTable.ToCollection<CreateJournalEntriesResult>().FirstOrDefault());
+            return dataTable.ToCollection<CreateJournalEntriesResult>().FirstOrDefault();
         }
+
     }
 }
