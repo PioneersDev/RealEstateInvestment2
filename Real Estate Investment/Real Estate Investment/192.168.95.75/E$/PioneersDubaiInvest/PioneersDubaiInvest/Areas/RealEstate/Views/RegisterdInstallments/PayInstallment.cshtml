@@ -1,0 +1,93 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.ViewModels.PayInstallmentViewModel
+@{
+    Layout = null;
+}
+<style>
+    ul.ui-autocomplete {
+        z-index: 1100;
+    }
+</style>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        دفع القسط
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("PayInstallment", "RegisterdInstallments", FormMethod.Post, new { id = "popupForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+
+                @*<div class="form-group">
+                        <div class="col-md-8">
+                            @Html.TextBox("AccountName", null, new { @class = "form-control", autocomplete = "off" })
+                        </div>
+                        <div class="col-md-3">
+                            @Html.EditorFor(model => model.BankAccount, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.BankAccount, "", new { @class = "text-danger" })
+                        </div>
+                        @Html.LabelFor(model => model.BankAccount, htmlAttributes: new { @class = "control-label col-md-1" })
+                    </div>*@
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.BankAccount, ViewBag.Accounts as SelectList, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.BankAccount, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.BankAccount, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.Remarks, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="دفع القسط" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#BankAccount').select2({ placeholder: 'الحساب' });
+
+        //$('#BankAccount').val('');
+
+        //$(document).on('keydown', '#AccountName', function (e) {
+        //    debugger;
+        //    var idInput = $("#BankAccount");
+        //    $("#searchname").autocomplete({
+        //        source: function (request, response) {
+        //            $.get("/RegisterdInstallments/SearchByName/", { term: request.term }, response);
+        //        },
+        //        minLength: 1,
+        //        select: function (event, ui) {
+        //            $(idInput).val(ui.item.ACCOUNTID);
+        //        }
+        //    });
+        //});
+
+        //$(document).on('keydown', '#BankAccount', function (e) {
+        //    debugger;
+        //    var nameInput = $("#AccountName");
+        //    $("#BankAccount").autocomplete({
+        //        source: function (request, response) {
+        //            $.get("/RegisterdInstallments/SearchById/", { term: request.term }, response);
+        //        },
+        //        minLength: 1,
+        //        select: function (event, ui) {
+        //            $(nameInput).val(ui.item.ACCOUNTNAMEA);
+        //        }
+        //    });
+        //});
+    });
+</script>

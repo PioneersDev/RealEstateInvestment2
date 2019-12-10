@@ -1,0 +1,8 @@
+﻿@model IEnumerable<RealEstateInvestment.Models.ViewModels.NotificationViewModels>
+@{
+    Layout = null;
+}
+@foreach (var note in Model)
+{
+    <li><a href="@note.Url" data-noteid="@note.Id">@note.MessageText بواسطة @note.ActorName</a></li>
+}

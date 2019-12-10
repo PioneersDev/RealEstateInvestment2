@@ -24,9 +24,9 @@ namespace RealEstateInvestment.Controllers
                 var confg = WebConfigurationManager.OpenWebConfiguration("~");
                 var sec = (ConnectionStringsSection)confg.GetSection("connectionStrings");
                 sec.ConnectionStrings["DefaultConnection"].ConnectionString =
-                    "Data Source="+model.Ip+"; Initial Catalog=RealEstateDb; User ID="+model.Name+"; Password="+model.dbPassword+"";
+                    "Data Source="+model.Ip+ "; Initial Catalog=RealEstateDbMashareq; User ID=" + model.Name+"; Password="+model.dbPassword+"";
                 sec.ConnectionStrings["dbconn"].ConnectionString =
-                    "Data Source=" + model.Ip + "; Initial Catalog=RealEstateDb; User ID=" + model.Name + "; Password=" + model.dbPassword + "";
+                    "Data Source=" + model.Ip + "; Initial Catalog=RealEstateDbMashareq; User ID=" + model.Name + "; Password=" + model.dbPassword + "";
                 confg.Save();
                 return RedirectToAction("Index","Home");
             }

@@ -1,0 +1,159 @@
+﻿@{
+    ViewBag.Title = "العقود المسجلة";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="width:90%;margin:0 auto;margin-bottom: 20px;margin-top: 20px;" class="tableContainer">
+    <table id="dataTable" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>رقم العقد</th>
+                <th>المشروع</th>
+                <th>الوحدة الرئيسية</th>
+                <th>الوحدة</th>
+                <th>العميل</th>
+                <th>تاريخ العقد</th>
+                <th class="no-sort">مفتاح المستندات</th>
+                <th class="no-sort">التفاصيل</th>
+                <th class="no-sort">تسجيل قيود العقد</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            var dialogOpened = false;
+            var oTable = $('#dataTable').DataTable({
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": '/RegisterdContracts/GetRegisterdContracts/ @ViewBag.id',
+                    "type": 'POST',
+                    "datatype": "json",
+                },
+                "columns": [
+                    {"data": "Id","autowidth": true},
+                    { "data": "ProjectName", "autowidth": true },
+                    { "data": "MainUnitName", "autowidth": true },
+                    { "data": "UnitName", "autowidth": true },
+                    { "data": "CustomerName", "autowidth": true },
+                    {
+                        "data": "ContractDate",
+                        "autowidth": true,
+                        "render": function (data) {
+                            if (data != null) {
+                                var date = new Date(parseInt(data.substr(6)));
+                                var month = date.getMonth() + 1;
+                                return date.getDate() + "/" + month + "/" + date.getFullYear();
+                            } else
+                                return "";
+                        }
+                    },
+                    {
+                        "data": "RequestId", "width": "50px","render": function (data, type, row) {
+                                return '<a class="popup btn btn-primary" href="/RealEstate/Contracts/ContractDocHeaderOperations/' + data + '">مفتاح المستندات</a>';
+                        }
+                    },
+                    {
+                        "data": "RequestId", "width": "50px", "render": function (data) {
+                            return '<a class="popup btn btn-primary" href="/RealEstate/Contracts/ContractRequestDetails/' + data + '">التفاصيل</a>'
+                        }
+                    },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data, type, row) {
+                            debugger;
+                            if (row.JournalDone ==false)
+                                return '<a class="popup btn btn-danger" href="/RealEstate/RegisterdContracts/RegisterdContractSaveJournal/' + data + '">تسجيل قيود العقد</a>';
+                            else
+                                return '<a class="popup btn btn-danger" href="/RealEstate/RegisterdContracts/RegisterdContractSaveJournal/' + data + '" style="pointer-events: none; display: inline-block;" disabled>تسجيل قيود العقد</a>';
+                        }
+                    }
+                ],
+                "language": {
+                    "emptyTable": "لا توجد نتائج لعرضها",
+                    "info": "عرض _START_ الى _END_ من _TOTAL_ نتيجة",
+                    "infoEmpty": "",
+                    "infoFiltered": "(نتائج بحث من اجمالي _MAX_ نتيجة)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "عرض _MENU_ نتائج ",
+                    "loadingRecords": "تحميل...",
+                    "search": "بحث: ",
+                    "zeroRecords": "لا توجد نتائج مطابقة للبحث",
+                    "paginate": {
+                        "first": "الأول",
+                        "last": "الأخير",
+                        "next": "التالي",
+                        "previous": "السابق"
+                    },
+                    "processing": "تحميل......."
+                },
+                columnDefs: [
+                    { "className": "dt-center", "targets": "_all" }/* to center data on columns*/,
+                    {
+                        "targets": 'no-sort',
+                        "orderable": false
+                    }
+                ]
+            });
+
+            $('.tableContainer').on('click', 'a.popup', function (e) {
+                e.preventDefault();
+                if (!dialogOpened) {
+                    OpenPopup($(this).attr('href'));
+                    dialogOpened = true;
+                }
+            });
+
+            function OpenPopup(pageUrl) {
+                var $pageContent = $('<div/>');
+                $pageContent.load(pageUrl, function () {
+                    $('#popupForm', $pageContent).removeData('validator');
+                    $('#popupForm', $pageContent).removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse('form');
+                });
+
+                $dialog = $('<div class="popupWindow" style="overflow:auto"></div>')
+                    .html($pageContent)
+                    .dialog({
+                        draggable: true,
+                        autoOpen: false,
+                        resizable: true,
+                        model: true,
+                        title: 'نافذة فرعية',
+                        height: 650,
+                        width: 700,
+                        close: function () {
+                            $dialog.dialog('destroy').remove();
+                            dialogOpened = false;
+                        }
+                    });
+
+                $('.popupWindow').on('submit', '#popupForm', function (e) {
+                    var url = $('#popupForm')[0].action;
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $('#popupForm').serialize(),
+                        success: function (data) {
+                            if (data.status) {
+                                $dialog.dialog('close');
+                                dialogOpened = false;
+                                oTable.ajax.reload();
+                                $.notify(data.message, {
+                                    globalPosition: 'top center',
+                                    className: data.className
+                                });
+                            }
+                        }
+                    });
+                    e.preventDefault();
+                });
+                $dialog.dialog('open');
+            };
+
+        });
+    </script>
+}

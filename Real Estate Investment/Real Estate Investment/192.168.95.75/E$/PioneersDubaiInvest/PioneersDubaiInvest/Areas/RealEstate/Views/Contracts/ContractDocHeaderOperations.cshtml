@@ -1,0 +1,31 @@
+﻿@{ 
+    Layout = null;
+}
+@if (ViewBag.step == 1)
+{
+    <button class="btn btn-primary opButton" data-href="/RealEstate/Contracts/ContractDocHeaderWrite/@ViewBag.id">استخراج عقد جديد</button>
+    <button class="btn btn-primary opButton" data-href="/RealEstate/Contracts/ContractDocHeaderScan/@ViewBag.id">مسح العقد الجديد بعد التعديل</button>
+}
+else
+{
+    <button class="btn btn-primary opButton" data-href="/RealEstate/Contracts/ContractDocHeaderReviow/@ViewBag.docHeaderId">الاطلاع على المستندات</button>
+}
+<div id="mainContent" style="margin:10px;">
+
+</div>
+<script>
+    $(function () {
+        $('.opButton').click(function () {
+            var url = $(this).attr('data-href');
+            var divToUpdate = $('#mainContent');
+            var $Content = $('<div/>');
+            $Content.load(url, function () {
+                $('#popupForm', $Content).removeData('validator');
+                $('#popupForm', $Content).removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse('form');
+            });
+            divToUpdate.empty();
+            divToUpdate.html($Content);
+        });
+    });
+</script>

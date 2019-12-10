@@ -1,0 +1,64 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.UnitType
+@{
+    Layout = null;
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        حذف نوع وحدات
+    </div>
+    <div class="panel-body">
+        <h3>هل انت متأكد من انك تريد حذف هذا النوع؟</h3>
+        <div>
+            <table>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.Id)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UnitTypeName) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.UnitTypeName)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsParent) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @(Model.IsParent == true ? "نعم" : "لا")
+                    </td>
+                </tr>
+                @if (Model.IsParent == true)
+                {
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SubUnitId) : &nbsp; &nbsp;
+                        </th>
+
+                        <td>
+                            @Html.DisplayFor(model => model.SubUnit.UnitTypeName)
+                        </td>
+                    </tr>
+                }
+            </table>
+
+            @using (Html.BeginForm("DeleteUnitType", "Types", FormMethod.Post, new { id = "popupForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="حذف" class="btn btn-danger" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

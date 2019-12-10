@@ -1,0 +1,151 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.ContractSys
+@{
+    Layout = null;
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        @if (Model != null && Model.VarId > 0)
+        {
+            @:تعديل بيانات متغير
+        }
+        else
+        {
+            @:اضافة متغير جديد
+        }
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("SaveContractSys", "Contracts", FormMethod.Post, new { id = "popupForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @if (Model != null && Model.VarId > 0)
+                {
+                    @Html.HiddenFor(model => model.VarId)
+                }
+
+                @Html.HiddenFor(model => model.VarName)
+                @Html.HiddenFor(model => model.IsMoney)
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.VarDescription, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.VarDescription, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.VarDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.VarType, ViewBag.Types as SelectList, string.Empty, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.VarType, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.VarType, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.VarValue, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.VarValue, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.VarValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.IsTafqet)
+                            @Html.ValidationMessageFor(model => model.IsTafqet, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @Html.LabelFor(model => model.IsTafqet, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="حفظ" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    $(function () {
+        debugger;
+         @if (Model != null && Model.VarId > 0)
+         {
+             if (Model.IsMoney == true)
+             {
+                 @:$('#VarType').val($('#VarType option').filter(function () { return $(this).html() == "مبلغ"; }).val());
+                 @:$('#VarValue').prop('type', 'number');
+                 @:$('#VarValue').prop('class', 'form-control');
+                 @:$('#VarValue').datepicker('destroy');
+             }
+             if (Model.VarType == "datetime")
+             {
+                 @:$('#IsTafqet').prop('checked', false);
+                 @:$('#IsTafqet').prop('disabled', true);
+                 @:$('#VarValue').prop('type', 'text');
+                 @:$('#VarValue').prop('class', 'form-control datepicker');
+                 @:$('#VarValue').datepicker({format: "dd/mm/yyyy",orientation: "bottom right"})
+             }
+             if (Model.VarType == "string")
+             {
+                 @:$('#IsTafqet').prop('checked', false);
+                 @:$('#IsTafqet').prop('disabled', true);
+                 @:$('#VarValue').prop('type', 'text');
+                 @:$('#VarValue').prop('class', 'form-control');
+                 @:$('#VarValue').datepicker('destroy');
+             }
+             if(Model.VarType == "int"|| Model.VarType == "decimal")
+             {
+                 @:$('#VarValue').prop('type', 'number');
+                 @:$('#VarValue').prop('class', 'form-control');
+                 @:$('#VarValue').datepicker('destroy');
+             }
+         }
+
+        $('#VarType').change(function () {
+                 debugger;
+            $('#VarValue').val('');
+                 switch (this.value) {
+                     case "money":
+                    $('#IsTafqet').prop('disabled', false);
+                    $('#IsMoney').val(true);
+                    $('#VarValue').prop('type', 'number');
+                    $('#VarValue').prop('class', 'form-control');
+                    $('#VarValue').datepicker('destroy');
+                         break;
+                     case "decimal":
+                     case "int":
+                    $('#IsTafqet').prop('disabled', false);
+                    $('#IsMoney').val(false);
+                    $('#VarValue').prop('type', 'number');
+                    $('#VarValue').prop('class', 'form-control');
+                    $('#VarValue').datepicker('destroy');
+                         break;
+                     case "string":
+                    $('#IsTafqet').prop('checked', false);
+                    $('#IsTafqet').prop('disabled', true);
+                    $('#IsMoney').val(false);
+                    $('#VarValue').prop('type', 'text');
+                    $('#VarValue').prop('class', 'form-control');
+                    $('#VarValue').datepicker('destroy');
+                         break;
+                     case "datetime":
+                    $('#IsTafqet').prop('checked', false);
+                    $('#IsTafqet').prop('disabled', true);
+                    $('#IsMoney').val(false);
+                    $('#VarValue').prop('type', 'text');
+                    $('#VarValue').prop('class', 'form-control datepicker');
+                    $('#VarValue').datepicker({
+                             format: "dd/mm/yyyy",
+                        orientation: "bottom right"
+                         })
+                    break;
+                 }
+             });
+         });
+</script>

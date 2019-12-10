@@ -1,0 +1,107 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.ContractSys
+@{
+    Layout = null;
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        حذف متغير
+    </div>
+    <div class="panel-body">
+        <h3>هل انت متأكد من انك تريد حذف هذا المتغير؟</h3>
+        <div>
+            <table>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.VarId) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.VarId)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.VarName) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.VarName)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.VarDescription) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.VarDescription)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.VarType) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @switch (Model.VarType)
+                        {
+                            case "int":
+                                if (Model.IsMoney == true)
+                                {
+                                    @:مبلغ
+                                    }
+                                else
+                                {
+                                    @:عدد صحيح
+                                    }
+                                break;
+                            case "decimal":
+                                if (Model.IsMoney == true)
+                                {
+                                    @:مبلغ
+                                    }
+                                else
+                                {
+                                    @:نسبة
+                                    }
+                                break;
+                            case "datetime":
+                                @:تاريخ
+                                    break;
+                            case "string":
+                                @:نص
+                                    break;
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.VarValue) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.VarValue)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsTafqet) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.IsTafqet)
+                    </td>
+                </tr>
+            </table>
+
+            @using (Html.BeginForm("DeleteContractSys", "Contracts", FormMethod.Post, new { id = "popupForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="حذف" class="btn btn-danger" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

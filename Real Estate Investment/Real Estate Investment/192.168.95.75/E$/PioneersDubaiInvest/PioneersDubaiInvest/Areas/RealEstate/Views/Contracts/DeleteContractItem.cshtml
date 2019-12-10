@@ -1,0 +1,54 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.ContractItem
+@{
+    Layout = null;
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        حذف بند
+    </div>
+    <div class="panel-body">
+        <h3>هل انت متأكد من انك تريد حذف هذا البند؟</h3>
+        <div>
+            <table>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.Id)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContractItemName) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.ContractItemName)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ContractItemString) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        <div contenteditable="false">
+                            @Html.Raw(HttpUtility.HtmlDecode(Model.ContractItemString))
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            @using (Html.BeginForm("DeleteContractItem", "Contracts", FormMethod.Post, new { id = "Form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="حذف" class="btn btn-danger" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

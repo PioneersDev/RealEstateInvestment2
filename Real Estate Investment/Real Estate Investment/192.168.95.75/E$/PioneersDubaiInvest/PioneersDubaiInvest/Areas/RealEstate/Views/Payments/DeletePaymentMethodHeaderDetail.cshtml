@@ -1,0 +1,72 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.PaymentMethodDetail
+@{
+    Layout = null;
+}
+<h3>هل انت متأكد من انك تريد حذف هذه الخاصية؟</h3>
+<div>
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentTypeId) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.PaymentType.Name)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ratio) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.Ratio)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MinimumAmount) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.MinimumAmount)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StartFrom) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.StartFrom)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Period) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.Period)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentsCounts) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.PaymentsCounts)
+            </td>
+        </tr>
+    </table>
+
+    @using (Html.BeginForm("DeletePaymentMethodHeaderDetail", "Payments", FormMethod.Post, new { id = "Form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-danger" />
+        </div>
+    }
+</div>

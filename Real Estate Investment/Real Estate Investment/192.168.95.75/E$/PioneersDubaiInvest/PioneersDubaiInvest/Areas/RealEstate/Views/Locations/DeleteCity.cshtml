@@ -1,0 +1,52 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.City
+@{
+    Layout = null;
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        حذف مدينة
+    </div>
+    <div class="panel-body">
+        <h3>هل انت متأكد من انك تريد حذف هذه المدينة؟</h3>
+        <div>
+            <table>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.Id)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CityName) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.CityName)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Country.CountryName) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.Country.CountryName)
+                    </td>
+                </tr>
+            </table>
+
+            @using (Html.BeginForm("DeleteCity", "Locations", FormMethod.Post, new { id = "popupForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="حذف" class="btn btn-danger" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿@model RealEstateInvestment.CLS.MenuTree
+<li>
+    @if (Model.nodes.Count > 0)
+            {
+        <a href="javascript:;">
+            <i class="fa fa-building "></i>
+            <span class="link-title">
+                @Model.text
+            </span>
+            <span class="fa arrow"></span>
+        </a>
+        <ul class="treeview-menu">
+            @for (int j = 0; j < Model.nodes.Count; j++)
+            {
+                @Html.Partial("RenderSubMenu", Model.nodes[j])
+            }
+        </ul>
+    }
+    else
+    {
+        <a href="@Model.flagUrl?aid=@Model.id" id="@string.Format("Menu{0}", Model.id)"><i class="fa fa-angle-left" style="float: left;padding-left: 15px;"></i>&nbsp; @Model.text</a>
+    }
+</li>
+
+
+

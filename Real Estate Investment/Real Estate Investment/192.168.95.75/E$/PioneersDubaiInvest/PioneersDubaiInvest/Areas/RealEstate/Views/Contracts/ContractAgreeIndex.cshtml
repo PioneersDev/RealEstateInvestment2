@@ -1,0 +1,246 @@
+﻿@{
+    ViewBag.Title = "الموافقة على العقود";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (ViewBag.AuthorizedUser != true)
+{
+    <h2>@ViewBag.Header</h2>
+}
+@if (ViewBag.AuthorizedUser == true)
+{
+    <div style="width:90%;margin:0 auto;margin-bottom: 20px;" class="tableContainer">
+        <h3>@ViewBag.Header</h3>
+        <table id="dataTable" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">رقم الطلب</th>
+                    <th class="text-center">رقم العقد</th>
+                    <th class="text-center">المشروع</th>
+                    <th class="text-center">الوحدة الرئيسية</th>
+                    <th class="text-center">الوحدة</th>
+                    <th class="text-center">العميل</th>
+                    <th class="text-center">تاريخ العقد</th>
+                    <th class="no-sort text-center">اخر حالة</th>
+                    <th class="no-sort text-center">ملاحظات</th>
+                    <th class="no-sort text-center">التفاصيل</th>
+                    <th class="no-sort text-center">مفتاح المستندات</th>
+                    <th class="no-sort text-center">تغيير الحالة</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    @section scripts{
+        @Scripts.Render("~/bundles/jqueryval")
+        <link href="~/Plugins/bootstrap-datepicker-1.6.4/css/bootstrap-datepicker.css" rel="stylesheet" />
+        <script src="~/Plugins/bootstrap-datepicker-1.6.4/js/bootstrap-datepicker.min.js"></script>
+        <script>
+            $(function () {
+                var dialogOpened = false;
+                var oTable = $('#dataTable').DataTable({
+                    "ajax": {
+                        "url": '/Contracts/GetData',
+                        "type": 'GET',
+                        "datatype": "json",
+                    },
+                    "columns": [
+                        {
+                            "data": "Id", "autowidth": true,
+                            "render": function (data, type, row, meta) {
+                                if (row.StepColumns.includes(meta.col))
+                                    return data;
+                                else
+                                    return null;
+                            }
+                        },
+                        {
+                            "data": "ContractId",
+                            "autowidth": true,
+                            "render": function (data, type, row, meta) {
+                                if (row.StepColumns.includes(meta.col)) {
+                                    if (data == null)
+                                        return "لم يتم تسجيل العقد حتى الان";
+                                    else
+                                        return data;
+                                }
+                                return null;
+                            }
+                        },
+                        {
+                            "data": "ProjectName", "autowidth": true,
+                            "render": function (data, type, row, meta) {
+                                if (row.StepColumns.includes(meta.col)) {
+                                    return data;
+                                }
+                                return null;
+                            }
+                        },
+                        {
+                            "data": "MainUnitName", "autowidth": true,
+                            "render": function (data, type, row, meta) {
+                                if (row.StepColumns.includes(meta.col)) {
+                                    return data;
+                                }
+                                return null;
+                            }
+                        },
+                        {
+                            "data": "UnitName", "autowidth": true,
+                            "render": function (data, type, row, meta) {
+                                if (row.StepColumns.includes(meta.col)) {
+                                    return data;
+                                }
+                                return null;
+                            }
+                        },
+                        {
+                            "data": "CustomerName", "autowidth": true,
+                            "render": function (data, type, row, meta) {
+                                if (row.StepColumns.includes(meta.col)) {
+                                    return data;
+                                }
+                                return null;
+                            }
+                        },
+                        {
+                            "data": "ContractDate", "autowidth": true,
+                            "render": function (data, type, row, meta) {
+                                if (row.StepColumns.includes(meta.col)) {
+                                    return data;
+                                }
+                                return null;
+                            }
+                        },
+                        {
+                            "data": "CurrentStatus", "autowidth": true,
+                            "render": function (data, type, row, meta) {
+                                if (row.StepColumns.includes(meta.col)) {
+                                    return data;
+                                }
+                                return null;
+                            }
+                        },
+                        {
+                            "data": "Remarks",
+                            "autowidth": true,
+                            "render": function (data, type, row, meta) {
+                                if (row.StepColumns.includes(meta.col)) {
+                                    if (data == null)
+                                        data = '';
+                                    return '<textarea style="resize:none" readonly>' + data + '</textarea>';
+                                }
+                                return null;
+                            }
+                        },
+                        {
+                            "data": "Id", "width": "50px", "render": function (data, type, row, meta) {
+                                if (row.StepColumns.includes(meta.col)) {
+                                    return '<a class="popup btn btn-primary" href="/RealEstate/Contracts/ContractRequestDetails/' + data + '">التفاصيل</a>';
+                                }
+                                return null;
+                            }
+                        },
+                        {
+                            "data": "Id", "width": "50px", "render": function (data, type, row, meta) {
+                                if (row.StepColumns.includes(meta.col)) {
+                                    return '<a class="popup btn btn-primary" href="/RealEstate/Contracts/ContractDocHeaderOperations/' + data + '">مفتاح المستندات</a>';
+                                }
+                                return null;
+                            }
+                        },
+                        {
+                            "data": "Id",
+                            "render": function (data, type, row, meta) {
+                                if (row.StepColumns.includes(11)) {
+                                    return '<a class="popup btn btn-success" href="/RealEstate/Contracts/ContractAgreeSave?id=' + data + '&isApprove=true" style="display: inline-block;margin-left:5px;">موافقة</a>' + '<a class="popup btn btn-danger" href="/RealEstate/Contracts/ContractAgreeSave?id=' + data + '&isApprove=false">رفض</a>';
+                                } else if (row.StepColumns.includes(12)){
+                                    return '<a class="popup btn btn-primary" href="/RealEstate/Contracts/ContractAgreeRegisterContract/' + data + '">تسجيل</a>';
+                                }
+                            }
+                        }
+                    ],
+                    "responsive": true,
+                    "language": {
+                        "emptyTable": "لا توجد نتائج لعرضها",
+                        "info": "عرض _START_ الى _END_ من _TOTAL_ نتيجة",
+                        "infoEmpty": "",
+                        "infoFiltered": "(نتائج بحث من اجمالي _MAX_ نتيجة)",
+                        "infoPostFix": "",
+                        "thousands": ",",
+                        "lengthMenu": "عرض _MENU_ نتائج ",
+                        "loadingRecords": "تحميل...",
+                        "search": "بحث: ",
+                        "zeroRecords": "لا توجد نتائج مطابقة للبحث",
+                        "paginate": {
+                            "first": "الأول",
+                            "last": "الأخير",
+                            "next": "التالي",
+                            "previous": "السابق"
+                        },
+                    },
+                    columndefs: [
+                        { "classname": "dt-center", "targets": "_all" }/* to center data on columns*/,
+                        {
+                            "targets": 'no-sort',
+                            "orderable": false
+                        }
+                    ]
+                });
+
+                $('.tableContainer').on('click', 'a.popup', function (e) {
+                    e.preventDefault();
+                    if (!dialogOpened) {
+                        OpenPopup($(this).attr('href'));
+                        dialogOpened = true;
+                    }
+                });
+
+                function OpenPopup(pageUrl) {
+                    var $pageContent = $('<div/>');
+                    $pageContent.load(pageUrl, function () {
+                        $('#popupForm', $pageContent).removeData('validator');
+                        $('#popupForm', $pageContent).removeData('unobtrusiveValidation');
+                        $.validator.unobtrusive.parse('form');
+                    });
+
+                    $dialog = $('<div class="popupWindow" style="overflow:auto"></div>')
+                        .html($pageContent)
+                        .dialog({
+                            draggable: true,
+                            autoOpen: false,
+                            resizable: true,
+                            model: true,
+                            title: 'نافذة فرعية',
+                            height: 665,
+                            width: 730,
+                            close: function () {
+                                $dialog.dialog('destroy').remove();
+                                dialogOpened = false;
+                            }
+                        });
+
+                    $('.popupWindow').on('submit', '#popupForm', function (e) {
+                        var url = $('#popupForm')[0].action;
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: $('#popupForm').serialize(),
+                            success: function (data) {
+                                if (data.status) {
+                                    $dialog.dialog('close');
+                                    dialogOpened = false;
+                                    oTable.ajax.reload();
+                                    $.notify(data.message, {
+                                        globalPosition: 'top center',
+                                        className: data.className
+                                    });
+                                }
+                            }
+                        });
+                        e.preventDefault();
+                    });
+                    $dialog.dialog('open');
+                };
+            });
+        </script>
+    }
+}

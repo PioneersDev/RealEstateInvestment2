@@ -1,0 +1,165 @@
+﻿@{
+    ViewBag.Title = "تكويد الوحدات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row" style="margin-top:10px; margin-bottom:10px;">
+    <div class="col-md-6"></div>
+    <div class="col-md-4">
+        @Html.DropDownList("ProjectId", ViewBag.Projects as SelectList, "اختر المشروع....", htmlAttributes: new { @class = "form-control" })
+    </div>
+    @Html.Label("اسم المشروع", htmlAttributes: new { @class = "control-label col-md-2", @style = "padding-right: 115px;padding-top: 5px; " })
+</div>
+<div class="row" style="margin-bottom:10px">
+    <div id="UnitContent" class="col-md-10"></div>
+    <div id="TreeView" class="col-md-2" style="margin-bottom:10px"></div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <link href="~/Plugins/bootstrap-datepicker-1.6.4/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="~/Plugins/bootstrap-datepicker-1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/Plugins/bootstrap-datepicker-1.6.4/locales/bootstrap-datepicker.ar.min.js"></script>
+    <script>
+        $(function () {
+            var searchText = null;
+            $("#ProjectId").change(function () {
+                var projectId = this.value;
+                if (projectId != '') {
+                    $('#TreeView').empty();
+                    $('#TreeView').load("/RealEstate/Units/GetUnitByProject?id=" + projectId + "&str=" + searchText);
+                } else {
+                    $('#TreeView').empty();
+                    $('#UnitContent').empty();
+                }
+            });
+
+            $(document).on("click", '.collapsible', function (e) {
+                e.preventDefault();
+                var clickedItem = $(this);
+                var data = { id: $(this).attr('pid') };
+                var isLoaded = $(clickedItem).attr('data-loaded');
+                if (isLoaded == "false") {
+                    $(clickedItem).addClass("loadingP");
+                    $(clickedItem).removeClass("collapse");
+                    $.ajax({
+                        url: "/RealEstate/Units/GetSubUnits",
+                        type: "GET",
+                        data: data,
+                        dataType: "json",
+                        success: function (data) {
+                            $(clickedItem).removeClass("loadingP");
+                            if (data.length > 0) {
+                                var $ul = $("<ul></ul>");
+                                $.each(data, function (i, ele) {
+                                    $ul.append(
+                                        $("<li></li>").append(
+                                            "<span class='collapse collapsible data-loaded='false' pid='" + ele.Id + "''>&nbsp;</span>" +
+                                            "<span><a class='showAside' href='/RealEstate/Units/OpenUnitData?id=" + ele.Id + "&ProjectId=" + ele.ProjectId + "'>" + ele.UnitName + "</a></span>&nbsp;<a class='popup' href='/RealEstate/Units/DeleteUnit/" + ele.Id + "' style='color:red'><i class='fa fa-trash'></i></a>"
+                                        )
+                                    )
+                                });
+                                $(clickedItem).parent().append($ul);
+                                $(clickedItem).addClass('collapse');
+                                $(clickedItem).toggleClass('collapse expand');
+                                $(clickedItem).closest('li').children('ul').slideDown();
+                            } else {
+                                //no submenues
+                                $(clickedItem).css({ 'display': 'inline-block', 'width': '15px' })
+                            }
+                            $(clickedItem).attr('data-loaded', true);
+                        },
+                        error: function () {
+                            alert("Error!");
+                        }
+                    });
+                } else {
+                    //if already data loaded
+                    $(clickedItem).toggleClass("collapse expand");
+                    $(clickedItem).closest('li').children('ul').slideToggle();
+                }
+            });
+            $(document).on('keypress', '#treeSearch', function (e) {
+                if (e.which == 13) {
+                    searchText = this.value;
+                    $("#ProjectId").trigger("change");
+                }
+            });
+
+            $(document).on('click', '.treeContainer a.showAside', function (e) {
+                e.preventDefault(); 
+                $('#UnitContent').empty();
+                $('#UnitContent').load($(this).attr('href'), function () {
+                    var form = $("#UnitContent").find("form");
+                    form.removeData('validator');
+                    form.removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse(form);
+                });
+            });
+
+            $(document).off('submit').on('submit', '.dataForm #Form', function (e) {
+                debugger;
+                var url = $('#Form')[0].action;
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: $('#Form').serialize(),
+                    success: function (data) {
+                        if (data.status) {
+                            alert("تم تعديل البانات الخاصة بالوحدة");
+                            searchText = null;
+                            $("#ProjectId").trigger("change");
+                        }
+                    }
+                });
+                e.preventDefault();
+            });
+
+            $(document).on('click', '.treeContainer a.popup', function (e) {
+                e.preventDefault();
+                OpenPopup($(this).attr('href'));
+            });
+
+            function OpenPopup(pageUrl) {
+                var $pageContent = $('<div/>');
+                $pageContent.load(pageUrl, function () {
+                    $('#popupForm', $pageContent).removeData('validator');
+                    $('#popupForm', $pageContent).removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse('form');
+                });
+
+                $dialog = $('<div class="popupWindow" style="overflow:auto"></div>')
+                    .html($pageContent)
+                    .dialog({
+                        draggable: false,
+                        autoOpen: false,
+                        resizable: true,
+                        model: true,
+                        title: 'نافذة فرعية',
+                        height: 550,
+                        width: 600,
+                        close: function () {
+                            $dialog.dialog('destroy').remove();
+                        }
+                    });
+
+                $(document).off('submit').on('submit', '.popupWindow #popupForm', function (e) {
+                    debugger;
+                    var url = $('#popupForm')[0].action;
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $('#popupForm').serialize(),
+                        success: function (data) {
+                            if (data.status) {
+                                $dialog.dialog('close');
+                                searchText = null;
+                                $("#ProjectId").trigger("change");
+                            }
+                        }
+                    });
+                    e.preventDefault();
+                });
+                $dialog.dialog('open');
+            };
+        });
+    </script>
+}

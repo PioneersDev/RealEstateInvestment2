@@ -1,0 +1,150 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.Unit
+@{
+    Layout = null;
+}
+<h3>هل انت متأكد من انك تريد حذف هذه الوحدة؟</h3>
+<div>
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitName) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.UnitName)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectUnitType.ProjectUnitTypeName) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.ProjectUnitType.ProjectUnitTypeName)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalMeters) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.TotalMeters)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NetPrice) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.NetPrice)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPrice) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.TotalPrice)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MeterPrice) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.MeterPrice)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Garage) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.Garage)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GarageMetes) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.GarageMetes)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GaragePrice) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.GaragePrice)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Perecent) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @switch (Model.Perecent)
+                {
+                    case null:@:غير محدد
+                    break;
+                    case true:@:نعم
+                    break;
+                    case false:@:لا
+                    break;
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MaintenanceDeposit) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.MaintenanceDeposit)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MainUnitId) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.MainUnitId)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitNo) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.UnitNo)
+            </td>
+        </tr>
+    </table>
+
+    @using (Html.BeginForm("DeleteUnit", "Units", FormMethod.Post, new { id = "popupForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-danger" />
+        </div>
+    }
+</div>
+<script>
+    $(function () {
+        $('#popupForm').submit(function (e) {
+            $(':input[type="submit"]').prop('disabled', true);
+        });
+    });
+</script>

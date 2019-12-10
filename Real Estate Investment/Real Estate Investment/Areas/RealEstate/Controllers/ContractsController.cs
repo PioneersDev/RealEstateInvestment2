@@ -477,7 +477,9 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             int startRec = Convert.ToInt32(Request.Form.GetValues("start")[0]);
             int pageSize = Convert.ToInt32(Request.Form.GetValues("length")[0]);
             // Loading.
+
             var contractsRequests = _db.Database.SqlQuery<ufn_GetRequestsResultModel>("SELECT * FROM [con].[ufn_GetRequests] (null, null, 1)").Select(a => new ContractRequests { Id = a.Id, UserId = a.UserId, UserName = a.UserName, RequestTypeId = a.RequestTypeId, RequestTypeName = a.RequestTypeName, Step = a.Step, StepName = a.StepName, Status = a.Status, StatusName = a.StatusName, Remarks = a.Remarks, ProjectId = a.ProjectId, ProjectName = a.ProjectName, MainUnitId = a.MainUnitId, MainUnitName = a.MainUnitName, UnitId = a.UnitId, UnitName = a.UnitName, CustomerId = a.CustomerId, CustomerName = a.CustomerName, ContractDate = a.ContractDate, PaymentMethodHeaderId = a.PaymentMethodHeaderId, PaymentMethodHeaderName = a.PaymentMethodHeaderName, ContractTypeId = a.ContractTypeId, ContractTypeName = a.ContractTypeName, ContractModelId = a.ContractModelId, ContractModelName = a.ContractModelName, UnitTotalValue = a.UnitTotalValue, DocHeaderId = a.DocHeaderId, DocHeaderName = a.DocHeaderName, ContractId = a.ContractId, FirstInstallmentDate = a.FirstInstallmentDate, MarketingCompanyId = a.MarketingCompanyId, MarketingCompanyName = a.MarketingCompanyName, MarketingCompanyPayValue = a.MarketingCompanyPayValue }).AsQueryable();
+
             // Total record count.
             int totalRecords = contractsRequests.Count();
             // Apply search
@@ -493,6 +495,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                 p.ContractDate.ToString().ToLower().Contains(search.ToLower()) ||
                 p.MarketingCompanyName.ToLower().Contains(search.ToLower()));
             }
+
             // Sorting.
             contractsRequests = SortContractsRequestsByColumnWithOrder(order, orderDir, contractsRequests);
             int recFilter = contractsRequests.Count();
@@ -563,7 +566,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             }
             else
             {
-                PopulateDropDownList();
+                PopulateDropDownList(); 
             }
             return View(contractRequest);
         }

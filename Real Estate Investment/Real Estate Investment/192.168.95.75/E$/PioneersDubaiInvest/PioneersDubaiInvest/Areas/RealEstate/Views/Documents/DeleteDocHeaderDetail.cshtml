@@ -1,0 +1,45 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.DTO.DocDetailDTO
+@{
+    Layout = null;
+}
+<h3>هل انت متأكد من انك تريد حذف هذه الصفحة؟</h3>
+<div>
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.Id)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name) : &nbsp; &nbsp;
+            </th>
+
+            <td>
+                @Html.DisplayFor(model => model.Name)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Doc) : &nbsp; &nbsp;
+            </th>
+            <td>
+                <a href="/RealEstate/Documents/GetDoc/@Model.Id" data-fancybox data-caption="@Model.Name">
+                    <img id='img-upload' src="@Url.Action("GetDoc", "Documents", new { id = Model.Id })" style="width: 240px;height:280px;" />
+                </a>
+            </td>
+        </tr>
+    </table>
+
+    @using (Html.BeginForm("DeleteDocHeaderDetail", "Documents", FormMethod.Post, new { id = "DeleteForm",data_id=Model.Id }))
+            {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-danger" />
+        </div>
+    }
+</div>

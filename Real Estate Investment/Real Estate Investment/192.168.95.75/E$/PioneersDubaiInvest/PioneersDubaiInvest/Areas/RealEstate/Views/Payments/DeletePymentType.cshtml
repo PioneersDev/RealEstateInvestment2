@@ -1,0 +1,52 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.PaymentType
+@{
+    Layout = null;
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        حذف نوع دفعة
+    </div>
+    <div class="panel-body">
+        <h3>هل انت متأكد من انك تريد حذف هذا النوع؟</h3>
+        <div>
+            <table>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.Id)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name) : &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.Name)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PaymentTypePropertyId) &nbsp; &nbsp;
+                    </th>
+
+                    <td>
+                        @Html.DisplayFor(model => model.PaymentTypeProperty.Name)
+                    </td>
+                </tr>
+            </table>
+
+            @using (Html.BeginForm("DeletePymentType", "Payments", FormMethod.Post, new { id = "popupForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="حذف" class="btn btn-danger" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

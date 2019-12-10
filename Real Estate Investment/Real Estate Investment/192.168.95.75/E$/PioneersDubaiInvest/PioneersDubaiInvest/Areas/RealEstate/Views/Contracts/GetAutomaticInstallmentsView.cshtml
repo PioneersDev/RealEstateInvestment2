@@ -1,0 +1,110 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.ContractRequestViewModel
+@{
+    Layout = null;
+}
+<div style="margin-bottom:10px;">
+    <label for="InstallmentTotal">مجموع الأقساط</label>
+    <input type="text" name="InstallmentTotal" id="InstallmentTotal" />
+</div>
+<div style="margin-bottom:10px;">
+    <label for="InstallmentDay">يوم دفع الأقساط كل شهر</label>
+    <input type="text" name="InstallmentDay" id="InstallmentDay" />
+</div>
+<table id="chdataTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>مسلسل</th>
+            <th>نوع الدفعة</th>
+            <th>تاريخ الدفع</th>
+            <th>القيمة</th>
+            <th>رقم الشيك</th>
+            <th>اسم البنك</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.InstallmentData.Count; i++)
+        {
+            <tr>
+                <td>
+                    @Html.Hidden("InstallmentData[" + @i + "].Serial", Model.InstallmentData[i].Serial)
+                    @Html.Hidden("InstallmentData[" + @i + "].CustomerId", Model.InstallmentData[i].CustomerId)
+                    @Html.Hidden("InstallmentData[" + @i + "].PaymentMethodDetailId", Model.InstallmentData[i].PaymentMethodDetailId)
+                    @Html.Hidden("InstallmentData[" + @i + "].TransactionDate", Model.InstallmentData[i].TransactionDate)
+                    @Html.Hidden("InstallmentData[" + @i + "].PayProperty", Model.InstallmentData[i].PayProperty)
+                    @Html.Hidden("InstallmentData[" + @i + "].JOURNALTYPEID", Model.InstallmentData[i].JOURNALTYPEID)
+                    @Model.InstallmentData[i].Serial
+                </td>
+                <td>
+                    @Model.InstallmentData[i].payName
+                </td>
+                <td>
+                    @Html.TextBox("InstallmentData[" + @i + "].PayDate", Model.InstallmentData[i].PayDate.ToString("dd/MM/yyyy"), new { autocomplete = "off", @class = "datepicker",data_payDate = Model.InstallmentData[i].PayCount })
+                </td>
+                <td>
+                    @Html.TextBox("InstallmentData[" + @i + "].PayValue", Model.InstallmentData[i].PayValue, new { autocomplete = "off", data_payCount = Model.InstallmentData[i].PayCount })
+                </td>
+                <td>
+                    @if (Model.InstallmentData[i].JOURNALTYPEID==5)
+                    {
+                        @Html.TextBox("InstallmentData[" + @i + "].CHEQUENO", Model.InstallmentData[i].CHEQUENO, new { autocomplete = "off",disabled="disabled" })
+                    }
+                    else
+                    {
+                        @Html.TextBox("InstallmentData[" + @i + "].CHEQUENO", Model.InstallmentData[i].CHEQUENO, new { autocomplete = "off" })
+                    }
+                </td>
+                <td>
+                    @if (Model.InstallmentData[i].JOURNALTYPEID==5)
+                    {
+                        @Html.TextBox("InstallmentData[" + @i + "].BANKNAME", Model.InstallmentData[i].BANKNAME, new { autocomplete = "off",disabled="disabled" })
+                    }
+                    else
+                    {
+                        @Html.TextBox("InstallmentData[" + @i + "].BANKNAME", Model.InstallmentData[i].BANKNAME, new { autocomplete = "off" })
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<link href="~/Plugins/bootstrap-datepicker-1.6.4/css/bootstrap-datepicker.css" rel="stylesheet" />
+<script src="~/Plugins/bootstrap-datepicker-1.6.4/js/bootstrap-datepicker.min.js"></script>
+<script src="~/Plugins/bootstrap-datepicker-1.6.4/locales/bootstrap-datepicker.ar.min.js"></script>
+<script>
+    $(function () {
+
+        $('.datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            orientation: "bottom left"
+        });
+
+        var oTable = $('#chdataTable').DataTable({
+            "language": {
+                "emptyTable": "لا توجد نتائج لعرضها",
+                "info": "عرض _START_ الى _END_ من _TOTAL_ نتيجة",
+                "infoEmpty": "",
+                "infoFiltered": "(نتائج بحث من اجمالي _MAX_ نتيجة)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "عرض _MENU_ نتائج ",
+                "loadingRecords": "تحميل...",
+                "search": "بحث: ",
+                "zeroRecords": "لا توجد نتائج مطابقة للبحث",
+                "paginate": {
+                    "first": "الأول",
+                    "last": "الأخير",
+                    "next": "التالي",
+                    "previous": "السابق"
+                },
+                "processing": "تحميل......."
+            },
+            columnDefs: [
+                { "className": "dt-center", "targets": "_all" }/* to center data on columns*/,
+                {
+                    "targets": 'no-sort',
+                    "orderable": false
+                }
+            ]
+        });
+    });
+</script>

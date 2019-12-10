@@ -1,0 +1,191 @@
+﻿@model RealEstateInvestment.Areas.RealEstate.Models.DTO.DocDetailDTO
+@{
+    Layout = null;
+}
+@using (Html.BeginForm("SaveDocHeaderDetail", "Documents", FormMethod.Post, new { enctype = "multipart/form-data", id = "UploadForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @if (Model != null && Model.Id > 0)
+        {
+            @Html.HiddenFor(model => model.Id)
+        }
+        @Html.HiddenFor(model => model.DocHeaderId)
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <button type="button" class="btn btn-primary ShowData" data-toggle="tooltip" data-placement="bottom" title="سحب المستند" onclick="scanImage();" style="margin-bottom: 5px;"> سحب المستند <span class="glyphicon glyphicon-duplicate"></span></button> أو <input type="file" name="uploadFile" id="uploadFile" style="display: inline-block;position: relative;border: 2px solid gray;color: gray;background-color: white;padding: 8px 20px;border-radius: 8px;font-weight: bold;" onchange="readURL(this);" />
+                @Html.ValidationMessageFor(model => model.Doc, "", new { @class = "text-danger", id = "DocValid" })
+            </div>
+            @Html.LabelFor(model => model.Doc, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+
+        <div id="selectedFiles">
+            @if (Model != null && Model.Id > 0)
+            {
+                <a href="/RealEstate/Documents/GetDoc/@Model.Id" data-fancybox data-caption="@Model.Name">
+                    <img id='img-upload' src="@Url.Action("GetDoc", "Documents", new { id = Model.Id })" style="width: 240px;height:280px;" />
+                </a>
+            }
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="حفظ" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+<link href="~/Plugins/fancybox/jquery.fancybox.min.css" rel="stylesheet" />
+<script src="~/Plugins/fancybox/jquery.fancybox.min.js"></script>
+<script>
+    var formdata = new FormData();
+    var selDiv;
+    var storedFiles;
+    var i;
+    $(document).ready(function () {
+        selDiv = $("#selectedFiles");
+    });
+
+    var start = function () {
+        debugger;
+        var i = 0
+        var wsImpl = window.WebSocket || window.MozWebSocket;
+
+        window.ws = new wsImpl('ws://localhost:8181/');
+
+        $.notify.addStyle('foo', {
+            html:
+            "<div>" +
+            "<div class='clearfix'>" +
+            "<div class='title' data-notify-html='title'/>" +
+            "<div class='buttons'>" +
+            "<button class='no'>الغاء</button>" +
+            "<button class='yes' data-notify-text='button'></button>" +
+            "</div>" +
+            "</div>" +
+            "</div>",
+            css: `.notifyjs-foo-base {
+                opacity: 1;
+                width: 400px;
+                background: #F5F5F5;
+                padding: 5px;
+                margin-right: 750px;
+                border-radius: 10px;
+            }
+
+                .notifyjs - foo - base.title {
+                    width: 100px;
+                    float: right;
+                    margin: 0 auto;
+                    text-align: right;
+                }
+
+                    .notifyjs - foo - base.buttons {
+                        width: 70px;
+                        float: right;
+                        font-size: 9px;
+                        padding: 5px;
+                        margin-right:5px;
+                    }
+
+                    ss.notifyjs - foo - base button {
+                    font-size: 9px;
+                    padding: 5px;
+                    margin: 2px;
+                    width: 60px;
+                }`
+        });
+        ws.onmessage = function (e) {
+            debugger;
+            if (typeof e.data === "string") {
+                //IF Received Data is String
+            }
+            else if (e.data instanceof ArrayBuffer) {
+                //IF Received Data is ArrayBuffer
+            }
+            else if (e.data instanceof Blob) {
+                debugger;
+                i++;
+
+                var f = e.data;
+
+                f.name = $('#Name').val();
+
+                storedFiles = f;
+
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    debugger;
+                    $(selDiv).empty();
+                    var html = '<a href="' + e.target.result + '" data-fancybox data-caption="' + f.name + '"><img src= "' + e.target.result + '" alt= "' + f.name + '" style="width: 240px;height:280px;"/></a >';
+                    formdata.append(f.name, f);
+                    selDiv.append(html);
+                }
+                reader.readAsDataURL(f);
+            }
+        };
+        ws.onopen = function () {
+            //Do whatever u want when connected succesfully
+        };
+        ws.onclose = function () {
+            $.notify({
+                title: 'عفوا لا يوجد برنامج لمسح المستندات في جهازكم .الرجاء تحميل البرنامج وتسطيبه ثم عمل تحديث للصفحة في المتصفح',
+                button: 'تحميل الملفات'
+            }, {
+                    style: 'foo',
+                    autoHide: false,
+                    clickToHide: false
+                });
+        };
+    }
+    start();
+
+    function scanImage() {
+        ws.send("1100");
+    };
+
+    //listen for click events from this style
+    $(document).on('click', '.notifyjs-foo-base .no', function () {
+        //programmatically trigger propogating hide event
+        $(this).trigger('notify-hide');
+    });
+
+    $(document).on('click', '.notifyjs-foo-base .yes', function () {
+        window.open("/SrcFile/WebScan/Setup.zip");
+        //hide notification
+        $(this).trigger('notify-hide');
+    });
+
+    function readURL(input) {
+        debugger;
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                debugger;
+                $(selDiv).empty();
+                var html = '<a href="' + e.target.result + '" data-fancybox data-caption="' + $('#Name').val() + '"><img src= "' + e.target.result + '" alt= "' + $('#Name').val() + '" style="width: 240px;height:280px;"/></a >';
+                selDiv.append(html);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function blobToFile(theBlob, fileName) {
+        //A Blob() is almost a File() - it's just missing the two properties below which we will add
+        theBlob.lastModifiedDate = new Date();
+        theBlob.name = fileName;
+        return theBlob;
+    }
+</script>

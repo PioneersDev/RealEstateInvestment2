@@ -1,0 +1,222 @@
+﻿@{
+    ViewBag.Title = "طلبات العقود";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="width:90%;margin:0 auto;margin-bottom: 20px;" class="tableContainer">
+    <a class="popup btn btn-primary" href="/RealEstate/Contracts/ContractRequestSave/0" style="margin-bottom:20px;margin-top:20px;">اضف عقد جديد</a>
+    <table id="dataTable" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>رقم الطلب</th>
+                <th>رقم العقد</th>
+                <th>المشروع</th>
+                <th>الوحدة الرئيسية</th>
+                <th>الوحدة</th>
+                <th>العميل</th>
+                <th>تاريخ العقد</th>
+                <th>شركة التسويق</th>
+                <th class="no-sort">حصة شركة التسويق</th>
+                <th class="no-sort">مفتاح المستندات</th>
+                <th class="no-sort">الحالة</th>
+                <th class="no-sort">عند</th>
+                <th class="no-sort">ملاحظات</th>
+                <th class="no-sort">التفاصيل</th>
+                <th class="no-sort">تعديل</th>
+                <th class="no-sort">حذف</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <link href="~/Plugins/bootstrap-datepicker-1.6.4/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Plugins/select2/css/select2.min.css" rel="stylesheet" />
+    <script src="~/Plugins/bootstrap-datepicker-1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/Plugins/bootstrap-datepicker-1.6.4/locales/bootstrap-datepicker.ar.min.js"></script>
+    <script src="~/Plugins/select2/js/select2.min.js"></script>
+    <script>
+        $(function () {
+            var dialogOpened = false;
+            var oTable = $('#dataTable').DataTable({
+                "responsive": true,
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": '/Contracts/GetContractsRequests/ @ViewBag.id',
+                    "type": 'POST',
+                    "datatype": "json",
+                },
+                "columns": [
+                    { "data": "Id", "autowidth": true },
+                    {
+                        "data": "ContractId",
+                        "autowidth": true,
+                        "render": function (data) {
+                            if (data == null)
+                                return "لم يتم تسجيل العقد حتى الان";
+                            else
+                                return data;
+                        }
+                    },
+                    { "data": "ProjectName", "autowidth": true },
+                    { "data": "MainUnitName", "autowidth": true },
+                    { "data": "UnitName", "autowidth": true },
+                    { "data": "CustomerName", "autowidth": true },
+                    {
+                        "data": "ContractDate",
+                        "autowidth": true,
+                        "render": function (data) {
+                            if (data != null) {
+                                var date = new Date(parseInt(data.substr(6)));
+                                var month = date.getMonth() + 1;
+                                return date.getDate() + "/" + month + "/" + date.getFullYear();
+                            } else
+                                return "";
+                        }
+                    },
+                    { "data": "MarketingCompanyName", "autowidth": true },
+                    { "data": "MarketingCompanyPayValue", "autowidth": true },
+                    {
+                        "data": "Id",
+                        "autowidth": true,
+                        "render": function (data, type, row) {
+                                return '<a class="popup btn btn-primary" href="/RealEstate/Contracts/ContractDocHeaderOperations/' + data + '">مفتاح المستندات</a>';
+                        }
+                    },
+                    {
+                        "data": "StatusName",
+                        "autowidth": true,
+                        "render": function (data, type, row) {
+                            if (data == 'تعليق')
+                                return '<span class="badge" style="background-color:#ffc107;">' + data + '</span>';
+                            else if (data == 'رفض')
+                                return '<span class="badge" style="background-color:red;">' + data + '</span>';
+                            else if (data == 'موافقة')
+                                return '<span class="badge" style="background-color:green;">' + data + '</span>';
+                            else if (data == 'لم يتم تسجيله')
+                                return '<span class="badge" style="background-color:#ffc107;">' + data + '</span>';
+                            else if (data == 'تم التسجيل')
+                                return '<span class="badge" style="background-color:green;">' + data + '</span>';
+                        }
+                    },
+                    {
+                        "data": "StepName",
+                        "autowidth": true
+                    },
+                    {
+                        "data": "Remarks",
+                        "autowidth": true,
+                        "render": function (data, type, row) {
+                            if (data == null)
+                                data = '';
+                            return '<textarea style="resize:none" readonly>' + data + '</textarea>';
+                        }
+                    },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data) {
+                            return '<a class="popup btn btn-primary" href="/RealEstate/Contracts/ContractRequestDetails/' + data + '">التفاصيل</a>'
+                        }
+                    },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data, type, row) {
+                            if (row.Step ==@ViewBag.ApproveSystemFirstStep && row.Status==@ViewBag.ApproveSystemFirstStepPendingStatus)
+                                return '<a class="popup btn btn-primary" href="/RealEstate/Contracts/ContractRequestSave/' + data + '">تعديل</a>';
+                            else
+                                return '<a class="popup btn btn-primary" href="/RealEstate/Contracts/ContractRequestSave/' + data + '" style="pointer-events: none; display: inline-block;" disabled>تعديل</a>';
+                        }
+                    },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data, type, row) {
+                            if (row.Step ==@ViewBag.ApproveSystemFirstStep && row.Status ==@ViewBag.ApproveSystemFirstStepPendingStatus)
+                                return '<a class="popup btn btn-danger" href="/RealEstate/Contracts/ContractRequestDelete/' + data + '">حذف</a>';
+                            else
+                                return '<a class="popup btn btn-danger" href="/RealEstate/Contracts/ContractRequestDelete/' + data + '" style="pointer-events: none; display: inline-block;" disabled>حذف</a>';
+                        }
+                    }
+                ],
+                "language": {
+                    "emptyTable": "لا توجد نتائج لعرضها",
+                    "info": "عرض _START_ الى _END_ من _TOTAL_ نتيجة",
+                    "infoEmpty": "",
+                    "infoFiltered": "(نتائج بحث من اجمالي _MAX_ نتيجة)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "عرض _MENU_ نتائج ",
+                    "loadingRecords": "تحميل...",
+                    "search": "بحث: ",
+                    "zeroRecords": "لا توجد نتائج مطابقة للبحث",
+                    "paginate": {
+                        "first": "الأول",
+                        "last": "الأخير",
+                        "next": "التالي",
+                        "previous": "السابق"
+                    },
+                    "processing": "تحميل......."
+                },
+                columnDefs: [
+                    { "className": "dt-center", "targets": "_all" }/* to center data on columns*/,
+                    {
+                        "targets": 'no-sort',
+                        "orderable": false
+                    }
+                ]
+            });
+
+            $('.tableContainer').on('click', 'a.popup', function (e) {
+                e.preventDefault();
+                if (!dialogOpened) {
+                    OpenPopup($(this).attr('href'));
+                    dialogOpened = true;
+                }
+            });
+
+            function OpenPopup(pageUrl) {
+                var $pageContent = $('<div/>');
+                $pageContent.load(pageUrl, function () {
+                    $('#popupForm', $pageContent).removeData('validator');
+                    $('#popupForm', $pageContent).removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse('form');
+                });
+
+                $dialog = $('<div class="popupWindow" style="overflow:auto"></div>')
+                    .html($pageContent)
+                    .dialog({
+                        draggable: true,
+                        autoOpen: false,
+                        resizable: true,
+                        model: true,
+                        title: 'نافذة فرعية',
+                        height: 650,
+                        width: 1290,
+                        close: function () {
+                            $dialog.dialog('destroy').remove();
+                            dialogOpened = false;
+                        }
+                    });
+
+                $('.popupWindow').on('submit', '#popupForm', function (e) {
+                    var url = $('#popupForm')[0].action;
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $('#popupForm').serialize(),
+                        success: function (data) {
+                            if (data.status) {
+                                $dialog.dialog('close');
+                                dialogOpened = false;
+                                oTable.ajax.reload();
+                                $.notify(data.message, {
+                                    globalPosition: 'top center',
+                                    className: data.className
+                                });
+                            }
+                        }
+                    });
+                    e.preventDefault();
+                });
+                $dialog.dialog('open');
+            };
+
+        });
+    </script>
+}

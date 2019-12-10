@@ -157,9 +157,9 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
                     param.mULTIPLECHEQUE_TYPEs.Add(new MULTIPLECHEQUE_TYPE { accountid = contract.Project.MintananceAccount.Value, ACTIONTYPE = "Insert", bankbranch = item.BANKBRANCH, bankname = item.BANKNAME, chequeno = item.CHEQUENO.Value.ToString(), chequevalue = item.PayValue, COMPANYNAME = "GL_SQUARE", currid = 1, currrate = 1, duedate = item.PayDate, InstallmentId = item.Id, LOGINUSER = User.Identity.Name, MACHINEIP = Request.UserHostAddress, MACHINENAME = "", remarksa = " دفعة صيانة " + Remark, remarkse = " دفعة صيانة " + Remark, SysAccount = 15, USERNAME = User.Identity.Name, ticketdate = ticketdate });
                 else
                     //أقساط عادية
-                    param.mULTIPLECHEQUE_TYPEs.Add(new MULTIPLECHEQUE_TYPE { accountid = contract.Project.InstallmentAccount.Value, ACTIONTYPE = "Insert", bankbranch = item.BANKBRANCH, bankname = item.BANKNAME, chequeno = item.CHEQUENO.Value.ToString(), chequevalue = item.PayValue, COMPANYNAME = "GL_SQUARE", currid = 1, currrate = 1, duedate = item.PayDate, InstallmentId = item.Id, LOGINUSER = User.Identity.Name, MACHINEIP = Request.UserHostAddress, MACHINENAME = "", remarksa = " قسط " + installmentType + Remark, remarkse = " قسط " + installmentType + Remark, SysAccount = 16, USERNAME = User.Identity.Name, ticketdate = ticketdate });
+                    param.mULTIPLECHEQUE_TYPEs.Add(new MULTIPLECHEQUE_TYPE { accountid = contract.Project.InstallmentAccount.Value, ACTIONTYPE = "Insert", bankbranch = item.BANKBRANCH, bankname = item.BANKNAME, chequeno = item.CHEQUENO.Value.ToString(), chequevalue = item.PayValue, COMPANYNAME = "GL_MASHAREQ", currid = 1, currrate = 1, duedate = item.PayDate, InstallmentId = item.Id, LOGINUSER = User.Identity.Name, MACHINEIP = Request.UserHostAddress, MACHINENAME = "", remarksa = " قسط " + installmentType + Remark, remarkse = " قسط " + installmentType + Remark, SysAccount = 16, USERNAME = User.Identity.Name, ticketdate = ticketdate });
             }
-            param.CompanyName = "GL_SQUERLOCAL";
+            param.CompanyName = "GL_MASHAREQLOCAL";
 
             CustomerQaed custq = new CustomerQaed();
 

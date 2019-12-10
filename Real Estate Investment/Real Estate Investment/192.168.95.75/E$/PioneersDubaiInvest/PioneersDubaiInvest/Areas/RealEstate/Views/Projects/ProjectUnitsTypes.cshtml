@@ -1,0 +1,177 @@
+﻿@{
+    Layout = null;
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        نماذج وحدات المشروع
+    </div>
+    <div class="panel-body">
+        <div style="width:90%;margin:0 auto;" class="childTableContainer">
+            <a class="popup btn btn-primary" href="/RealEstate/Projects/SavePUnitType?id=0&ProjectId=@ViewBag.id" style="margin-bottom:20px;margin-top:20px;color:white">اضافة نموذج جديد</a>
+            <table id="childDataTable">
+                <thead>
+                    <tr>
+                        <th>الكود</th>
+                        <th>اسم النموذج</th>
+                        <th>نوع النموذج</th>
+                        <th>عدد الوحدات</th>
+                        <th>الاسم يحتوي على</th>
+                        <th>الأرقام تبدأ من</th>
+                        <th>الحروف تبدأ من</th>
+                        <th>الزيادة في</th>
+                        <th>معدل الزيادة </th>
+                        <th>عدد الوحدات الفرعية في التقسيمة</th>
+                        <th>وصف النموذج</th>
+                        <th>مفتاح المستندات</th>
+                        <th class="no-sort">تعديل</th>
+                        <th class="no-sort">حذف</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+            var childDialogOpened = false;
+            var childTable = $('#childDataTable').DataTable({
+                "ajax": {
+                    "url": '/Projects/GetProjectUnitsTypes/@ViewBag.id',
+                    "type": 'get',
+                    "datatype": "json",
+                },
+                "columns": [
+                    { "data": "Id", "autowidth": true },
+                    { "data": "ProjectUnitTypeName", "autowidth": true },
+                    { "data": "UnitTypeName", "autowidth": true },
+                    { "data": "Count", "autowidth": true },
+                    {
+                        "data": "NameContain",
+                        "autowidth": true,
+                        "render": function (data) {
+                            if (data == 1)
+                                return "أرقام";
+                            else if (data == 2)
+                                return "حروف";
+                            else if (data == 3)
+                                return "أرقام وحروف";
+                        }
+                    },
+                    { "data": "NumStartFrom", "autowidth": true },
+                    { "data": "CharStartFrom", "autowidth": true },
+                    {
+                        "data": "NameIncrementIn",
+                        "autowidth": true,
+                        "render": function (data) {
+                            if (data == 1)
+                                return "أرقام";
+                            else if (data == 2)
+                                return "حروف";
+                            else if (data == 3)
+                                return "أرقام وحروف";
+                        }
+                    },
+                    { "data": "NameIncrement", "autowidth": true },
+                    { "data": "MainUnitSubUnitsNum", "autowidth": true },
+                    {
+                        "data": "ProjectUnitTypeDescription",
+                        "autowidth": true,
+                        "render": function (data, type, row) {
+                            if (data == null)
+                                data = '';
+                            return '<textarea style="resize:none" readonly>' + data + '</textarea>';
+                        }
+                    },
+                    { "data": "DocHeaderId", "autowidth": true },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data) {
+                            return '<a class="popup btn btn-primary" href="/RealEstate/Projects/SavePUnitType?id=' + data + '&ProjectId=@ViewBag.id"style="color:white">تعديل</a>'
+                        }
+                    },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data) {
+                            return '<a class="popup btn btn-danger" href="/RealEstate/Projects/DeletePUnitType/' + data + '"style="color:white">حذف</a>'
+                        }
+                    }
+                ],
+                "language": {
+                    "emptyTable": "لا توجد نتائج لعرضها",
+                    "info": "عرض _START_ الى _END_ من _TOTAL_ نتيجة",
+                    "infoEmpty": "",
+                    "infoFiltered": "(نتائج بحث من اجمالي _MAX_ نتيجة)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "عرض _MENU_ نتائج ",
+                    "loadingRecords": "تحميل...",
+                    "search": "بحث: ",
+                    "zeroRecords": "لا توجد نتائج مطابقة للبحث",
+                    "paginate": {
+                        "first": "الأول",
+                        "last": "الأخير",
+                        "next": "التالي",
+                        "previous": "السابق"
+                    },
+
+                },
+                columnDefs: [
+                    { "className": "dt-center", "targets": "_all" }/* to center data on columns*/,
+                    {
+                        "targets": 'no-sort',
+                        "orderable": false
+                    }
+                ]
+            });
+
+            $('.childTableContainer').on('click', 'a.popup', function (e) {
+                e.preventDefault();
+                if (!childDialogOpened) {
+                    ChildOpenPopup($(this).attr('href'));
+                    childDialogOpened = true;
+                }
+            });
+
+            function ChildOpenPopup(pageUrl) {
+                var $childPageContent = $('<div/>');
+                $childPageContent.load(pageUrl, function () {
+                    $('#Form', $childPageContent).removeData('validator');
+                    $('#Form', $childPageContent).removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse('form');
+                });
+
+                $childDialog = $('<div class="childPopupWindow" style="overflow:auto"></div>')
+                    .html($childPageContent)
+                    .dialog({
+                        draggable: true,
+                        autoOpen: false,
+                        resizable: true,
+                        model: true,
+                        title: 'نافذة فرعية',
+                        height: 540,
+                        width: 670,
+                        close: function () {
+                            $childDialog.dialog('destroy').remove();
+                            childDialogOpened = false;
+                        }
+                    });
+
+                $('.childPopupWindow').on('submit', '#Form', function (e) {
+                    var url = $('#Form')[0].action;
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $('#Form').serialize(),
+                        success: function (data) {
+                            if (data.status) {
+                                $childDialog.dialog('close');
+                                childDialogOpened = false;
+                                childTable.ajax.reload();
+                            }
+                        }
+                    });
+                    e.preventDefault();
+                });
+                $childDialog.dialog('open');
+            };
+
+        });
+</script>

@@ -1,0 +1,138 @@
+﻿@{
+    ViewBag.Title = "أنظمة الدفع";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="width:90%;margin:0 auto;margin-bottom: 20px;" class="tableContainer">
+    <a class="popup btn btn-primary" href="/RealEstate/Payments/SavePaymentMethodHeader/0" style="margin-bottom:20px;margin-top:20px;">اضف نظام جديد</a>
+    <table id="dataTable" class="table table-striped table-bordered text-center">
+        <thead>
+            <tr>
+                <th>كود النظام</th>
+                <th>النظام</th>
+                <th>عدد شهور النظام</th>
+                <th class="no-sort">تعديل</th>
+                <th class="no-sort">تفاصيل النظام</th>
+                <th class="no-sort">حذف</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            var dialogOpened = false;
+            var oTable = $('#dataTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": '/Payments/GetPaymentMethodHeaders/ @ViewBag.id',
+                    "type": 'POST',
+                    "datatype": "json",
+                },
+                "columns": [
+                    { "data": "Id", "autowidth": true },
+                    { "data": "Name", "autowidth": true },
+                    { "data": "TotalMonthPeriod", "autowidth": true },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data) {
+                            return '<a class="popup btn btn-primary" href="/RealEstate/Payments/SavePaymentMethodHeader/' + data + '">تعديل</a>'
+                        }
+                    },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data) {
+                            return '<a class="popup btn btn-primary" href="/RealEstate/Payments/PaymentMethodDetailIndex/' + data + '">تفاصيل النظام</a>'
+                        }
+                    },
+                    {
+                        "data": "Id", "width": "50px", "render": function (data) {
+                            return '<a class="popup btn btn-danger" href="/RealEstate/Payments/DeletePaymentMethodHeader/' + data + '">حذف</a>'
+                        }
+                    }
+                ],
+                "language": {
+                    "emptyTable": "لا توجد نتائج لعرضها",
+                    "info": "عرض _START_ الى _END_ من _TOTAL_ نتيجة",
+                    "infoEmpty": "",
+                    "infoFiltered": "(نتائج بحث من اجمالي _MAX_ نتيجة)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "عرض _MENU_ نتائج ",
+                    "loadingRecords": "تحميل...",
+                    "search": "بحث: ",
+                    "zeroRecords": "لا توجد نتائج مطابقة للبحث",
+                    "paginate": {
+                        "first": "الأول",
+                        "last": "الأخير",
+                        "next": "التالي",
+                        "previous": "السابق"
+                    },
+                    "processing": "تحميل......."
+                },
+                columnDefs: [
+                    { "className": "dt-center", "targets": "_all" }/* to center data on columns*/,
+                    {
+                        "targets": 'no-sort',
+                        "orderable": false
+                    }
+                ]
+            });
+
+            $('.tableContainer').on('click', 'a.popup', function (e) {
+                e.preventDefault();
+                if (!dialogOpened) {
+                    OpenPopup($(this).attr('href'));
+                    dialogOpened = true;
+                }
+            });
+
+            function OpenPopup(pageUrl) {
+                var $pageContent = $('<div/>');
+                $pageContent.load(pageUrl, function () {
+                    $('#popupForm', $pageContent).removeData('validator');
+                    $('#popupForm', $pageContent).removeData('unobtrusiveValidation');
+                    $.validator.unobtrusive.parse('form');
+                });
+
+                $dialog = $('<div class="popupWindow" style="overflow:auto"></div>')
+                    .html($pageContent)
+                    .dialog({
+                        draggable: true,
+                        autoOpen: false,
+                        resizable: true,
+                        model: true,
+                        title: 'نافذة فرعية',
+                        height: 550,
+                        width: 1100,
+                        close: function () {
+                            $dialog.dialog('destroy').remove();
+                            dialogOpened = false;
+                        }
+                    });
+
+                $('.popupWindow').on('submit', '#popupForm', function (e) {
+                    var url = $('#popupForm')[0].action;
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $('#popupForm').serialize(),
+                        success: function (data) {
+                            if (data.status) {
+                                $dialog.dialog('close');
+                                dialogOpened = false;
+                                oTable.ajax.reload();
+                                $.notify(data.message, {
+                                    globalPosition: 'top center',
+                                    className: data.className
+                                });
+                            }
+                        }
+                    });
+                    e.preventDefault();
+                });
+                $dialog.dialog('open');
+            };
+
+        });
+    </script>
+}

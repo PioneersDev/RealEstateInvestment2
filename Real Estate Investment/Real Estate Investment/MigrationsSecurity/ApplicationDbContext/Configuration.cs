@@ -20,9 +20,9 @@ namespace RealEstateInvestment.MigrationsSecurity.ApplicationDbContext
 
         protected override void Seed(ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data.
+              //This method will be called after migrating to the latest version.
+              //You can use the DbSet<T>.AddOrUpdate() helper extension method 
+              //to avoid creating duplicate seed data.
             //context.Applications.AddOrUpdate(p => p.Id, new Application { Id = 1, ApplicationName = "RealEstate" });
             //context.Menus.AddOrUpdate(p => p.MenuId
             //, new Menu { MenuId = 1, ApplicationId = 1, MenuName = "", MenuText = "«·’·«ÕÌ« ", MainMenu = -1, Section = null, Show = true }
