@@ -506,42 +506,42 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
 
         private IQueryable<ContractRequests> SortContractsRequestsByColumnWithOrder(string order, string orderDir, IQueryable<ContractRequests> contractsRequests)
         {
-            // Initialization.   
+            // Initialization.
             try
             {
-                // Sorting   
+                // Sorting
                 switch (order)
                 {
                     case "0":
-                        // Setting.   
+                        // Setting.
                         contractsRequests = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? contractsRequests.OrderByDescending(p => p.Id) : contractsRequests.OrderBy(p => p.Id);
                         break;
                     case "1":
-                        // Setting.   
+                        // Setting.
                         contractsRequests = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? contractsRequests.OrderByDescending(p => p.ContractId) : contractsRequests.OrderBy(p => p.ContractId);
                         break;
                     case "2":
-                        // Setting.   
+                        // Setting.
                         contractsRequests = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? contractsRequests.OrderByDescending(p => p.ProjectName) : contractsRequests.OrderBy(p => p.ProjectName);
                         break;
                     case "3":
-                        // Setting.   
+                        // Setting.
                         contractsRequests = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? contractsRequests.OrderByDescending(p => p.UnitName) : contractsRequests.OrderBy(p => p.UnitName);
                         break;
                     case "4":
-                        // Setting.   
+                        // Setting.
                         contractsRequests = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? contractsRequests.OrderByDescending(p => p.CustomerName) : contractsRequests.OrderBy(p => p.CustomerName);
                         break;
                     case "5":
-                        // Setting.   
+                        // Setting.
                         contractsRequests = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? contractsRequests.OrderByDescending(p => p.ContractDate) : contractsRequests.OrderBy(p => p.ContractDate);
                         break;
                     case "6":
-                        // Setting.   
+                        // Setting.
                         contractsRequests = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? contractsRequests.OrderByDescending(p => p.MarketingCompanyName) : contractsRequests.OrderBy(p => p.MarketingCompanyName);
                         break;
                     default:
-                        // Setting.   
+                        // Setting.
                         contractsRequests = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? contractsRequests.OrderByDescending(p => p.Id) : contractsRequests.OrderBy(p => p.Id);
                         break;
                 }
@@ -566,7 +566,7 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             }
             else
             {
-                PopulateDropDownList(); 
+                PopulateDropDownList();
             }
             return View(contractRequest);
         }
@@ -674,6 +674,44 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             return View(vm);
         }
 
+        public ActionResult GetSpecialContract(InstallmentDataSerializer model)
+        {
+            ContractRequestViewModel vm = new ContractRequestViewModel();
+            var spec = new InstallmentDataSerializer()
+            {
+                BANKNAME = "",
+                CHEQUENO = 0,
+                PayValue = 0,
+                PaymentMethodDetailId = model.PaymentMethodDetailId,
+                PayDate = DateTime.Today,
+                PayCount = model.PayCount,
+                Serial = 0,
+                Id = model.Id,
+                BANKBRANCH = model.BANKBRANCH,
+                ContractId = model.ContractId,
+                CustomerId = model.CustomerId,
+                DELETED = model.DELETED,
+                IsPaid = model.IsPaid,
+                JOURNALID = model.JOURNALID,
+                JOURNALTYPEID = model.JOURNALTYPEID,
+                PayNote = model.PayNote,
+                PayProperty = model.PayProperty,
+                REVERSED = model.REVERSED,
+                RefId = model.RefId,
+                TICKETDATE = model.TICKETDATE,
+                TICKETID = model.TICKETID,
+                TransactionDate = model.TransactionDate,
+                payName = model.payName
+            };
+
+            for (int i = 0; i < model.PayCount; i++)
+            {
+                vm.InstallmentData.Add(spec);
+                spec.Serial += 1;
+            }
+            return View(vm);
+        }
+
         //for ContractRequestSave --->Edit
         public ActionResult GetAutomaticInstallmentsViewForEdit(int id)
         {
@@ -716,10 +754,23 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
             return new JsonResult { Data = new { status = status, message = message, className = className } };
         }
 
-        private void PopulateDropDownList(object selectedProject = null, object selectedUnit = null, object selectedCustomer = null, object selectedPaymentMethodHeader = null, object selectedContractType = null, object selectedContractModel = null, object selectedMarketingCompany = null)
+        private void PopulateDropDownList(object selectedProject = null, object selectedPaymentType = null, object selectedUnit = null, object selectedCustomer = null, object selectedPaymentMethodHeader = null, object selectedContractType = null, object selectedContractModel = null, object selectedMarketingCompany = null)
         {
             ViewBag.Projects = new SelectList(_db.Projects.ToList(), "Id", "ProjectName", selectedProject);
-            ViewBag.Units = new SelectList(_db.Units.ToList(), "Id", "UnitName", selectedUnit);
+
+            var data = from paymentTypes in _db.PaymentTypes
+                join paymentMethodDetails in _db.PaymentMethodDetails on paymentTypes.Id equals paymentMethodDetails
+                    .PaymentTypeId
+                where paymentMethodDetails.Id >= 9 && paymentMethodDetails.Id <= 16
+                select new
+                {
+                    Id = paymentMethodDetails.Id,
+                    Name = paymentTypes.Name
+                };
+
+            ViewBag.PaymentTypes = new SelectList(data.ToList(), "Id", "Name", selectedPaymentType);
+
+              ViewBag.Units = new SelectList(_db.Units.ToList(), "Id", "UnitName", selectedUnit);
             ViewBag.Customers = new SelectList(_db.Customers.Select(a => new { Id = a.Id, NameArab = a.Id + " " + a.NameArab }).ToList(), "Id", "NameArab", selectedCustomer);
             ViewBag.PaymentMethodHeaders = new SelectList(_db.PaymentMethodHeaders.ToList(), "Id", "Name", selectedPaymentMethodHeader);
             ViewBag.ContractTypes = new SelectList(_db.ContractTypes.ToList(), "Id", "Name", selectedContractType);

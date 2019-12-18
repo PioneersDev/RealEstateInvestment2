@@ -93,6 +93,8 @@ namespace RealEstateInvestment.MigrationsDb.dbContainer
             context.ProjectOwners.AddOrUpdate(p => p.Id
             , new ProjectOwner { Id = 1, ProjectId = 1, ProjectOwnerId = 1, IsMainOwner = false, MainOwnerId = 2, ProjectOwnerDelegateName = "هشام أحمد عبد اللطيف العوضي", ProjectOwnerDelegateRepresent = "رئيس مجلس الادارة", ProjectOwnerDetails = "يمتلك عدد من البنايات السكنية" });
             context.PaymentMethodHeaders.AddOrUpdate(p => p.Id, new PaymentMethodHeader { Id = 1, Name = "6 سنوات", TotalMonthPeriod = 72 });
+            context.PaymentMethodHeaders.AddOrUpdate(p => p.Id, new PaymentMethodHeader { Id = 1000, Name = "نظام دفع خاص", TotalMonthPeriod = 0 });
+
             context.PaymentMethodDetails.AddOrUpdate(p => p.Id
             , new PaymentMethodDetail { Id = 1, PaymentMethodHeaderId = 1, PaymentTypeId = 1, IsRatioNotAmount = true, Ratio = 10, MinimumAmount = null, StartFrom = 0, Period = 0, PaymentsCounts = 0 }
             , new PaymentMethodDetail { Id = 2, PaymentMethodHeaderId = 1, PaymentTypeId = 2, IsRatioNotAmount = true, Ratio = 6.665m, MinimumAmount = null, StartFrom = 3, Period = 0, PaymentsCounts = 0 }
@@ -108,7 +110,7 @@ namespace RealEstateInvestment.MigrationsDb.dbContainer
 
                 , new ContractItem { Id = 3, ContractModelId = 1, ContractItemName = "البند الثالث (الثمن وطريقة الدفع)", ContractItemString = "تم هذا البيع مقابل ثمن اجمالي وقدره (@107) (فقط @108 فقط لا غير) ، اتفق الطرفان على ان يتم سدادها كما هو وارد في جدول السداد" }
 
-           
+
                 );
 
             context.Database.ExecuteSqlCommand(@"create function [con].[ufn_GetRequests](@Id bigint,@UserId int,@RequestTypeId int) 

@@ -19,121 +19,154 @@ namespace RealEstateInvestment.MigrationsDb.dbContainer
 
         protected override void Seed(RealEstateInvestment.Areas.RealEstate.Models.dbContainer context)
         {
+
+
+
             //  This method will be called after migD:\TFS\RealEstate\Real Estate Investment\Real Estate Investment\MigrationsDb\dbContainer\Configuration.csrating to the latest version.
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
 
-            //            context.Database.ExecuteSqlCommand("INSERT INTO [au].[UserRole]([UserId],[RoleId])VALUES(1,1)");
-
-            //            context.Religions.AddOrUpdate(p => p.Id
-            //            , new Religion { Id = 1, ReligionName = "«б«”б«г" }
-            //            , new Religion { Id = 2, ReligionName = "«бг”нЌн…" });
-
-            //            context.PhoneTypes.AddOrUpdate(p => p.Id
-            //            , new PhoneType { Id = 1, PhoneTypeName = "гж»«нб" }
-            //            , new PhoneType { Id = 2, PhoneTypeName = "√—÷н" });
-
-            //            context.Nationalities.AddOrUpdate(p => p.Id
-            //            , new Nationality { Id = 1, NationalityName = "г’—н/…" });
-
-            //            context.TypeIds.AddOrUpdate(p => p.Id
-            //            , new TypeId { Id = 1, IdName = " »Ў«ё… —ёг ёжгн" }
-            //            , new TypeId { Id = 2, IdName = "ћж«“ ”Ё—" });
-
-            //            context.Statuses.AddOrUpdate(p => p.Id
-            //            , new Status { Id = 1, Name = "џн— гЌћж“…" }
-            //            , new Status { Id = 2, Name = "гЌћж“…" }
-            //            , new Status { Id = 3, Name = " г «б Џ«ёѕ" }
-            //            , new Status { Id = 4, Name = " г «б»нЏ" });
-
-            //            context.Owners.AddOrUpdate(p => p.Id
-            //            , new Owner { Id = 1, Name = "‘—я… «бгнѕ«д бб«” ‘«—« ", Address = "1 ‘«—Џ Ќж÷ «бћ“н—… - яж—дн‘ «бгЏ«ѕн -«бё«е—…" }
-            //            , new Owner { Id = 2, Name = "‘—я… —ƒн… бб«” Ћг«— «бЏё«—н", Address = "" });
-
-            //            context.DocTypes.AddOrUpdate(p => p.Id
-            //            , new DocType { Id = 1, Name = "дгж–ћ" }
-            //            , new DocType { Id = 2, Name = "Џёѕ" });
-
-            //            context.PaymentTypes.AddOrUpdate(p => p.Id
-            //            , new PaymentType { Id = 1, Name = "ѕЁЏ…  Џ«ёѕ", PayAddition = false }
-            //            , new PaymentType { Id = 2, Name = "ѕЁЏ… √жбм", PayAddition = false }
-            //            , new PaymentType { Id = 3, Name = "ѕЁЏ… «” б«г", PayAddition = false }
-            //            , new PaymentType { Id = 4, Name = "ѕЁЏ… ’н«д…", PayAddition = true }
-            //            , new PaymentType { Id = 5, Name = "√ё”«Ў —»Џ ”джн…", PayAddition = false });
-
-            //            context.ContractSyses.AddOrUpdate(p => p.VarId
-            //            , new ContractSys { VarId = 1, VarName = "@1", VarDescription = "џ—«г… «б √ќн— Ён ”ѕ«ѕ √н ё”Ў (д”»… гд «бё”Ў)", VarValue = "2.5", VarType = "decimal", IsTafqet = true, IsMoney = false }
-            //            , new ContractSys { VarId = 2, VarName = "@2", VarDescription = "«бёнг… «б н н г ќ’ге« Ён Ќ«б… «” —ѕ«ѕ гбян… «бжЌѕ… (д”»… гд ёнг… «бжЌѕ…)", VarValue = "10", VarType = "int", IsTafqet = true, IsMoney = false }
-            //            , new ContractSys { VarId = 3, VarName = "@3", VarDescription = "џ—«г…  д«“б «бЏгнб ббџн— (д”»… гд ёнг… «бжЌѕ…)", VarValue = "5", VarType = "int", IsTafqet = true, IsMoney = false }
-            //            , new ContractSys { VarId = 4, VarName = "@4", VarDescription = " «—нќ  ”бнг «бжЌѕ… ббЏгнб", VarValue = "1/1/2019", VarType = "datetime", IsTafqet = false, IsMoney = false }
-            //            , new ContractSys { VarId = 5, VarName = "@5", VarDescription = "гѕ… «б”г«Ќ Ќ м  ”бнг «бжЌѕ… ббЏгнб »«б√‘е—", VarValue = "6", VarType = "int", IsTafqet = true, IsMoney = false }
-            //            , new ContractSys { VarId = 6, VarName = "@6", VarDescription = "џ—«г…  √ќн— «б ”бнг (д”»… гд Ћгд «бжЌѕ… «б”ядн… Џд яб ‘е—  √ќн—)", VarValue = "0.5", VarType = "decimal", IsTafqet = true, IsMoney = false }
-            //            , new ContractSys { VarId = 7, VarName = "@7", VarDescription = "«бЌѕ «б√ё’м бџ—«г…  √ќн— «б ”бнг (д”»… гд Ћгд «бжЌѕ…)", VarValue = "5", VarType = "int", IsTafqet = true, IsMoney = false }
-            //            , new ContractSys { VarId = 8, VarName = "@8", VarDescription = "жѕнЏ… «б’н«д… Џд яб г —", VarValue = "600", VarType = "int", IsTafqet = false, IsMoney = true }
-            //            , new ContractSys { VarId = 9, VarName = "@9", VarDescription = "«ћг«бн жѕнЏ… «б’н«д…", VarValue = "100000", VarType = "int", IsTafqet = true, IsMoney = true }
-            //            , new ContractSys { VarId = 10, VarName = "@10", VarDescription = "√ё’м гжЏѕ б«” б«г жѕнЏ… «б’н«д…", VarValue = "1/1/2019", VarType = "datetime", IsTafqet = false, IsMoney = false });
-
-            //            context.UnitTypes.AddOrUpdate(p => p.Id
-            //            , new UnitType { Id = 1, UnitTypeName = "‘ё…", IsParent = false, SubUnitId = null }
-            //            , new UnitType { Id = 2, UnitTypeName = "гЌб", IsParent = false, SubUnitId = null }
-            //            , new UnitType { Id = 3, UnitTypeName = "Ёнб«", IsParent = false, SubUnitId = null }
-            //            , new UnitType { Id = 4, UnitTypeName = "Џг«—…", IsParent = true, SubUnitId = 1 }
-            //            , new UnitType { Id = 5, UnitTypeName = "гжб", IsParent = true, SubUnitId = 2 });
+            context.PaymentMethodHeaders.AddOrUpdate(p => p.Id, new PaymentMethodHeader { Id = 1000, Name = "дў«г ѕЁЏ ќ«’", TotalMonthPeriod = 0 });
 
 
-            //            context.ContractTypes.AddOrUpdate(p => p.Id
-            //            , new ContractType { Id = 1, Name = " ё”нЎ" }
-            //            , new ContractType { Id = 2, Name = " гбня" }
-            //            , new ContractType { Id = 3, Name = "«нћ«—" });
 
-            //            context.Countries.AddOrUpdate(p => p.Id, new Country { Id = 1, CountryName = "г’—" });
-            //            context.Cities.AddOrUpdate(p => p.Id, new City { Id = 1, CountryId = 1, CityName = "«бё«е—…" });
-            //            context.Districts.AddOrUpdate(p => p.Id, new District { Id = 1, CityId = 1, DistrictName = "«бд“е…" }, new District { Id = 2, CityId = 1, DistrictName = "«б ћгЏ «бќ«г”" });
+            context.PaymentMethodDetails.AddOrUpdate(p => p.Id, new PaymentMethodDetail {Id = 9 , PaymentMethodHeaderId = 1000 ,PaymentTypeId = 1, IsRatioNotAmount = true,Ratio = 0,StartFrom = 0,Period = 0,PaymentsCounts = 0});
 
-            //            context.Customers.AddOrUpdate(p => p.Id, new Customer { Id = 1, NameArab = "Џ»«” гЌгѕ Џ»«” ”бнг«д", NameEng = "Abbas Mohamed Abbas Soliman", Email = "eng.abbasmohamed14@gmail.com", ReligionId = 1, NationalityId = 1, CountryId = 1, CityId = 1, DistrictId = 1, IDTypeId = 1, IdNumber = "29212148801254", IdissuePlace = "‘ «бЌ—н… г—я“ Ўг« - ”же«ћ", IdExpiryDate = DateTime.ParseExact("04/07/2025", "dd/MM/yyyy", null), Address = "6 ‘«—Џ Ќ”жд… - ‘«—Џ ћ”— «б”жн” «бћ—«ћ »ћж«— г’дЏ «бгб«»” " });
 
-            //            context.CustomerPhones.AddOrUpdate(p => p.Id, new CustomerPhone { Id = 1, CustomerId = 1, PhoneTypeId = 1, PhoneNo = "01118863234" });
+            context.PaymentMethodDetails.AddOrUpdate(p => p.Id, new PaymentMethodDetail { Id = 10, PaymentMethodHeaderId = 1000, PaymentTypeId = 2, IsRatioNotAmount = true, Ratio = 0, StartFrom = 0, Period = 0, PaymentsCounts = 0 });
 
-            //            context.Projects.AddOrUpdate(p => p.Id
-            //            , new Project { Id = 1, CountryId = 1, CityId = 1, DistrictId = 2, ProjectName = "” жд —н“ѕд”", ProjectContentDetails = "гд«Ўё ббЁнб«  жгд«Ўё «ѕ«—н… ж ћ«—н… »«б«÷«Ё… бгд«Ўё Џг«—«  ”ядн…", Location = "ёЎЏ… «б√—÷ —ёг (4) »«бЎ—нё «бѕ«∆—н- «б ћгЏ «бќ«г”- гѕнд… «бё«е—… «бћѕнѕ…", ProjectDescription = "г‘—жЏ гћ гЏ Џг—«дн г я«гб" });
-            //            context.ProjectOwners.AddOrUpdate(p => p.Id
-            //            , new ProjectOwner { Id = 1, ProjectId = 1, ProjectOwnerId = 1, IsMainOwner = false, MainOwnerId = 2, ProjectOwnerDelegateName = "е‘«г √Ќгѕ Џ»ѕ «ббЎнЁ «бЏж÷н", ProjectOwnerDelegateRepresent = "—∆н” гћб” «б«ѕ«—…", ProjectOwnerDetails = "нг бя Џѕѕ гд «б»д«н«  «б”ядн…" });
-            //            context.PaymentMethodHeaders.AddOrUpdate(p => p.Id, new PaymentMethodHeader { Id = 1, Name = "6 ”дж« ", TotalYearPeriod = 6 });
-            //            context.PaymentMethodDetails.AddOrUpdate(p => p.Id
-            //            , new PaymentMethodDetail { Id = 1, PaymentMethodHeaderId = 1, PaymentTypeId = 1, IsRatioNotAmount = true, Ratio = 10, MinimumAmount = null, StartFrom = 0, Period = 0, PaymentsCounts = 0 }
-            //            , new PaymentMethodDetail { Id = 2, PaymentMethodHeaderId = 1, PaymentTypeId = 2, IsRatioNotAmount = true, Ratio = 6.665m, MinimumAmount = null, StartFrom = 3, Period = 0, PaymentsCounts = 0 }
-            //            , new PaymentMethodDetail { Id = 3, PaymentMethodHeaderId = 1, PaymentTypeId = 5, IsRatioNotAmount = true, Ratio = 0.03125m, MinimumAmount = null, StartFrom = 6, Period = 3, PaymentsCounts = 24 });
+            context.PaymentMethodDetails.AddOrUpdate(p => p.Id, new PaymentMethodDetail { Id = 11, PaymentMethodHeaderId = 1000, PaymentTypeId = 6, IsRatioNotAmount = true, Ratio = 0, StartFrom = 0, Period = 0, PaymentsCounts = 0 });
 
-            //            context.ContractModels.AddOrUpdate(p => p.Id
-            //            , new ContractModel { Id = 1, ContractTypeId = 1, Name = "Џёѕ  ё”нЎ ‘ёё ” жд —“нѕд”" });
 
-            //            context.ContractItems.AddOrUpdate(p => p.Id
-            //                , new ContractItem { Id = 1, ContractModelId = 1, ContractItemName = "«б»дѕ «б√жб", ContractItemString = "нЏ »—«б генѕ «б”«»ё ж«бгб«Ќё «бг—Ёё… »«бЏёѕ √ж «б н ”жЁ  бЌё »е Ёнг« »Џѕ ж«б ќЎнЎ «бЏ«г ббг‘—жЏ «бгЌѕѕ Џбне гжёЏ «бжЌѕ… «бг»нЏ… ж«б‘—жЎ ж«бгж«’Ё«  «бг—Ёё… »е–« «бЏёѕ √ж «б н ”жЁ  —Ёё »е ћ“Ѕ«р б« н ћ“√ гд е–« «бЏёѕ жгягб«р жг гг«р бя«Ё… »джѕе ж√Ќя«ге жбе« –«  «бёж… ж«бдЁ«– «бё«дждн «б н б»джѕ ж√Ќя«г е–« «бЏёѕ" }
+            context.PaymentMethodDetails.AddOrUpdate(p => p.Id, new PaymentMethodDetail { Id = 12, PaymentMethodHeaderId = 1000, PaymentTypeId = 7, IsRatioNotAmount = true, Ratio = 0, StartFrom = 0, Period = 0, PaymentsCounts = 0 });
 
-            //                , new ContractItem { Id = 2, ContractModelId = 1, ContractItemName = " «б»дѕ «бЋ«дн (»н«д «бг»нЏ)", ContractItemString = "»«Џ «бЎ—Ё «б√жб «бм «бЎ—Ё «бЋ«дн «бё«»б б–бя «бжЌѕ… «б”ядн… @103 Ён @104 »г‘—жЏ @101 «бгё«г Џбм @102 жн»бџ «ћг«бн г”ЎЌ «бжЌѕ… «б”ядн… гЌб е–« «бЏёѕ  (@105)г2 ЁёЎ @106 г — г—»Џ  \" Ќ  «бЏћ“ ж«б“н«ѕ…\" Џбм г«еж г»нд »«бг”ёЎ «б√Ёён ж«б—”г «бедѕ”н ббжЌѕ… «б”ядн… гЌб е–« «бЏёѕ ж«б —«ќн’ «б н ’ѕ—  ж«б н ’ ’ѕ— б«Ќё« ° жёѕ « Ёё «бЎ—Ё«д Џбм «д е–« «б»нЏ ж«бЏёѕ гжёжЁ Џбм ‘—Ў ж«ёЁ жеж ”ѕ«ѕ я«гб «бЋгд Ён «бгЏ«ѕ «бг Ёё Џбне ж«бгд’ж’ Џбне ° жнЏ »— е–« «бЏёѕ џн— д«ёб ббгбян… жџн— г— » б√н… Ќёжё Џндн… √’бн… √ж »Џн… √ж ‘ќ’н… Џбм «бЏнд гЌб «б Џ«ёѕ «б« »Џѕ ”ѕ«ѕ «бЎ—Ё «бЋ«дн бя«гб «бЋгд Ён «бгЏ«ѕ «бгЌѕѕ °жн‘гб е–« «б»нЏ Ќ’… ‘«∆Џ… »«б√—÷ «бгё«г Џбне« «бг»дм «бя«∆д »е «бжЌѕ… «бг»нЏ… гЌб е–« «бЏёѕ ж«б√ћ“«Ѕ «бг‘ —я…  Џ«ѕб д”»… г”ЎЌ «бжЌѕ… «бг»нЏ… «бм я«гб г”«Ќ… жЌѕ«  «бЏё«— жб« нЌё ббЎ—Ё «бЋ«дн «бгЎ«б»… »ё”г е« √ж Ќ’… гЁ—“… »е« ° Џбм √д б« нЏѕ гд «б√ћ“«Ѕ «бг‘ —я… я«гб г”«Ќ… «б”ЎЌ ж«бЌѕнё… ЌнЋ √дег« гбя ббЎ—Ё «б√жб жбе жЌѕе Ќё «б ’—Ё Ёне« ж«” Џг«бе« ° яг« √д «бг Ёё Џбне »нд «бЎ—Ёнд √д е–« «б»нЏ б« н‘гб √н Ќёжё Ёнг« нќ’ «бг—«Ёё «бЏ«г… ж«бЎ—ё ж«б√—’Ё… ж«б‘ж«—Џ «бѕ«ќбн… ж«бг”«Ќ«  ж«бг»«дн «бгќ’’… ббгдЁЏ… «бЏ«г… ж«бЌѕ«∆ё «бЏ«г… ж«бгд«Ўё «бќѕгн… √ндг« жћѕ  жќб«Ёе гд «бгд‘¬  «б н нёнге« «бЎ—Ё «б√жб ° ЌнЋ √д  бя «бгд‘¬   Џѕ гбя«р ббЎ—Ё «б√жб." }
 
-            //                , new ContractItem { Id = 3, ContractModelId = 1, ContractItemName = "«б»дѕ «бЋ«бЋ («бЋгд жЎ—нё… «бѕЁЏ)", ContractItemString = " г е–« «б»нЏ гё«»б Ћгд «ћг«бн жёѕ—е (@107) (ЁёЎ @108 ЁёЎ б« џн—) ° « Ёё «бЎ—Ё«д Џбм «д н г ”ѕ«ѕе« яг« еж ж«—ѕ Ён ћѕжб «б”ѕ«ѕ" }
+            context.PaymentMethodDetails.AddOrUpdate(p => p.Id, new PaymentMethodDetail { Id = 13, PaymentMethodHeaderId = 1000, PaymentTypeId = 8, IsRatioNotAmount = true, Ratio = 0, StartFrom = 0, Period = 0, PaymentsCounts = 0 });
 
-            //                //                , new ContractItem { Id = 4, ContractItemName = "«б»дѕ «б—«»Џ («б«б “«г »«б”ѕ«ѕ)", ContractItemString = @"1-нб “г «бЎ—Ё «бЋ«дн »”ѕ«ѕ »«ён Ћгд «б»нЏ »«бя«гб Ён «бгж«Џнѕ «бг Ёё Џбне«
-            //                //2-жнЌў— Џб «бЎ—Ё «бЋ«дн «б √ќ— √ж «б√г д«Џ Џд «б”ѕ«ѕ б«н ”»» гд «б√”»«» √н« я«д  ° жнЏ »—  жёнЏ «бЎ—Ё «бЋ«дн Џбм е–« «бЏёѕ «ё—«—«р где »–бя ж д«“б де«∆н гд «бЎ—Ё «бЋ«дн Џд √н Ќё бе Ён «бЌ»” √ж «бѕЁЏ »Џѕг «б дЁн– ° жнЏ »— «ќб«б «бЎ—Ё «бЋ«дн »–бя «ќб«б ћже—н »‘—жЎ «бЏёѕ н»нЌ ббЎ—ё «б√жб «Џг«б «б‘—Ў «б’—нЌ «бЁ«”ќ «бж«—ѕ »«б»дѕ «бќ«г” гд е–« «бЏёѕ
-            //                //" }
-            //                //                , new ContractItem { Id = 5, ContractItemName = "«б»дѕ «бќ«г” («б √ќн— Ён «б”ѕ«ѕ)", ContractItemString = @"1-«–«  √ќ— √ж  ќбЁ √ж «г дЏ «бЎ—Ё «бЋ«дн Џд ”ѕ«ѕ ёнг… √н ё”Ў Ён «бгжЏѕ «бгЌѕѕ бе б√н ”»» гд «б√”»«» √яЋ— гд гѕ… Џ‘—… √н«г гд  «—нќ «б≈” Ќё«ё ЁнЌё ббЎ—Ё «б√жб  Ќ’нб џ—«г… ёѕ—е«  @џ—«г…«б √ќн— (@џ—«г…«б √ќн—гЁ’б… б« џн—) гд ёнг… «бё”Ў Џд яб ‘е—  √ќн— √ж ћ“√гд «б‘е— Џбм «д  ” Ќё »ѕ«н… гд  «—нќ «бё”Ў «бг √ќ— жЌ м  «—нќ «б”ѕ«ѕ  ° яг« нЌё ббЎ—Ё «б√жб √н÷« Ён е–е «бЌ«б… «–«  ћ«ж“… гѕ… «б √ќн— б√яЋ— гд 60 нжг« гд  «—нќ «б√” Ќё«ё «Џ »«— е–« «бЏёѕ гЁ”жќ« гд  бё«Ѕ дЁ”е ѕжд Ќ«ћ… «бм  д»не «ж «д–«— √ж ’ѕж— Ќяг ё÷«∆н »–бя √ж « ќ«– «н… «ћ—«Ѕ«  ё÷«∆н… ж«” —ѕ«ѕ «бжЌѕ… «б”ядн… гд  Ќ  нѕ «бЎ—Ё «бЋ«дн √ж √н нѕ я«д  ≈д я«д ёѕ «” бге« жн г —ѕ г«  г ”ѕ«ѕе гд «бЋгд »Џѕ ќ’г ёнг… (@џ—«г…«” —ѕ«ѕ) (ЁёЎ @џ—«г…«” —ѕ«ѕгЁ’б…) гд «ћг«бн ёнг… «бжЌѕ… «б”ядн… гЌб е–« «бЏёѕ гё«»б «бг’—жЁ«  «б≈ѕ«—н… ж«бѕЏ«н… ж«б≈Џб«д жџн—е« гд «бг’—жЁ«  «б н  я»ѕе« «бЎ—Ё «б√жб Ён ”»нб « г«г е–« «бЏёѕ  ж«б н нё— »е« «бЎ—Ё «бЋ«дн ж«де« ёнг… џн— ќ«÷Џ… б—ё«»… «бё÷«Ѕ ж–бя б√д ”»» Ё”ќ «бЏёѕ н—ћЏ «бм «бЎ—Ё «бЋ«дн  ° жЏбм √д н г —ѕ «бг»«бџ Џбм √ё”«Ў жЏбм гѕѕ гг«Ћб… бб√ё”«Ў ж«бгѕѕ «б н  г »е« «б”ѕ«ѕ гд ё»б «бЎ—Ё «бЋ«дн жЏбм √д н»ѕ√ «” Ќё«ё «бЎ—Ё «бЋ«дн б бя «бг»«бџ »Џѕ «Џ«ѕ… »нЏ «бЎ—Ё «б√жб ббжЌѕ… «бг” —ѕ… жббЎ—Ё «б√жб «бЌё Ён «бгЎ«б»… »яб √ж »Џ÷ г« –я—
-            //                //2-нЌё ббЎ—Ё «б√жб Ён Ќ«б… Ё”ќ «бЏёѕ «б ’—Ё Ён «бжЌѕ… «б”ядн… гЌб е–« «бЏёѕ ббџн— ѕжд √д няжд ббЎ—Ё «бЋ«дн √н Ќё Ён «б≈Џ —«÷ Џбм –бя
-            //                //3-жб« нЏ »—  г”я «бЎ—Ё «б√жб («б»«∆Џ) »«б‘—Ў «б’—нЌ «бЁ«”ќ »«бд”»… «бм √Ќѕ «б√ё”«Ў  д«“б« где Џд «б г”я »е »«бд”»… «бм џн—е гд «б√ё”«Ў
-            //                //" }
-            //                //                , new ContractItem { Id = 6, ContractItemName = "«б»дѕ «б”«ѕ” (Џѕжб «бЎ—Ё «бЋ«дн Џд «б»нЏ)", ContractItemString = @"Ён Ќ«б… —џ»… «бЎ—Ё «бЋ«дн Ён «бЏѕжб Џд « г«г «б»нЏ жЁ”ќ «бЏёѕ ж«” —ѕ«ѕ г« ”»ё ”ѕ«ѕе гд √ё”«Ў ж«Џ«ѕ… «бЌ«б бг« я«д  Џбне ё»б «б Џ«ёѕ  ° ЁЏбне «б ёѕг »Ўб» —”гн ≈бм «бЎ—Ё «б√жб н»ѕн Ёне —џ» е  бя ° жн г «б»  »«бЎб» »«бгж«Ёё… √ж«б—Ё÷ Ён гѕ… √ё’«е« ‘е— гд  «—нќ  ёѕнге жЁн Ќ«б… «бгж«Ёё… Џбм «бЏѕжб √ж «бЁ”ќ »д«Ѕ«р Џбм Ўб» «бЎ—Ё «бЋ«дн Ён г ќ’г г»бџ нЏ«ѕб @џ—«г…«” —ѕ«ѕ (ЁёЎ @џ—«г…«” —ѕ«ѕгЁ’б… б«џн—) гд «ћг«бн ёнг… «бжЌѕ… «б”ядн… гё«»б «бг’«—нЁ «б≈ѕ«—н… Џд Ё”ќ «бЏёѕ я Џжн÷ « Ё«ён Џд Ўб» «бЏѕжб б« нќ÷Џ б—ё«»… «бё÷«Ѕ ° жнб “г «бЎ—Ё «бЋ«дн »—ѕ «бжЌѕ… «б”ядн… гЌб е–« «бЏёѕ «д я«д ёѕ «” бге« ° Ћг нёжг «бЎ—Ё «б√жб »—ѕ «бЋгд «бгѕЁжЏ »Џѕ ќ’г  бя «бд”»… Џбм √д н г «б—ѕ »–«  Ў—нё… ”ѕ«ѕ «б√ё”«Ў жќб«б гѕѕ гг«Ћб… бб√ё”«Ў ж«бгѕѕ «б н  г »е« «б”ѕ«ѕ гд ё»б «бЎ—Ё «бЋ«дн ° Џбм √д н»ѕ√ «бЎ—Ё «б√жб Ён —ѕ «бг»«бџ »Џѕ ≈Џ«ѕ… »нЏ «бЎ—Ё «б√жб ббжЌѕ… «бг” —ѕ…° жЁн ћгнЏ «б√Ќж«б нЌё ббЎ—Ё «б√жб »≈—«ѕ е «бгдЁ—ѕ… Џѕг «бгж«Ёё… Џбм Ўб» «бЏѕжб √ж «—ћ«Ѕ «б»  Ёне" }
+            context.PaymentMethodDetails.AddOrUpdate(p => p.Id, new PaymentMethodDetail { Id = 14, PaymentMethodHeaderId = 1000, PaymentTypeId = 9, IsRatioNotAmount = true, Ratio = 0, StartFrom = 0, Period = 0, PaymentsCounts = 0 });
 
-            //                //                , new ContractItem { Id = 7, ContractItemName = "«б»дѕ «б”«»Џ (Ё”ќ «бЏёѕ ж ”бнг «бжЌѕ… «б”ядн…)", ContractItemString = @"гЏ Џѕг «б≈ќб«б бг«  г «б≈ Ё«ё Џбне »«б»дѕ «бќ«г” ж»«ён »джѕ «бЏёѕ Ё≈де Ён Ќ«б… Ё”ќ √ж «дЁ”«ќ √ж —ѕ √ж «»Ў«б √ж »Ўб«д е–« «бЏёѕ б√н ”»» гд «б√”»«» √н« я«д ° Ёнб “г «бЎ—Ё «бЋ«дн »—ѕ ж ”бнг «бжЌѕ… «б”ядн… гЌб е–« «бЏёѕ Ён Ќ«б… «” б«ге« ° ќ«бн…  г«г« гд «б‘ж«џб √ж «б√‘ќ«’ ж»«бЌ«б… «б н я«д  Џбне« «бм «бЎ—Ё «б√жб ° Џбм √д н г –бя Ёж—« ѕжд Ќ«ћ… «б  д»не √ж «д–«— √ж ’ѕж— Ќяг ё÷«∆н ° жб« н”—н Ён Ќё «бЎ—Ё «б√жб √н ≈ћ—«Ѕ √ж Џёжѕ √ж √н  ’—Ё гд «б ’—Ё«  «б н ёѕ няжд «бЎ—Ё «бЋ«дн ёѕ √»—ге« Ён ‘√д «бжЌѕ… «б”ядн… гЌб «бЏёѕ √ж √н Ќё гд «бЌёжё «б н няжд ёѕ — »е« Џбне« ”ж«Ѕ я«д  Ќёжё Џндн… √ж  »Џн… √ж ‘ќ’н… √ж √н ё—ж÷ √ж ÷г«д«  Џбм «бЏнд гЌб е–« «бЏёѕ °жЁн Ќ«б… «ќб«б «бЎ—Ё «бЋ«дн »—ѕ «бЏнд ж ”бнге« Ё Џ »— нѕе √ж нѕ гд Ќб гЌбе нѕ џ«’»… жнЌё ббЎ—Ё «б√жб «ббћжЅ «бм «бё÷«Ѕ «бг” Џћб б≈ќб«Ѕ «бжЌѕ… «б”ядн… ж«” б«ге« ж≈Џ«ѕ… Ќ«б е« ≈бм г«я«д  Џбне »дЁё«   ќ’г гг« няжд «бЎ—Ё «бЋ«дн ёѕ ”ѕѕе гд «бЋгд гЏ «б Џжн÷«  «бб«“г… ° жя«Ё… –бя ѕжд Ќ«ћ… «бм  д»не √ж «д–«— √ж ’ѕж— Ќяг ё÷«∆н " }
+            context.PaymentMethodDetails.AddOrUpdate(p => p.Id, new PaymentMethodDetail { Id = 15, PaymentMethodHeaderId = 1000, PaymentTypeId = 5, IsRatioNotAmount = true, Ratio = 0, StartFrom = 0, Period = 20, PaymentsCounts = 20 });
 
-            //                //                  , new ContractItem { Id = 8, ContractItemName = "«б»дѕ «бЋ«гд («б ’—Ё Ён «бжЌѕ… «б”ядн…)", ContractItemString = @"1-гд «бг Ёё Џбне √д е–« «бЏёѕ еж Џёѕ гЏбё Џбм ‘—Ў ж«ёЁ жеж ”ѕ«ѕ я«гб √ё”«Ў «бЋгд Ён гж«Џнѕе« жеж џн— д«ёб ббгбян… ≈б« »Џѕ ”ѕ«ѕ я«гб «бЋгд Ў»ё« бг«  г «б« Ё«ё Џбне ° жг« н” Ќё ббЎ—Ё «б√жб Ён «бгж«Џнѕ «бг Ёё Џбне« жнЌ Ёў «бЎ—Ё «б√жб »гбян… «бжЌѕ… «б”ядн… «бг»нЏ… жняжд бе Ќё «г н«“ Џбне« Ќ м «бжЁ«Ѕ »я«гб «бЋгд 
-            //                //2-жгд «бг Ёё Џбне »нд «бЎ—Ёнд √д нЌб гЌб «бЎ—Ё «бЋ«дн Ён Ќ«б… жЁ« е √ж Ёёѕ«д √ебн е ё»б ”ѕ«ѕ я«гб «бЋгд ж—Ћ е («бќбЁ «бЏ«г) Ён Ќ«б… «»ѕ«Ѕ «б—џ»… »–бя ќб«б Ћб«Ћ… √‘е— гд  «—нќ «бжЁ«… -б« ёѕ— «ббе- √ж Ёёѕ«д «б√ебн… »‘—Ў «б«б “«г »я«Ё… «б«б “«г«  «бгё——… Ён е–« «бЏёѕ Џбм гж—Ћег «бЎ—Ё «бЋ«дн «бг‘ —н жЁн Ќ«б… Ўб»ег «бЏѕжб Џд  г«г «б»нЏ √ж «бЏёѕ н”—н Џбнег г« я«д н”—н Џбм гж—Ћег Ќ”»г« ж—ѕ Ён «б»дѕ «б”«ѕ” гд е–« «бЏёѕ 
-            //                //жб« нћж“ ббЎ—Ё «бЋ«дн «бг‘ —н √ж ќбЁе «бЏ«г ”ж«Ѕ ё»б √ж »Џѕ «” б«г «бжЌѕ… «б”ядн… « ќ«– √н «ћ—«Ѕ √ж «»—«г √н Џёѕ √ж «б ’—Ё Ён «бжЌѕ… гЌб е–« «бЏёѕ »√н жће гд √жће «б ’—Ё«  √ж  — н» √н Ќёжё Џндн… √’бн… √ж  »Џн… √ж Ќёжё ‘ќ’н… √ж «бЌ’жб Џбм √н ё—ж÷ √ж ÷г«д«  √ж гдЌ √н  жянб«  »‘√д «бжЌѕ… гЌб е–« «бЏёѕ ° ж»’Ё… Џ«г… б« нЌё бег«  — н» √н «б “«г«  Џбм «бжЌѕ… «б”ядн… «б« »Џѕ ”ѕ«ѕ я«гб «бЋгд ж√н г’«—нЁ г” Ќё… Ён –г ег ббЎ—Ё «б√жб 
-            //                //3-жЁн Ќ«б…  ’—Ё «бЎ—Ё «бЋ«дн √ж ќбЁе «бЏ«г Ён «бжЌѕ… «б”ядн… √ж Ён ћ“Ѕ где« ё»б ”ѕ«ѕ я«гб «бЋгд жя«Ё… «бг»«бџ «бг” Ќё… Ён –г ег ббЎ—Ё «б√жб  √Џ »— е–« «бЏёѕ гЁ”жќ« гд  бё«Ѕ дЁ”е ѕжд «бЌ«ћ… «бм  д»не √ж «д–«— √ж «” ’ѕ«— Ќяг ё÷«∆н √ж « ќ«– √н «ћ—«Ѕ«  жняжд ббЎ—Ё «б√жб «” —ѕ«ѕ «бЏнд гЌб е–« «бЏёѕ гд  Ќ  √н нѕ я«д  гЏ «б«Ќ Ё«ў »г« ё«г «бЎ—Ё «бЋ«дн √ж ќбЁе «бЏ«г »”ѕ«ѕе гд Ћгд я Џжн÷ « Ё«ён Џд «б«ќб«б »е–« «б«б “«г џн— ќ«÷Џ б—ё«»… «бё÷«Ѕ° жя«Ё… –бя ѕжд Ќ«ћ… «бм  д»не √ж «д–«— √ж ’ѕж— Ќяг ё÷«∆н 
-            //                //4-е–« жгЏ Џѕг «б«ќб«б »√Ќя«г «бЁё—«  «б”«»ё… »е–« «б»дѕ Ёнћж“ ббЎ—Ё «бЋ«дн Ён Ќ«б… —џ» е Ён «б д«“б Џд «бжЌѕ… гЌб е–« «бЏёѕ ббџн— √д н ёѕг »Ўб» ббЎ—Ё «б√жб н»ѕн Ёне —џ» е  бя ° жняжд ббЎ—Ё «б√жб гЎбё «бЌ—н… Ён «бё»жб √ж «б—Ё÷ ° жЁн Ќ«б… гж«Ёё… «бЎ—Ё «б√жб Џбм —џ»… «бЎ—Ё «бЋ«дн Ён «б д«“б °Ёнћ» √д н г «б д«“б »гЏ—Ё… жг’«ѕё… «бЎ—Ё «б√жб Џбм «б д«“б жб« ндЁ– «б д«“б «б« »г’«ѕё… «бЎ—Ё «б√жб ° Џбм «д н г «б д«“б »Џѕ ”ѕ«ѕ «бЎ—Ё «бЋ«дн ббЎ—Ё «б√жб @џ—«г…«б д«“б (ЁёЎ @џ—«г…«б д«“бгЁ’б… б« џн—) гд ёнг… «бжЌѕ… «б”ядн… гё«»б «бг’«—нЁ «б≈ѕ«—н… «бб«“г…° жн” Ћдм гд  бя «бг’«—нЁ «б д«“б б’«бЌ «б√ё«—» гд «бѕ—ћ… «б√жбм жбг—… ж«Ќѕ… ЁёЎ
-            //                //" }
+            context.PaymentMethodDetails.AddOrUpdate(p => p.Id, new PaymentMethodDetail { Id = 16, PaymentMethodHeaderId = 1000, PaymentTypeId = 3 , IsRatioNotAmount = true, Ratio = 0, StartFrom = 0, Period = 0, PaymentsCounts = 0 });
 
-            //                //                  , new ContractItem { Id = 9, ContractItemName = "«б»дѕ «б «”Џ (гЏ«нд… «бжЌѕ… «б”ядн… «бг»нЏ…)", ContractItemString = @"нё— «бЎ—Ё «бЋ«дн √де «ЎбЏ Џбм «б ќЎнЎ «бЏ«г ббг‘—жЏ жгжёЏе ж«бгжёЏ «б–н ” ё«г Џбне «бжЌѕ… гЌб е–« «бЏёѕ ж«б—”жг«  «бедѕ”н… «бќ«’… »дгж–ћ «б»д«Ѕ «бг—Ёё »«бЏёѕ «б–н  Џ«ёѕ Џбне гЏ «бЎ—Ё «б√жб Џбм «ё«г е ж«бг”ёЎ «б√Ёён ж«б—”г «бгж÷Ќ бб‘ё… гЌб «бЏёѕ ° жЏбг »гж«’Ё«  ≈ё«г… г»«дн «бжЌѕ… «б”ядн… гж÷жЏ е–« «бЏёѕ ж√ г «бгЏ«нд… «б «г… «бд«Ён… ббће«б… ‘—Џ« жё«джд« жЁё« бг«  ёѕг жЏбг »гжёЏе« гд «бг‘—жЏ жё»б «б‘—«Ѕ »д«Ѕ«р Џбм –бя яг« нё— »√де б« нћж“ бе »Џѕ –бя √д нЎб»  џнн— гжёЏе« »жЌѕ… гд жЌѕ«  «бг‘—жЏ √ж «ћ—«Ѕ  Џѕнб Ёне« нќ«бЁ дгж–ћ «б»д«Ѕ «бг Џ«ёѕ Џбне «б« »гж«Ёё… «бЎ—Ё «б√жб Џбм –бя я «»… яг« нё»б «бЎ—Ё «бЋ«дн гд «б¬д ж»’Ё… де«∆н… √д нё ’— «д Ё«Џе »«бжЌѕ… «б”ядн… «бг»нЏ… Џбм «бџ—÷ «б–н ќ’’ гд √ћбе жеж «б”яд жб« нћж“ бе √ж бќбЁе «бЏ«г √ж «бќ«’  џнн— –бя «бџ—÷ б≈” џб«бе Ён д‘«Ў ¬ќ— гд «б√д‘Ў… џн— «б”ядн… √н« я«д  жнЏ »— е–« «б “«г ћже—н Ён «»—«г е–« «бЏёѕ ° яг« нё— «бЎ—Ё «бЋ«дн √де б« нћж“ бе «б—ћжЏ Џбм «бЎ—Ё «б√жб √ж Ўб» Ё”ќ √ж ≈дЁ”«ќ √ж —ѕ √ж ≈»Ў«б √ж »Ўб«д «бЏёѕ √ж «бгЎ«б»… »√н Ќёжё »‘√д –бя б√н ”»» гд «б√”»«»" }
-            //                );
+            context.PaymentMethodDetails.AddOrUpdate(p => p.Id, new PaymentMethodDetail { Id = 17, PaymentMethodHeaderId = 1000, PaymentTypeId = 4, IsRatioNotAmount = true, Ratio = 0, StartFrom = 0, Period = 0, PaymentsCounts = 0 });
+
+            //context.Database.ExecuteSqlCommand("INSERT INTO [au].[UserRole]([UserId],[RoleId])VALUES(1,1)");
+
+            //context.Religions.AddOrUpdate(p => p.Id
+            //, new Religion { Id = 1, ReligionName = "«б«”б«г" }
+            //, new Religion { Id = 2, ReligionName = "«бг”нЌн…" });
+
+            //context.PhoneTypes.AddOrUpdate(p => p.Id
+            //, new PhoneType { Id = 1, PhoneTypeName = "гж»«нб" }
+            //, new PhoneType { Id = 2, PhoneTypeName = "√—÷н" });
+
+            //context.Nationalities.AddOrUpdate(p => p.Id
+            //, new Nationality { Id = 1, NationalityName = "г’—н/…" });
+
+            //context.TypeIds.AddOrUpdate(p => p.Id
+            //, new TypeId { Id = 1, IdName = " »Ў«ё… —ёг ёжгн" }
+            //, new TypeId { Id = 2, IdName = "ћж«“ ”Ё—" });
+
+            //context.Statuses.AddOrUpdate(p => p.Id
+            //, new Status { Id = 1, Name = "џн— гЌћж“…" }
+            //, new Status { Id = 2, Name = "гЌћж“…" }
+            //, new Status { Id = 3, Name = " г «б Џ«ёѕ" }
+            //, new Status { Id = 4, Name = " г «б»нЏ" });
+
+            //context.Owners.AddOrUpdate(p => p.Id
+            //, new Owner { Id = 1, Name = "‘—я… «бгнѕ«д бб«” ‘«—« ", Address = "1 ‘«—Џ Ќж÷ «бћ“н—… - яж—дн‘ «бгЏ«ѕн -«бё«е—…" }
+            //, new Owner { Id = 2, Name = "‘—я… —ƒн… бб«” Ћг«— «бЏё«—н", Address = "" });
+
+            //context.DocTypes.AddOrUpdate(p => p.Id
+            //, new DocType { Id = 1, Name = "дгж–ћ" }
+            //, new DocType { Id = 2, Name = "Џёѕ" });
+
+            //context.PaymentTypes.AddOrUpdate(p => p.Id
+            //, new PaymentType { Id = 1, Name = "ѕЁЏ…  Џ«ёѕ", PaymentTypePropertyId = 1}
+            //, new PaymentType { Id = 2, Name = "ѕЁЏ… √жбм" }
+            //, new PaymentType { Id = 3, Name = "ѕЁЏ… «” б«г" }
+            //, new PaymentType { Id = 4, Name = "ѕЁЏ… ’н«д…", PaymentTypePropertyId = 2 }
+            //, new PaymentType { Id = 5, Name = "√ё”«Ў —»Џ ”джн…" }
+            //, new PaymentType { Id = 6, Name = "ѕЁЏ… Ћ«дн…" }
+            //, new PaymentType { Id = 7, Name = "«бѕЁЏ… «бЋ«бЋ…" }
+            //, new PaymentType { Id = 8, Name = "«бѕЁЏ… «б—«»Џ…" }
+            //);
+
+            //context.ContractSyses.AddOrUpdate(p => p.VarId
+            //, new ContractSys { VarId = 1, VarName = "@1", VarDescription = "џ—«г… «б √ќн— Ён ”ѕ«ѕ √н ё”Ў (д”»… гд «бё”Ў)", VarValue = "2.5", VarType = "decimal", IsTafqet = true, IsMoney = false }
+            //, new ContractSys { VarId = 2, VarName = "@2", VarDescription = "«бёнг… «б н н г ќ’ге« Ён Ќ«б… «” —ѕ«ѕ гбян… «бжЌѕ… (д”»… гд ёнг… «бжЌѕ…)", VarValue = "10", VarType = "int", IsTafqet = true, IsMoney = false }
+            //, new ContractSys { VarId = 3, VarName = "@3", VarDescription = "џ—«г…  д«“б «бЏгнб ббџн— (д”»… гд ёнг… «бжЌѕ…)", VarValue = "5", VarType = "int", IsTafqet = true, IsMoney = false }
+            //, new ContractSys { VarId = 4, VarName = "@4", VarDescription = " «—нќ  ”бнг «бжЌѕ… ббЏгнб", VarValue = "1/1/2019", VarType = "datetime", IsTafqet = false, IsMoney = false }
+            //, new ContractSys { VarId = 5, VarName = "@5", VarDescription = "гѕ… «б”г«Ќ Ќ м  ”бнг «бжЌѕ… ббЏгнб »«б√‘е—", VarValue = "6", VarType = "int", IsTafqet = true, IsMoney = false }
+            //, new ContractSys { VarId = 6, VarName = "@6", VarDescription = "џ—«г…  √ќн— «б ”бнг (д”»… гд Ћгд «бжЌѕ… «б”ядн… Џд яб ‘е—  √ќн—)", VarValue = "0.5", VarType = "decimal", IsTafqet = true, IsMoney = false }
+            //, new ContractSys { VarId = 7, VarName = "@7", VarDescription = "«бЌѕ «б√ё’м бџ—«г…  √ќн— «б ”бнг (д”»… гд Ћгд «бжЌѕ…)", VarValue = "5", VarType = "int", IsTafqet = true, IsMoney = false }
+            //, new ContractSys { VarId = 8, VarName = "@8", VarDescription = "жѕнЏ… «б’н«д… Џд яб г —", VarValue = "600", VarType = "int", IsTafqet = false, IsMoney = true }
+            //, new ContractSys { VarId = 9, VarName = "@9", VarDescription = "«ћг«бн жѕнЏ… «б’н«д…", VarValue = "100000", VarType = "int", IsTafqet = true, IsMoney = true }
+            //, new ContractSys { VarId = 10, VarName = "@10", VarDescription = "√ё’м гжЏѕ б«” б«г жѕнЏ… «б’н«д…", VarValue = "1/1/2019", VarType = "datetime", IsTafqet = false, IsMoney = false });
+
+            //context.UnitTypes.AddOrUpdate(p => p.Id
+            //, new UnitType { Id = 1, UnitTypeName = "‘ё…", IsParent = false, SubUnitId = null }
+            //, new UnitType { Id = 2, UnitTypeName = "гЌб", IsParent = false, SubUnitId = null }
+            //, new UnitType { Id = 3, UnitTypeName = "Ёнб«", IsParent = false, SubUnitId = null }
+            //, new UnitType { Id = 4, UnitTypeName = "Џг«—…", IsParent = true, SubUnitId = 1 }
+            //, new UnitType { Id = 5, UnitTypeName = "гжб", IsParent = true, SubUnitId = 2 });
+
+
+            //context.ContractTypes.AddOrUpdate(p => p.Id
+            //, new ContractType { Id = 1, Name = " ё”нЎ" }
+            //, new ContractType { Id = 2, Name = " гбня" }
+            //, new ContractType { Id = 3, Name = "«нћ«—" });
+
+            //context.Countries.AddOrUpdate(p => p.Id, new Country { Id = 1, CountryName = "г’—" });
+            //context.Cities.AddOrUpdate(p => p.Id, new City { Id = 1, CountryId = 1, CityName = "«бё«е—…" });
+            //context.Districts.AddOrUpdate(p => p.Id, new District { Id = 1, CityId = 1, DistrictName = "«бд“е…" }, new District { Id = 2, CityId = 1, DistrictName = "«б ћгЏ «бќ«г”" });
+
+            //context.Customers.AddOrUpdate(p => p.Id, new Customer { Id = 1, NameArab = "Џ»«” гЌгѕ Џ»«” ”бнг«д", NameEng = "Abbas Mohamed Abbas Soliman", Email = "eng.abbasmohamed14@gmail.com", ReligionId = 1, NationalityId = 1, CountryId = 1, CityId = 1, DistrictId = 1, IDTypeId = 1, IdNumber = "29212148801254", IdissuePlace = "‘ «бЌ—н… г—я“ Ўг« - ”же«ћ", IdExpiryDate = DateTime.ParseExact("04/07/2025", "dd/MM/yyyy", null), Address = "6 ‘«—Џ Ќ”жд… - ‘«—Џ ћ”— «б”жн” «бћ—«ћ »ћж«— г’дЏ «бгб«»” " });
+
+            //context.CustomerPhones.AddOrUpdate(p => p.Id, new CustomerPhone { Id = 1, CustomerId = 1, PhoneTypeId = 1, PhoneNo = "01118863234" });
+
+            //context.Projects.AddOrUpdate(p => p.Id
+            //, new Project { Id = 1, CountryId = 1, CityId = 1, DistrictId = 2, ProjectName = "” жд —н“ѕд”", ProjectContentDetails = "гд«Ўё ббЁнб«  жгд«Ўё «ѕ«—н… ж ћ«—н… »«б«÷«Ё… бгд«Ўё Џг«—«  ”ядн…", Location = "ёЎЏ… «б√—÷ —ёг (4) »«бЎ—нё «бѕ«∆—н- «б ћгЏ «бќ«г”- гѕнд… «бё«е—… «бћѕнѕ…", ProjectDescription = "г‘—жЏ гћ гЏ Џг—«дн г я«гб" });
+            //context.ProjectOwners.AddOrUpdate(p => p.Id
+            //, new ProjectOwner { Id = 1, ProjectId = 1, ProjectOwnerId = 1, IsMainOwner = false, MainOwnerId = 2, ProjectOwnerDelegateName = "е‘«г √Ќгѕ Џ»ѕ «ббЎнЁ «бЏж÷н", ProjectOwnerDelegateRepresent = "—∆н” гћб” «б«ѕ«—…", ProjectOwnerDetails = "нг бя Џѕѕ гд «б»д«н«  «б”ядн…" });
+            //context.PaymentMethodHeaders.AddOrUpdate(p => p.Id, new PaymentMethodHeader { Id = 1, Name = "6 ”дж« ", TotalMonthPeriod = 6 });
+            //context.PaymentMethodHeaders.AddOrUpdate(p => p.Id, new PaymentMethodHeader { Id = 1000, Name = "дў«г ѕЁЏ ќ«’", TotalMonthPeriod = 0 });
+            //context.PaymentMethodDetails.AddOrUpdate(p => p.Id
+            //, new PaymentMethodDetail { Id = 1, PaymentMethodHeaderId = 1, PaymentTypeId = 1, IsRatioNotAmount = true, Ratio = 10, MinimumAmount = null, StartFrom = 0, Period = 0, PaymentsCounts = 0 }
+            //, new PaymentMethodDetail { Id = 2, PaymentMethodHeaderId = 1, PaymentTypeId = 2, IsRatioNotAmount = true, Ratio = 6.665m, MinimumAmount = null, StartFrom = 3, Period = 0, PaymentsCounts = 0 }
+            //, new PaymentMethodDetail { Id = 3, PaymentMethodHeaderId = 1, PaymentTypeId = 5, IsRatioNotAmount = true, Ratio = 0.03125m, MinimumAmount = null, StartFrom = 6, Period = 3, PaymentsCounts = 24 });
+
+            //context.ContractModels.AddOrUpdate(p => p.Id
+            //, new ContractModel { Id = 1, ContractTypeId = 1, Name = "Џёѕ  ё”нЎ ‘ёё ” жд —“нѕд”" });
+
+            //context.ContractItems.AddOrUpdate(p => p.Id
+            //    , new ContractItem { Id = 1, ContractModelId = 1, ContractItemName = "«б»дѕ «б√жб", ContractItemString = "нЏ »—«б генѕ «б”«»ё ж«бгб«Ќё «бг—Ёё… »«бЏёѕ √ж «б н ”жЁ  бЌё »е Ёнг« »Џѕ ж«б ќЎнЎ «бЏ«г ббг‘—жЏ «бгЌѕѕ Џбне гжёЏ «бжЌѕ… «бг»нЏ… ж«б‘—жЎ ж«бгж«’Ё«  «бг—Ёё… »е–« «бЏёѕ √ж «б н ”жЁ  —Ёё »е ћ“Ѕ«р б« н ћ“√ гд е–« «бЏёѕ жгягб«р жг гг«р бя«Ё… »джѕе ж√Ќя«ге жбе« –«  «бёж… ж«бдЁ«– «бё«дждн «б н б»джѕ ж√Ќя«г е–« «бЏёѕ" }
+
+            //    , new ContractItem { Id = 2, ContractModelId = 1, ContractItemName = " «б»дѕ «бЋ«дн (»н«д «бг»нЏ)", ContractItemString = "»«Џ «бЎ—Ё «б√жб «бм «бЎ—Ё «бЋ«дн «бё«»б б–бя «бжЌѕ… «б”ядн… @103 Ён @104 »г‘—жЏ @101 «бгё«г Џбм @102 жн»бџ «ћг«бн г”ЎЌ «бжЌѕ… «б”ядн… гЌб е–« «бЏёѕ  (@105)г2 ЁёЎ @106 г — г—»Џ  \" Ќ  «бЏћ“ ж«б“н«ѕ…\" Џбм г«еж г»нд »«бг”ёЎ «б√Ёён ж«б—”г «бедѕ”н ббжЌѕ… «б”ядн… гЌб е–« «бЏёѕ ж«б —«ќн’ «б н ’ѕ—  ж«б н ’ ’ѕ— б«Ќё« ° жёѕ « Ёё «бЎ—Ё«д Џбм «д е–« «б»нЏ ж«бЏёѕ гжёжЁ Џбм ‘—Ў ж«ёЁ жеж ”ѕ«ѕ я«гб «бЋгд Ён «бгЏ«ѕ «бг Ёё Џбне ж«бгд’ж’ Џбне ° жнЏ »— е–« «бЏёѕ џн— д«ёб ббгбян… жџн— г— » б√н… Ќёжё Џндн… √’бн… √ж »Џн… √ж ‘ќ’н… Џбм «бЏнд гЌб «б Џ«ёѕ «б« »Џѕ ”ѕ«ѕ «бЎ—Ё «бЋ«дн бя«гб «бЋгд Ён «бгЏ«ѕ «бгЌѕѕ °жн‘гб е–« «б»нЏ Ќ’… ‘«∆Џ… »«б√—÷ «бгё«г Џбне« «бг»дм «бя«∆д »е «бжЌѕ… «бг»нЏ… гЌб е–« «бЏёѕ ж«б√ћ“«Ѕ «бг‘ —я…  Џ«ѕб д”»… г”ЎЌ «бжЌѕ… «бг»нЏ… «бм я«гб г”«Ќ… жЌѕ«  «бЏё«— жб« нЌё ббЎ—Ё «бЋ«дн «бгЎ«б»… »ё”г е« √ж Ќ’… гЁ—“… »е« ° Џбм √д б« нЏѕ гд «б√ћ“«Ѕ «бг‘ —я… я«гб г”«Ќ… «б”ЎЌ ж«бЌѕнё… ЌнЋ √дег« гбя ббЎ—Ё «б√жб жбе жЌѕе Ќё «б ’—Ё Ёне« ж«” Џг«бе« ° яг« √д «бг Ёё Џбне »нд «бЎ—Ёнд √д е–« «б»нЏ б« н‘гб √н Ќёжё Ёнг« нќ’ «бг—«Ёё «бЏ«г… ж«бЎ—ё ж«б√—’Ё… ж«б‘ж«—Џ «бѕ«ќбн… ж«бг”«Ќ«  ж«бг»«дн «бгќ’’… ббгдЁЏ… «бЏ«г… ж«бЌѕ«∆ё «бЏ«г… ж«бгд«Ўё «бќѕгн… √ндг« жћѕ  жќб«Ёе гд «бгд‘¬  «б н нёнге« «бЎ—Ё «б√жб ° ЌнЋ √д  бя «бгд‘¬   Џѕ гбя«р ббЎ—Ё «б√жб." }
+
+            //    , new ContractItem { Id = 3, ContractModelId = 1, ContractItemName = "«б»дѕ «бЋ«бЋ («бЋгд жЎ—нё… «бѕЁЏ)", ContractItemString = " г е–« «б»нЏ гё«»б Ћгд «ћг«бн жёѕ—е (@107) (ЁёЎ @108 ЁёЎ б« џн—) ° « Ёё «бЎ—Ё«д Џбм «д н г ”ѕ«ѕе« яг« еж ж«—ѕ Ён ћѕжб «б”ѕ«ѕ" }
+
+            //                    , new ContractItem { Id = 4, ContractItemName = "«б»дѕ «б—«»Џ («б«б “«г »«б”ѕ«ѕ)", ContractItemString = @"1-нб “г «бЎ—Ё «бЋ«дн »”ѕ«ѕ »«ён Ћгд «б»нЏ »«бя«гб Ён «бгж«Џнѕ «бг Ёё Џбне«
+            //    2-жнЌў— Џб «бЎ—Ё «бЋ«дн «б √ќ— √ж «б√г д«Џ Џд «б”ѕ«ѕ б«н ”»» гд «б√”»«» √н« я«д  ° жнЏ »—  жёнЏ «бЎ—Ё «бЋ«дн Џбм е–« «бЏёѕ «ё—«—«р где »–бя ж д«“б де«∆н гд «бЎ—Ё «бЋ«дн Џд √н Ќё бе Ён «бЌ»” √ж «бѕЁЏ »Џѕг «б дЁн– ° жнЏ »— «ќб«б «бЎ—Ё «бЋ«дн »–бя «ќб«б ћже—н »‘—жЎ «бЏёѕ н»нЌ ббЎ—ё «б√жб «Џг«б «б‘—Ў «б’—нЌ «бЁ«”ќ «бж«—ѕ »«б»дѕ «бќ«г” гд е–« «бЏёѕ
+            //    " }
+            //                    , new ContractItem { Id = 5, ContractItemName = "«б»дѕ «бќ«г” («б √ќн— Ён «б”ѕ«ѕ)", ContractItemString = @"1-«–«  √ќ— √ж  ќбЁ √ж «г дЏ «бЎ—Ё «бЋ«дн Џд ”ѕ«ѕ ёнг… √н ё”Ў Ён «бгжЏѕ «бгЌѕѕ бе б√н ”»» гд «б√”»«» √яЋ— гд гѕ… Џ‘—… √н«г гд  «—нќ «б≈” Ќё«ё ЁнЌё ббЎ—Ё «б√жб  Ќ’нб џ—«г… ёѕ—е«  @џ—«г…«б √ќн— (@џ—«г…«б √ќн—гЁ’б… б« џн—) гд ёнг… «бё”Ў Џд яб ‘е—  √ќн— √ж ћ“√гд «б‘е— Џбм «д  ” Ќё »ѕ«н… гд  «—нќ «бё”Ў «бг √ќ— жЌ м  «—нќ «б”ѕ«ѕ  ° яг« нЌё ббЎ—Ё «б√жб √н÷« Ён е–е «бЌ«б… «–«  ћ«ж“… гѕ… «б √ќн— б√яЋ— гд 60 нжг« гд  «—нќ «б√” Ќё«ё «Џ »«— е–« «бЏёѕ гЁ”жќ« гд  бё«Ѕ дЁ”е ѕжд Ќ«ћ… «бм  д»не «ж «д–«— √ж ’ѕж— Ќяг ё÷«∆н »–бя √ж « ќ«– «н… «ћ—«Ѕ«  ё÷«∆н… ж«” —ѕ«ѕ «бжЌѕ… «б”ядн… гд  Ќ  нѕ «бЎ—Ё «бЋ«дн √ж √н нѕ я«д  ≈д я«д ёѕ «” бге« жн г —ѕ г«  г ”ѕ«ѕе гд «бЋгд »Џѕ ќ’г ёнг… (@џ—«г…«” —ѕ«ѕ) (ЁёЎ @џ—«г…«” —ѕ«ѕгЁ’б…) гд «ћг«бн ёнг… «бжЌѕ… «б”ядн… гЌб е–« «бЏёѕ гё«»б «бг’—жЁ«  «б≈ѕ«—н… ж«бѕЏ«н… ж«б≈Џб«д жџн—е« гд «бг’—жЁ«  «б н  я»ѕе« «бЎ—Ё «б√жб Ён ”»нб « г«г е–« «бЏёѕ  ж«б н нё— »е« «бЎ—Ё «бЋ«дн ж«де« ёнг… џн— ќ«÷Џ… б—ё«»… «бё÷«Ѕ ж–бя б√д ”»» Ё”ќ «бЏёѕ н—ћЏ «бм «бЎ—Ё «бЋ«дн  ° жЏбм √д н г —ѕ «бг»«бџ Џбм √ё”«Ў жЏбм гѕѕ гг«Ћб… бб√ё”«Ў ж«бгѕѕ «б н  г »е« «б”ѕ«ѕ гд ё»б «бЎ—Ё «бЋ«дн жЏбм √д н»ѕ√ «” Ќё«ё «бЎ—Ё «бЋ«дн б бя «бг»«бџ »Џѕ «Џ«ѕ… »нЏ «бЎ—Ё «б√жб ббжЌѕ… «бг” —ѕ… жббЎ—Ё «б√жб «бЌё Ён «бгЎ«б»… »яб √ж »Џ÷ г« –я—
+            //    2-нЌё ббЎ—Ё «б√жб Ён Ќ«б… Ё”ќ «бЏёѕ «б ’—Ё Ён «бжЌѕ… «б”ядн… гЌб е–« «бЏёѕ ббџн— ѕжд √д няжд ббЎ—Ё «бЋ«дн √н Ќё Ён «б≈Џ —«÷ Џбм –бя
+            //    3-жб« нЏ »—  г”я «бЎ—Ё «б√жб («б»«∆Џ) »«б‘—Ў «б’—нЌ «бЁ«”ќ »«бд”»… «бм √Ќѕ «б√ё”«Ў  д«“б« где Џд «б г”я »е »«бд”»… «бм џн—е гд «б√ё”«Ў
+            //    " }
+            //                    , new ContractItem { Id = 6, ContractItemName = "«б»дѕ «б”«ѕ” (Џѕжб «бЎ—Ё «бЋ«дн Џд «б»нЏ)", ContractItemString = @"Ён Ќ«б… —џ»… «бЎ—Ё «бЋ«дн Ён «бЏѕжб Џд « г«г «б»нЏ жЁ”ќ «бЏёѕ ж«” —ѕ«ѕ г« ”»ё ”ѕ«ѕе гд √ё”«Ў ж«Џ«ѕ… «бЌ«б бг« я«д  Џбне ё»б «б Џ«ёѕ  ° ЁЏбне «б ёѕг »Ўб» —”гн ≈бм «бЎ—Ё «б√жб н»ѕн Ёне —џ» е  бя ° жн г «б»  »«бЎб» »«бгж«Ёё… √ж«б—Ё÷ Ён гѕ… √ё’«е« ‘е— гд  «—нќ  ёѕнге жЁн Ќ«б… «бгж«Ёё… Џбм «бЏѕжб √ж «бЁ”ќ »д«Ѕ«р Џбм Ўб» «бЎ—Ё «бЋ«дн Ён г ќ’г г»бџ нЏ«ѕб @џ—«г…«” —ѕ«ѕ (ЁёЎ @џ—«г…«” —ѕ«ѕгЁ’б… б«џн—) гд «ћг«бн ёнг… «бжЌѕ… «б”ядн… гё«»б «бг’«—нЁ «б≈ѕ«—н… Џд Ё”ќ «бЏёѕ я Џжн÷ « Ё«ён Џд Ўб» «бЏѕжб б« нќ÷Џ б—ё«»… «бё÷«Ѕ ° жнб “г «бЎ—Ё «бЋ«дн »—ѕ «бжЌѕ… «б”ядн… гЌб е–« «бЏёѕ «д я«д ёѕ «” бге« ° Ћг нёжг «бЎ—Ё «б√жб »—ѕ «бЋгд «бгѕЁжЏ »Џѕ ќ’г  бя «бд”»… Џбм √д н г «б—ѕ »–«  Ў—нё… ”ѕ«ѕ «б√ё”«Ў жќб«б гѕѕ гг«Ћб… бб√ё”«Ў ж«бгѕѕ «б н  г »е« «б”ѕ«ѕ гд ё»б «бЎ—Ё «бЋ«дн ° Џбм √д н»ѕ√ «бЎ—Ё «б√жб Ён —ѕ «бг»«бџ »Џѕ ≈Џ«ѕ… »нЏ «бЎ—Ё «б√жб ббжЌѕ… «бг” —ѕ…° жЁн ћгнЏ «б√Ќж«б нЌё ббЎ—Ё «б√жб »≈—«ѕ е «бгдЁ—ѕ… Џѕг «бгж«Ёё… Џбм Ўб» «бЏѕжб √ж «—ћ«Ѕ «б»  Ёне" }
+
+            //                    , new ContractItem { Id = 7, ContractItemName = "«б»дѕ «б”«»Џ (Ё”ќ «бЏёѕ ж ”бнг «бжЌѕ… «б”ядн…)", ContractItemString = @"гЏ Џѕг «б≈ќб«б бг«  г «б≈ Ё«ё Џбне »«б»дѕ «бќ«г” ж»«ён »джѕ «бЏёѕ Ё≈де Ён Ќ«б… Ё”ќ √ж «дЁ”«ќ √ж —ѕ √ж «»Ў«б √ж »Ўб«д е–« «бЏёѕ б√н ”»» гд «б√”»«» √н« я«д ° Ёнб “г «бЎ—Ё «бЋ«дн »—ѕ ж ”бнг «бжЌѕ… «б”ядн… гЌб е–« «бЏёѕ Ён Ќ«б… «” б«ге« ° ќ«бн…  г«г« гд «б‘ж«џб √ж «б√‘ќ«’ ж»«бЌ«б… «б н я«д  Џбне« «бм «бЎ—Ё «б√жб ° Џбм √д н г –бя Ёж—« ѕжд Ќ«ћ… «б  д»не √ж «д–«— √ж ’ѕж— Ќяг ё÷«∆н ° жб« н”—н Ён Ќё «бЎ—Ё «б√жб √н ≈ћ—«Ѕ √ж Џёжѕ √ж √н  ’—Ё гд «б ’—Ё«  «б н ёѕ няжд «бЎ—Ё «бЋ«дн ёѕ √»—ге« Ён ‘√д «бжЌѕ… «б”ядн… гЌб «бЏёѕ √ж √н Ќё гд «бЌёжё «б н няжд ёѕ — »е« Џбне« ”ж«Ѕ я«д  Ќёжё Џндн… √ж  »Џн… √ж ‘ќ’н… √ж √н ё—ж÷ √ж ÷г«д«  Џбм «бЏнд гЌб е–« «бЏёѕ °жЁн Ќ«б… «ќб«б «бЎ—Ё «бЋ«дн »—ѕ «бЏнд ж ”бнге« Ё Џ »— нѕе √ж нѕ гд Ќб гЌбе нѕ џ«’»… жнЌё ббЎ—Ё «б√жб «ббћжЅ «бм «бё÷«Ѕ «бг” Џћб б≈ќб«Ѕ «бжЌѕ… «б”ядн… ж«” б«ге« ж≈Џ«ѕ… Ќ«б е« ≈бм г«я«д  Џбне »дЁё«   ќ’г гг« няжд «бЎ—Ё «бЋ«дн ёѕ ”ѕѕе гд «бЋгд гЏ «б Џжн÷«  «бб«“г… ° жя«Ё… –бя ѕжд Ќ«ћ… «бм  д»не √ж «д–«— √ж ’ѕж— Ќяг ё÷«∆н " }
+
+            //                      , new ContractItem { Id = 8, ContractItemName = "«б»дѕ «бЋ«гд («б ’—Ё Ён «бжЌѕ… «б”ядн…)", ContractItemString = @"1-гд «бг Ёё Џбне √д е–« «бЏёѕ еж Џёѕ гЏбё Џбм ‘—Ў ж«ёЁ жеж ”ѕ«ѕ я«гб √ё”«Ў «бЋгд Ён гж«Џнѕе« жеж џн— д«ёб ббгбян… ≈б« »Џѕ ”ѕ«ѕ я«гб «бЋгд Ў»ё« бг«  г «б« Ё«ё Џбне ° жг« н” Ќё ббЎ—Ё «б√жб Ён «бгж«Џнѕ «бг Ёё Џбне« жнЌ Ёў «бЎ—Ё «б√жб »гбян… «бжЌѕ… «б”ядн… «бг»нЏ… жняжд бе Ќё «г н«“ Џбне« Ќ м «бжЁ«Ѕ »я«гб «бЋгд
+            //    2-жгд «бг Ёё Џбне »нд «бЎ—Ёнд √д нЌб гЌб «бЎ—Ё «бЋ«дн Ён Ќ«б… жЁ« е √ж Ёёѕ«д √ебн е ё»б ”ѕ«ѕ я«гб «бЋгд ж—Ћ е («бќбЁ «бЏ«г) Ён Ќ«б… «»ѕ«Ѕ «б—џ»… »–бя ќб«б Ћб«Ћ… √‘е— гд  «—нќ «бжЁ«… -б« ёѕ— «ббе- √ж Ёёѕ«д «б√ебн… »‘—Ў «б«б “«г »я«Ё… «б«б “«г«  «бгё——… Ён е–« «бЏёѕ Џбм гж—Ћег «бЎ—Ё «бЋ«дн «бг‘ —н жЁн Ќ«б… Ўб»ег «бЏѕжб Џд  г«г «б»нЏ √ж «бЏёѕ н”—н Џбнег г« я«д н”—н Џбм гж—Ћег Ќ”»г« ж—ѕ Ён «б»дѕ «б”«ѕ” гд е–« «бЏёѕ
+            //    жб« нћж“ ббЎ—Ё «бЋ«дн «бг‘ —н √ж ќбЁе «бЏ«г ”ж«Ѕ ё»б √ж »Џѕ «” б«г «бжЌѕ… «б”ядн… « ќ«– √н «ћ—«Ѕ √ж «»—«г √н Џёѕ √ж «б ’—Ё Ён «бжЌѕ… гЌб е–« «бЏёѕ »√н жће гд √жће «б ’—Ё«  √ж  — н» √н Ќёжё Џндн… √’бн… √ж  »Џн… √ж Ќёжё ‘ќ’н… √ж «бЌ’жб Џбм √н ё—ж÷ √ж ÷г«д«  √ж гдЌ √н  жянб«  »‘√д «бжЌѕ… гЌб е–« «бЏёѕ ° ж»’Ё… Џ«г… б« нЌё бег«  — н» √н «б “«г«  Џбм «бжЌѕ… «б”ядн… «б« »Џѕ ”ѕ«ѕ я«гб «бЋгд ж√н г’«—нЁ г” Ќё… Ён –г ег ббЎ—Ё «б√жб
+            //    3-жЁн Ќ«б…  ’—Ё «бЎ—Ё «бЋ«дн √ж ќбЁе «бЏ«г Ён «бжЌѕ… «б”ядн… √ж Ён ћ“Ѕ где« ё»б ”ѕ«ѕ я«гб «бЋгд жя«Ё… «бг»«бџ «бг” Ќё… Ён –г ег ббЎ—Ё «б√жб  √Џ »— е–« «бЏёѕ гЁ”жќ« гд  бё«Ѕ дЁ”е ѕжд «бЌ«ћ… «бм  д»не √ж «д–«— √ж «” ’ѕ«— Ќяг ё÷«∆н √ж « ќ«– √н «ћ—«Ѕ«  жняжд ббЎ—Ё «б√жб «” —ѕ«ѕ «бЏнд гЌб е–« «бЏёѕ гд  Ќ  √н нѕ я«д  гЏ «б«Ќ Ё«ў »г« ё«г «бЎ—Ё «бЋ«дн √ж ќбЁе «бЏ«г »”ѕ«ѕе гд Ћгд я Џжн÷ « Ё«ён Џд «б«ќб«б »е–« «б«б “«г џн— ќ«÷Џ б—ё«»… «бё÷«Ѕ° жя«Ё… –бя ѕжд Ќ«ћ… «бм  д»не √ж «д–«— √ж ’ѕж— Ќяг ё÷«∆н
+            //    4-е–« жгЏ Џѕг «б«ќб«б »√Ќя«г «бЁё—«  «б”«»ё… »е–« «б»дѕ Ёнћж“ ббЎ—Ё «бЋ«дн Ён Ќ«б… —џ» е Ён «б д«“б Џд «бжЌѕ… гЌб е–« «бЏёѕ ббџн— √д н ёѕг »Ўб» ббЎ—Ё «б√жб н»ѕн Ёне —џ» е  бя ° жняжд ббЎ—Ё «б√жб гЎбё «бЌ—н… Ён «бё»жб √ж «б—Ё÷ ° жЁн Ќ«б… гж«Ёё… «бЎ—Ё «б√жб Џбм —џ»… «бЎ—Ё «бЋ«дн Ён «б д«“б °Ёнћ» √д н г «б д«“б »гЏ—Ё… жг’«ѕё… «бЎ—Ё «б√жб Џбм «б д«“б жб« ндЁ– «б д«“б «б« »г’«ѕё… «бЎ—Ё «б√жб ° Џбм «д н г «б д«“б »Џѕ ”ѕ«ѕ «бЎ—Ё «бЋ«дн ббЎ—Ё «б√жб @џ—«г…«б д«“б (ЁёЎ @џ—«г…«б д«“бгЁ’б… б« џн—) гд ёнг… «бжЌѕ… «б”ядн… гё«»б «бг’«—нЁ «б≈ѕ«—н… «бб«“г…° жн” Ћдм гд  бя «бг’«—нЁ «б д«“б б’«бЌ «б√ё«—» гд «бѕ—ћ… «б√жбм жбг—… ж«Ќѕ… ЁёЎ
+            //    " }
+
+            //                      , new ContractItem { Id = 9, ContractItemName = "«б»дѕ «б «”Џ (гЏ«нд… «бжЌѕ… «б”ядн… «бг»нЏ…)", ContractItemString = @"нё— «бЎ—Ё «бЋ«дн √де «ЎбЏ Џбм «б ќЎнЎ «бЏ«г ббг‘—жЏ жгжёЏе ж«бгжёЏ «б–н ” ё«г Џбне «бжЌѕ… гЌб е–« «бЏёѕ ж«б—”жг«  «бедѕ”н… «бќ«’… »дгж–ћ «б»д«Ѕ «бг—Ёё »«бЏёѕ «б–н  Џ«ёѕ Џбне гЏ «бЎ—Ё «б√жб Џбм «ё«г е ж«бг”ёЎ «б√Ёён ж«б—”г «бгж÷Ќ бб‘ё… гЌб «бЏёѕ ° жЏбг »гж«’Ё«  ≈ё«г… г»«дн «бжЌѕ… «б”ядн… гж÷жЏ е–« «бЏёѕ ж√ г «бгЏ«нд… «б «г… «бд«Ён… ббће«б… ‘—Џ« жё«джд« жЁё« бг«  ёѕг жЏбг »гжёЏе« гд «бг‘—жЏ жё»б «б‘—«Ѕ »д«Ѕ«р Џбм –бя яг« нё— »√де б« нћж“ бе »Џѕ –бя √д нЎб»  џнн— гжёЏе« »жЌѕ… гд жЌѕ«  «бг‘—жЏ √ж «ћ—«Ѕ  Џѕнб Ёне« нќ«бЁ дгж–ћ «б»д«Ѕ «бг Џ«ёѕ Џбне «б« »гж«Ёё… «бЎ—Ё «б√жб Џбм –бя я «»… яг« нё»б «бЎ—Ё «бЋ«дн гд «б¬д ж»’Ё… де«∆н… √д нё ’— «д Ё«Џе »«бжЌѕ… «б”ядн… «бг»нЏ… Џбм «бџ—÷ «б–н ќ’’ гд √ћбе жеж «б”яд жб« нћж“ бе √ж бќбЁе «бЏ«г √ж «бќ«’  џнн— –бя «бџ—÷ б≈” џб«бе Ён д‘«Ў ¬ќ— гд «б√д‘Ў… џн— «б”ядн… √н« я«д  жнЏ »— е–« «б “«г ћже—н Ён «»—«г е–« «бЏёѕ ° яг« нё— «бЎ—Ё «бЋ«дн √де б« нћж“ бе «б—ћжЏ Џбм «бЎ—Ё «б√жб √ж Ўб» Ё”ќ √ж ≈дЁ”«ќ √ж —ѕ √ж ≈»Ў«б √ж »Ўб«д «бЏёѕ √ж «бгЎ«б»… »√н Ќёжё »‘√д –бя б√н ”»» гд «б√”»«»" }
+            //    );
 
             //            context.Database.ExecuteSqlCommand(@"create function [con].[ufn_GetRequests](@Id bigint,@UserId int,@RequestTypeId int) 
             //RETURNS @rtnTable TABLE

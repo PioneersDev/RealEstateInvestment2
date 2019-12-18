@@ -100,5 +100,9 @@ namespace RealEstateInvestment.Areas.RealEstate.Models.DTO
 
         [Display(Name = "حصة شركة التسويق")]
         public decimal? MarketingCompanyPayValue { get; set; }
+
+        [Display(Name = "عدد الأقساط")]
+        public int? InstallmentNumber { get; set; }
+
     }
 }

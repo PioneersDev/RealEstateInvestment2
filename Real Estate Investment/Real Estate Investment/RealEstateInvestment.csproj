@@ -203,9 +203,8 @@
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
-    <Reference Include="Tafqeet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\abbas.soliman\Desktop\Tafqeet.dll</HintPath>
+    <Reference Include="Tafqeet">
+      <HintPath>..\Tafqeet.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -407,6 +406,10 @@
     <Compile Include="MigrationsDb\dbContainer\201909171551398_addCHEQUEINBOXID.cs" />
     <Compile Include="MigrationsDb\dbContainer\201909171551398_addCHEQUEINBOXID.Designer.cs">
       <DependentUpon>201909171551398_addCHEQUEINBOXID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsDb\dbContainer\201912171326395_AddPaymentMethodHeaderSeed.cs" />
+    <Compile Include="MigrationsDb\dbContainer\201912171326395_AddPaymentMethodHeaderSeed.Designer.cs">
+      <DependentUpon>201912171326395_AddPaymentMethodHeaderSeed.cs</DependentUpon>
     </Compile>
     <Compile Include="MigrationsDb\dbContainer\Configuration.cs" />
     <Compile Include="MigrationsDb\dbContainer\dbContainerInitializer.cs" />
@@ -2310,6 +2313,7 @@
     <Content Include="Areas\RealEstate\Views\MarketingCompany\Save.cshtml" />
     <Content Include="Areas\RealEstate\Views\MarketingCompany\Delete.cshtml" />
     <Content Include="Areas\RealEstate\Views\RegisterdContracts\RegisterdContractSaveJournal.cshtml" />
+    <Content Include="Areas\RealEstate\Views\Contracts\GetSpecialContract.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
@@ -2465,6 +2469,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationsDb\dbContainer\201909171551398_addCHEQUEINBOXID.resx">
       <DependentUpon>201909171551398_addCHEQUEINBOXID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsDb\dbContainer\201912171326395_AddPaymentMethodHeaderSeed.resx">
+      <DependentUpon>201912171326395_AddPaymentMethodHeaderSeed.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationsSecurity\ApplicationDbContext\201812231717127_InitialDatabaseCreation.resx">
       <DependentUpon>201812231717127_InitialDatabaseCreation.cs</DependentUpon>

@@ -161,26 +161,26 @@ namespace RealEstateInvestment.Areas.RealEstate.Controllers
 
         private IQueryable<PaymentMethodHeaderDTO> SortPaymentMethodHeadersByColumnWithOrder(string order, string orderDir, IQueryable<PaymentMethodHeaderDTO> paymentHeaders)
         {
-            // Initialization.   
+            // Initialization.
             try
             {
-                // Sorting   
+                // Sorting
                 switch (order)
                 {
                     case "0":
-                        // Setting.   
+                        // Setting.
                         paymentHeaders = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? paymentHeaders.OrderByDescending(p => p.Id) : paymentHeaders.OrderBy(p => p.Id);
                         break;
                     case "1":
-                        // Setting.   
+                        // Setting.
                         paymentHeaders = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? paymentHeaders.OrderByDescending(p => p.Name) : paymentHeaders.OrderBy(p => p.Name);
                         break;
                     case "2":
-                        // Setting.   
+                        // Setting.
                         paymentHeaders = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? paymentHeaders.OrderByDescending(p => p.TotalMonthPeriod) : paymentHeaders.OrderBy(p => p.TotalMonthPeriod);
                         break;
                     default:
-                        // Setting.   
+                        // Setting.
                         paymentHeaders = orderDir.Equals("DESC", StringComparison.CurrentCultureIgnoreCase) ? paymentHeaders.OrderByDescending(p => p.Id) : paymentHeaders.OrderBy(p => p.Id);
                         break;
                 }
